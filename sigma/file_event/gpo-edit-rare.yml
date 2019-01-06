@@ -1,0 +1,17 @@
+title: gpo-edit-rare
+id: 743e60f1-1111-2222-3333-e96255d88b86
+status: stable
+description: Detects regsvr32 loading a remote scriptlet
+logsource:
+    category: file_event
+    product: windows
+detection:
+    selection:
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
+    filter:
+        ParentImage|endswith: '\winlogon'
+    condition: selection and not filter
+tags:
+    - attack.credential_access/T1003
+    - attack.persistence
