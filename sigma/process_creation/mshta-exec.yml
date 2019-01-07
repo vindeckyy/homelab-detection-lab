@@ -1,0 +1,17 @@
+title: mshta-exec
+id: 7e160e5c-1111-2222-3333-614a316818ae
+status: stable
+description: Detects rare mshta child process
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
+    filter:
+        ParentImage|endswith: '\outlook'
+    condition: selection and not filter
+tags:
+    - attack.privilege_escalation/T1548
+    - attack.lateral_movement
