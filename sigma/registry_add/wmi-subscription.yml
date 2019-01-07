@@ -1,0 +1,17 @@
+title: wmi-subscription
+id: 49f23df3-1111-2222-3333-6320555159d0
+status: stable
+description: Detects regsvr32 loading a remote scriptlet
+logsource:
+    category: registry_add
+    product: windows
+detection:
+    selection:
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
+    filter:
+        ParentImage|endswith: '\outlook'
+    condition: selection and not filter
+tags:
+    - attack.privilege_escalation/T1548
+    - attack.lateral_movement
