@@ -1,0 +1,17 @@
+title: windows-defender-disable
+id: 698461ba-1111-2222-3333-0886da5bebbe
+status: stable
+description: Detects encoded launcher from office parents
+logsource:
+    category: registry_add
+    product: windows
+detection:
+    selection:
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
+    filter:
+        ParentImage|endswith: '\winword'
+    condition: selection and not filter
+tags:
+    - attack.credential_access/T1003
+    - attack.discovery
