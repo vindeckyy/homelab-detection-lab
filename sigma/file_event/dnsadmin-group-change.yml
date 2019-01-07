@@ -1,0 +1,17 @@
+title: dnsadmin-group-change
+id: bf23ae12-1111-2222-3333-c30dca7f8f3b
+status: stable
+description: Detects schtask created outside it ops hours
+logsource:
+    category: file_event
+    product: windows
+detection:
+    selection:
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
+    filter:
+        ParentImage|endswith: '\outlook'
+    condition: selection and not filter
+tags:
+    - attack.lateral_movement/T1021
+    - attack.lateral_movement
