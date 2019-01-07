@@ -1,0 +1,17 @@
+title: certutil-urlfetch
+id: 103ecbb1-1111-2222-3333-86acbc23dcf3
+status: stable
+description: Detects rare mshta child process
+logsource:
+    category: registry_add
+    product: windows
+detection:
+    selection:
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
+    filter:
+        ParentImage|endswith: '\winlogon'
+    condition: selection and not filter
+tags:
+    - attack.discovery/T1046
+    - attack.persistence
