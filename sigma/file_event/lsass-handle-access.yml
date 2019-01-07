@@ -1,0 +1,17 @@
+title: lsass-handle-access
+id: 853f8bf5-1111-2222-3333-7ebde0bf76c9
+status: stable
+description: Detects encoded launcher from office parents
+logsource:
+    category: file_event
+    product: windows
+detection:
+    selection:
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
+    filter:
+        ParentImage|endswith: '\winword'
+    condition: selection and not filter
+tags:
+    - attack.credential_access/T1003
+    - attack.discovery
