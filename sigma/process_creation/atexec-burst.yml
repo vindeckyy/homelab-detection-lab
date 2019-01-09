@@ -1,0 +1,17 @@
+title: atexec-burst
+id: 8c36bd1f-1111-2222-3333-3783e7e1e36d
+status: stable
+description: Detects schtask created outside it ops hours
+logsource:
+    category: process_creation
+    product: windows
+detection:
+    selection:
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
+    filter:
+        ParentImage|endswith: '\winlogon'
+    condition: selection and not filter
+tags:
+    - attack.collection/T1560
+    - attack.persistence
