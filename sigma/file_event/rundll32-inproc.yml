@@ -1,0 +1,17 @@
+title: rundll32-inproc
+id: 3284f015-1111-2222-3333-c1cc20194448
+status: stable
+description: Detects encoded launcher from office parents
+logsource:
+    category: file_event
+    product: windows
+detection:
+    selection:
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
+    filter:
+        ParentImage|endswith: '\svchost'
+    condition: selection and not filter
+tags:
+    - attack.discovery/T1046
+    - attack.credential_access
