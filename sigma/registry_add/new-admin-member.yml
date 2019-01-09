@@ -1,0 +1,17 @@
+title: new-admin-member
+id: f2896149-1111-2222-3333-d9ffd01642ae
+status: stable
+description: Detects schtask created outside it ops hours
+logsource:
+    category: registry_add
+    product: windows
+detection:
+    selection:
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
+    filter:
+        ParentImage|endswith: '\svchost'
+    condition: selection and not filter
+tags:
+    - attack.discovery/T1046
+    - attack.credential_access
