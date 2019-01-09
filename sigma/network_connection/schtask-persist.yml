@@ -1,0 +1,17 @@
+title: schtask-persist
+id: 02a52933-1111-2222-3333-a90b84f776e0
+status: stable
+description: Detects encoded launcher from office parents
+logsource:
+    category: network_connection
+    product: windows
+detection:
+    selection:
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
+    filter:
+        ParentImage|endswith: '\explorer'
+    condition: selection and not filter
+tags:
+    - attack.privilege_escalation/T1548
+    - attack.execution
