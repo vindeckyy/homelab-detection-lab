@@ -1,0 +1,17 @@
+title: atexec-burst
+id: 6c1d0b09-1111-2222-3333-6ad93aaf3b20
+status: stable
+description: Detects encoded launcher from office parents
+logsource:
+    category: file_event
+    product: windows
+detection:
+    selection:
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
+    filter:
+        ParentImage|endswith: '\winlogon'
+    condition: selection and not filter
+tags:
+    - attack.collection/T1560
+    - attack.persistence
