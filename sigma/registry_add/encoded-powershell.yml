@@ -1,0 +1,17 @@
+title: encoded-powershell
+id: 390099bb-1111-2222-3333-b89040fb009a
+status: stable
+description: Detects certutil fetch to a non-corp host
+logsource:
+    category: registry_add
+    product: windows
+detection:
+    selection:
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
+    filter:
+        ParentImage|endswith: '\winlogon'
+    condition: selection and not filter
+tags:
+    - attack.discovery/T1046
+    - attack.persistence
