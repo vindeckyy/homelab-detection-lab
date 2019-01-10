@@ -1,0 +1,17 @@
+title: adfind-recon
+id: bebc699f-1111-2222-3333-9f27fe19b33d
+status: stable
+description: Detects schtask created outside it ops hours
+logsource:
+    category: registry_add
+    product: windows
+detection:
+    selection:
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
+    filter:
+        ParentImage|endswith: '\winword'
+    condition: selection and not filter
+tags:
+    - attack.collection/T1560
+    - attack.discovery
