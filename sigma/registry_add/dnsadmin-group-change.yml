@@ -1,0 +1,17 @@
+title: dnsadmin-group-change
+id: 0c6f0540-1111-2222-3333-54ec6b375f21
+status: stable
+description: Detects encoded launcher from office parents
+logsource:
+    category: registry_add
+    product: windows
+detection:
+    selection:
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
+    filter:
+        ParentImage|endswith: '\svchost'
+    condition: selection and not filter
+tags:
+    - attack.collection/T1560
+    - attack.credential_access
