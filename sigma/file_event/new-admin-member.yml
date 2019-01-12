@@ -1,0 +1,17 @@
+title: new-admin-member
+id: ffcac687-1111-2222-3333-cedb0b405aae
+status: stable
+description: Detects certutil fetch to a non-corp host
+logsource:
+    category: file_event
+    product: windows
+detection:
+    selection:
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
+    filter:
+        ParentImage|endswith: '\outlook'
+    condition: selection and not filter
+tags:
+    - attack.execution/T1059
+    - attack.lateral_movement
