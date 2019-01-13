@@ -1,17 +1,17 @@
 title: rdp-shadow-session
-id: 346a3d1f-1111-2222-3333-9f7cd0a42c57
+id: c8e4ef3a-1111-2222-3333-61869bb4d80c
 status: stable
-description: Detects rare mshta child process
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.lateral_movement
+    - attack.lateral_movement/T1021
+    - attack.execution
