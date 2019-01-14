@@ -1,0 +1,17 @@
+title: kerberoast-activity
+id: f8c45d2b-1111-2222-3333-e42e5a9459fb
+status: stable
+description: Detects encoded launcher from office parents
+logsource:
+    category: file_event
+    product: windows
+detection:
+    selection:
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
+    filter:
+        ParentImage|endswith: '\winlogon'
+    condition: selection and not filter
+tags:
+    - attack.discovery/T1046
+    - attack.persistence
