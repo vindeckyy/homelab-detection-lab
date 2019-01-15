@@ -1,17 +1,17 @@
 title: seclogon-abuse
-id: 729a6c26-1111-2222-3333-15a08ca5a73b
+id: 492474d4-1111-2222-3333-ef1015ad5134
 status: stable
-description: Detects rare mshta child process
+description: Detects schtask created outside it ops hours
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.persistence
+    - attack.collection/T1560
+    - attack.discovery
