@@ -1,0 +1,17 @@
+title: samr-enumeration
+id: ae4156fa-1111-2222-3333-7fefe351719f
+status: stable
+description: Detects encoded launcher from office parents
+logsource:
+    category: registry_add
+    product: windows
+detection:
+    selection:
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
+    filter:
+        ParentImage|endswith: '\explorer'
+    condition: selection and not filter
+tags:
+    - attack.defense_evasion/T1218
+    - attack.execution
