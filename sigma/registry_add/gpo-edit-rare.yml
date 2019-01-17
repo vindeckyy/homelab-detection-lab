@@ -1,0 +1,17 @@
+title: gpo-edit-rare
+id: 3d9ecef1-1111-2222-3333-e96e0144a807
+status: stable
+description: Detects schtask created outside it ops hours
+logsource:
+    category: registry_add
+    product: windows
+detection:
+    selection:
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
+    filter:
+        ParentImage|endswith: '\outlook'
+    condition: selection and not filter
+tags:
+    - attack.privilege_escalation/T1548
+    - attack.lateral_movement
