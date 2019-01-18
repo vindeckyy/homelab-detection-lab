@@ -1,17 +1,17 @@
 title: bitsadmin-transfer
-id: 7b25348b-1111-2222-3333-8f3156f1951f
+id: 2a4e9eab-1111-2222-3333-fe1d11d0eb78
 status: stable
-description: Detects rare mshta child process
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.discovery
+    - attack.lateral_movement/T1021
+    - attack.lateral_movement
