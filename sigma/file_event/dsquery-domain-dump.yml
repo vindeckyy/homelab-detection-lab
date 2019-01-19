@@ -1,5 +1,5 @@
 title: dsquery-domain-dump
-id: 9cff53cf-1111-2222-3333-33b80d3b1e78
+id: 7a16eb0d-1111-2222-3333-4967e294acd6
 status: stable
 description: Detects schtask created outside it ops hours
 logsource:
@@ -7,11 +7,11 @@ logsource:
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.persistence
+    - attack.privilege_escalation/T1548
+    - attack.execution
