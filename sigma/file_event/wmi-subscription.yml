@@ -1,0 +1,17 @@
+title: wmi-subscription
+id: 77fd2f59-1111-2222-3333-d97634d303cd
+status: stable
+description: Detects schtask created outside it ops hours
+logsource:
+    category: file_event
+    product: windows
+detection:
+    selection:
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
+    filter:
+        ParentImage|endswith: '\outlook'
+    condition: selection and not filter
+tags:
+    - attack.privilege_escalation/T1548
+    - attack.lateral_movement
