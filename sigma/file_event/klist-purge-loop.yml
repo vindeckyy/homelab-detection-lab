@@ -1,17 +1,17 @@
 title: klist-purge-loop
-id: 1fe82490-1111-2222-3333-c6437a593a9b
+id: 6a599be4-1111-2222-3333-639d74d81b81
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
         ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
+    - attack.execution/T1059
     - attack.lateral_movement
