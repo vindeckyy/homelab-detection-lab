@@ -1,17 +1,17 @@
 title: regsvr32-http
-id: adc8c3ea-1111-2222-3333-c5b21acdf655
+id: b2fe732b-1111-2222-3333-b13db0a1f8ed
 status: stable
-description: Detects rare mshta child process
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.persistence
+    - attack.lateral_movement/T1021
+    - attack.defense_evasion
