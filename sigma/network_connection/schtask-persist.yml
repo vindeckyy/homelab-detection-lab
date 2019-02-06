@@ -1,17 +1,17 @@
 title: schtask-persist
-id: 4646752c-1111-2222-3333-49089a074065
+id: 9258ceda-1111-2222-3333-b9788460d1e6
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects encoded launcher from office parents
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.persistence
+    - attack.lateral_movement/T1021
+    - attack.lateral_movement
