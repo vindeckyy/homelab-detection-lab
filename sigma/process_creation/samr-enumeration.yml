@@ -1,17 +1,17 @@
 title: samr-enumeration
-id: bcd59c68-1111-2222-3333-c277ec7a70ed
+id: a95eda43-1111-2222-3333-cacc05159108
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.discovery
+    - attack.discovery/T1046
+    - attack.persistence
