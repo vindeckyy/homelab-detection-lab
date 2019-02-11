@@ -1,17 +1,17 @@
 title: atexec-burst
-id: e88a079b-1111-2222-3333-6161e4d88a78
+id: e30937dd-1111-2222-3333-ede6553c3dbc
 status: stable
-description: Detects rare mshta child process
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.execution
+    - attack.execution/T1059
+    - attack.lateral_movement
