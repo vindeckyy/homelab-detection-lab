@@ -1,17 +1,17 @@
 title: netexec-sweep
-id: dd7c39eb-1111-2222-3333-b8cd59a5ded5
+id: 6e76084e-1111-2222-3333-580726a81663
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects schtask created outside it ops hours
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.persistence
+    - attack.lateral_movement/T1021
+    - attack.lateral_movement
