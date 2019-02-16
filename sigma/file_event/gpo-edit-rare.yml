@@ -1,17 +1,17 @@
 title: gpo-edit-rare
-id: a083e947-1111-2222-3333-dfc689e8df9e
+id: d57cf85c-1111-2222-3333-b412d3141ff8
 status: stable
-description: Detects rare mshta child process
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.persistence
+    - attack.discovery/T1046
+    - attack.discovery
