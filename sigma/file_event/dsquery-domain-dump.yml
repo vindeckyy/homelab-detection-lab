@@ -1,17 +1,17 @@
 title: dsquery-domain-dump
-id: 28ea8d2d-1111-2222-3333-47d8f256ffb7
+id: 8619eae4-1111-2222-3333-6a1c71a489cf
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.credential_access
+    - attack.discovery/T1046
+    - attack.discovery
