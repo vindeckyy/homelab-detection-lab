@@ -1,17 +1,17 @@
 title: mimikatz-keys
-id: ce2de73c-1111-2222-3333-5f73c8db3d0c
+id: 6cd776c4-1111-2222-3333-eb5514643cb6
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects rare mshta child process
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.persistence
+    - attack.lateral_movement/T1021
+    - attack.defense_evasion
