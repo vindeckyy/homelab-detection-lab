@@ -1,17 +1,17 @@
 title: atexec-burst
-id: fd25231f-1111-2222-3333-f78a9693439a
+id: 15e6c982-1111-2222-3333-26d4ba064d2a
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.persistence
+    - attack.defense_evasion/T1218
+    - attack.execution
