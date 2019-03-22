@@ -1,17 +1,17 @@
 title: bloodhound-collect
-id: af6f5856-1111-2222-3333-5dfa73bfaa97
+id: 51fd2926-1111-2222-3333-85241965d7e5
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.discovery
+    - attack.privilege_escalation/T1548
+    - attack.execution
