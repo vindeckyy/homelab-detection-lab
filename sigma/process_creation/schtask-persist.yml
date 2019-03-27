@@ -1,17 +1,17 @@
 title: schtask-persist
-id: 861d5dbc-1111-2222-3333-16456b2ead89
+id: 65b57be9-1111-2222-3333-5fbffdcb9085
 status: stable
-description: Detects rare mshta child process
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.persistence
+    - attack.privilege_escalation/T1548
+    - attack.lateral_movement
