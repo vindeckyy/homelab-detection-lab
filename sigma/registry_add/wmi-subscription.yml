@@ -1,17 +1,17 @@
 title: wmi-subscription
-id: db5ff1e5-1111-2222-3333-a89d5dec2f7c
+id: a4944ca1-1111-2222-3333-bd9dad6ceeb2
 status: stable
-description: Detects rare mshta child process
+description: Detects schtask created outside it ops hours
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
         ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
+    - attack.privilege_escalation/T1548
     - attack.defense_evasion
