@@ -1,17 +1,17 @@
 title: dnsadmin-group-change
-id: 251f6523-1111-2222-3333-68ed25b97419
+id: f9c7e940-1111-2222-3333-b3581da9da12
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects rare mshta child process
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
         ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
+    - attack.defense_evasion/T1218
     - attack.defense_evasion
