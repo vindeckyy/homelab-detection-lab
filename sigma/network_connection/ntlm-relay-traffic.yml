@@ -1,17 +1,17 @@
 title: ntlm-relay-traffic
-id: 4acffdf1-1111-2222-3333-6421455d1b3f
+id: 0fcfc89a-1111-2222-3333-b848f494bcf1
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.execution
+    - attack.discovery/T1046
+    - attack.discovery
