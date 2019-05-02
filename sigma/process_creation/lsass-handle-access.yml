@@ -1,17 +1,17 @@
 title: lsass-handle-access
-id: 8a0caa6f-1111-2222-3333-b5275adc5b2b
+id: c243a482-1111-2222-3333-da7ce3abd2b7
 status: stable
-description: Detects rare mshta child process
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.defense_evasion
+    - attack.privilege_escalation/T1548
+    - attack.lateral_movement
