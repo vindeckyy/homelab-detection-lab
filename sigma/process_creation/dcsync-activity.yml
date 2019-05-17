@@ -1,17 +1,17 @@
 title: dcsync-activity
-id: 29ef341e-1111-2222-3333-11c4fc730db6
+id: 4470c5cd-1111-2222-3333-27e46a61fd87
 status: stable
-description: Detects rare mshta child process
+description: Detects schtask created outside it ops hours
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.defense_evasion
+    - attack.credential_access/T1003
+    - attack.discovery
