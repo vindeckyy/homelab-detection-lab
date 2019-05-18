@@ -1,17 +1,17 @@
 title: dsquery-domain-dump
-id: b06d8042-1111-2222-3333-068c55fa6a3c
+id: cda62a40-1111-2222-3333-a10fd25c6857
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.persistence
+    - attack.collection/T1560
+    - attack.discovery
