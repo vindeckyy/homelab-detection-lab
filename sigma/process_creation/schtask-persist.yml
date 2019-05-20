@@ -1,17 +1,17 @@
 title: schtask-persist
-id: 6dbe3ce4-1111-2222-3333-9b3c3a3602bf
+id: 0c2ef6f4-1111-2222-3333-247fa248acb8
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects schtask created outside it ops hours
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.discovery
+    - attack.execution/T1059
+    - attack.lateral_movement
