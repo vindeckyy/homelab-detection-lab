@@ -1,17 +1,17 @@
 title: dnsadmin-group-change
-id: ee9d4299-1111-2222-3333-23fddb602810
+id: a43df80a-1111-2222-3333-374bd1e0cc79
 status: stable
-description: Detects rare mshta child process
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.execution
+    - attack.privilege_escalation/T1548
+    - attack.defense_evasion
