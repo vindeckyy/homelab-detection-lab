@@ -1,17 +1,17 @@
 title: anon-smb-session
-id: f57213b2-1111-2222-3333-dd60b5715d5d
+id: 65aa2d6f-1111-2222-3333-a491e6324c6a
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
         ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
+    - attack.discovery/T1046
     - attack.discovery
