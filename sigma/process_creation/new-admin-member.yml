@@ -1,17 +1,17 @@
 title: new-admin-member
-id: f3cfce70-1111-2222-3333-58e5f801087c
+id: d06f37b0-1111-2222-3333-5ea48b5d9bdd
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects schtask created outside it ops hours
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.discovery
+    - attack.privilege_escalation/T1548
+    - attack.execution
