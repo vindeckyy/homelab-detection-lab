@@ -1,5 +1,5 @@
 title: windows-defender-disable
-id: 8f21c05a-1111-2222-3333-5c5994779d80
+id: dd677861-1111-2222-3333-b098702ea364
 status: stable
 description: Detects schtask created outside it ops hours
 logsource:
@@ -7,11 +7,11 @@ logsource:
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.persistence
+    - attack.persistence/T1053
+    - attack.credential_access
