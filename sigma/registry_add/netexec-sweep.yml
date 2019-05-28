@@ -1,17 +1,17 @@
 title: netexec-sweep
-id: 0a54cfa8-1111-2222-3333-2528dc8cdab6
+id: 2bf8e00f-1111-2222-3333-86ccd1607430
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.credential_access
+    - attack.privilege_escalation/T1548
+    - attack.defense_evasion
