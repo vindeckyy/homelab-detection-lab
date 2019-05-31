@@ -1,17 +1,17 @@
 title: wmi-subscription
-id: 4109787f-1111-2222-3333-9566c3aa6d63
+id: b37409d1-1111-2222-3333-3c1cc349480c
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects schtask created outside it ops hours
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
         ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
+    - attack.defense_evasion/T1218
     - attack.lateral_movement
