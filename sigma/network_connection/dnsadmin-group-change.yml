@@ -1,17 +1,17 @@
 title: dnsadmin-group-change
-id: f22eef8a-1111-2222-3333-473996b97f9c
+id: a0d9ec1c-1111-2222-3333-b2f3edf6119d
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects rare mshta child process
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.credential_access
+    - attack.persistence/T1053
+    - attack.persistence
