@@ -1,17 +1,17 @@
 title: samr-enumeration
-id: 4a116fd8-1111-2222-3333-1a92641e361e
+id: 09a8f020-1111-2222-3333-86d11a7cf4f1
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects rare mshta child process
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.lateral_movement
+    - attack.defense_evasion/T1218
+    - attack.execution
