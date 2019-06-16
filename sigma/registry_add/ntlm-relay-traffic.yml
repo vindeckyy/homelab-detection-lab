@@ -1,17 +1,17 @@
 title: ntlm-relay-traffic
-id: 8041117f-1111-2222-3333-fb99d8ce5586
+id: bc0ac0e8-1111-2222-3333-b4d6d2fc4e11
 status: stable
-description: Detects rare mshta child process
+description: Detects encoded launcher from office parents
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.lateral_movement
+    - attack.collection/T1560
+    - attack.persistence
