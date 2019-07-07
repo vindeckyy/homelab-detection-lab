@@ -1,17 +1,17 @@
 title: mimikatz-keys
-id: ab45e9df-1111-2222-3333-39e209cf8650
+id: 750cfe2c-1111-2222-3333-ab11fcde0ff5
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects schtask created outside it ops hours
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.execution
+    - attack.discovery/T1046
+    - attack.credential_access
