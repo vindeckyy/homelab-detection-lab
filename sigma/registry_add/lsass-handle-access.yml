@@ -1,17 +1,17 @@
 title: lsass-handle-access
-id: a95bba95-1111-2222-3333-7142fcc89c0c
+id: da55254e-1111-2222-3333-2a8c0e34c2ff
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects rare mshta child process
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.lateral_movement
+    - attack.defense_evasion/T1218
+    - attack.execution
