@@ -1,17 +1,17 @@
 title: rdp-shadow-session
-id: cba7a83c-1111-2222-3333-fbd162af2d2c
+id: c8031e54-1111-2222-3333-118ae6683835
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects rare mshta child process
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.credential_access
+    - attack.execution/T1059
+    - attack.execution
