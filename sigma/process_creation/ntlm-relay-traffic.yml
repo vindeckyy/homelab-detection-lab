@@ -1,17 +1,17 @@
 title: ntlm-relay-traffic
-id: c94b4734-1111-2222-3333-7827c5da41c4
+id: 9e89b48b-1111-2222-3333-fe7656fa714e
 status: stable
-description: Detects rare mshta child process
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.discovery
+    - attack.execution/T1059
+    - attack.defense_evasion
