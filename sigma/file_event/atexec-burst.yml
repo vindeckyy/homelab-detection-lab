@@ -1,17 +1,17 @@
 title: atexec-burst
-id: 856c8b38-1111-2222-3333-c6078c4760ec
+id: 0cb5efd6-1111-2222-3333-4235eb1de3fb
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects rare mshta child process
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.lateral_movement
+    - attack.lateral_movement/T1021
+    - attack.defense_evasion
