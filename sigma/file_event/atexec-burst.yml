@@ -1,17 +1,17 @@
 title: atexec-burst
-id: 4da6aac3-1111-2222-3333-f57b3e26a1e8
+id: 856c8b38-1111-2222-3333-c6078c4760ec
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects schtask created outside it ops hours
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.execution
+    - attack.privilege_escalation/T1548
+    - attack.lateral_movement
