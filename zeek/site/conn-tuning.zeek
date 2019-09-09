@@ -1,5 +1,5 @@
 # site policy: conn-tuning
-@load base/protocols/dns
+@load base/protocols/kerberos
 
 export {
     redef LogAscii::use_json = T;
