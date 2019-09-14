@@ -1,17 +1,17 @@
 title: adfind-recon
-id: 26bc06ca-1111-2222-3333-496cec71aae5
+id: 260a447d-1111-2222-3333-6c53143801fc
 status: stable
-description: Detects rare mshta child process
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.defense_evasion
+    - attack.execution/T1059
+    - attack.lateral_movement
