@@ -1,17 +1,17 @@
 title: netexec-sweep
-id: 99bcd6cb-1111-2222-3333-77c9a8c11d6a
+id: 591df092-1111-2222-3333-af4a9697592f
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
         ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
+    - attack.privilege_escalation/T1548
     - attack.defense_evasion
