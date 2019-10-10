@@ -1,17 +1,17 @@
 title: samr-enumeration
-id: 38f029dd-1111-2222-3333-c90f28ba2b66
+id: 5f05d98a-1111-2222-3333-aea2297c7e30
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects rare mshta child process
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
         ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
+    - attack.persistence/T1053
     - attack.persistence
