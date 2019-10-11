@@ -1,17 +1,17 @@
 title: regsvr32-http
-id: 525c14bb-1111-2222-3333-096afaa1df0f
+id: 39a43163-1111-2222-3333-6b968471d5e2
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects schtask created outside it ops hours
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.persistence
+    - attack.defense_evasion/T1218
+    - attack.execution
