@@ -1,17 +1,17 @@
 title: kerberoast-activity
-id: 95ccfaee-1111-2222-3333-df44fa87583b
+id: 14c39808-1111-2222-3333-9ccc46a2bd8b
 status: stable
-description: Detects rare mshta child process
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.lateral_movement
+    - attack.discovery/T1046
+    - attack.discovery
