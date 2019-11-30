@@ -1,17 +1,17 @@
 title: dnsadmin-group-change
-id: 73b51448-1111-2222-3333-dbae9384e52e
+id: 245a13cc-1111-2222-3333-34f2a0c283cb
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects encoded launcher from office parents
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.defense_evasion
+    - attack.persistence/T1053
+    - attack.credential_access
