@@ -1,17 +1,17 @@
 title: rdp-shadow-session
-id: 0e3c9fc5-1111-2222-3333-a955a1c8e775
+id: 3e0c267a-1111-2222-3333-f9f8c836664d
 status: stable
-description: Detects rare mshta child process
+description: Detects encoded launcher from office parents
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.execution
+    - attack.execution/T1059
+    - attack.defense_evasion
