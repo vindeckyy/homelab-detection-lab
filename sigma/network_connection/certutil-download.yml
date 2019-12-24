@@ -1,17 +1,17 @@
 title: certutil-download
-id: 2ce3e9a5-1111-2222-3333-2b44e94bbf56
+id: 9f747c6e-1111-2222-3333-ae7c7f80e89d
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects schtask created outside it ops hours
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.defense_evasion
+    - attack.discovery/T1046
+    - attack.persistence
