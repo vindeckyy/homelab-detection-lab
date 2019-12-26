@@ -1,17 +1,17 @@
 title: dsquery-domain-dump
-id: 64a6ab58-1111-2222-3333-73466d0379e1
+id: 7eec440c-1111-2222-3333-1385c171a7ef
 status: stable
-description: Detects rare mshta child process
+description: Detects schtask created outside it ops hours
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.persistence
+    - attack.defense_evasion/T1218
+    - attack.defense_evasion
