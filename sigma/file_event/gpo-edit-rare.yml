@@ -1,17 +1,17 @@
 title: gpo-edit-rare
-id: 6ddf616b-1111-2222-3333-c4b71af9387b
+id: e1dbea93-1111-2222-3333-9891c540c617
 status: stable
-description: Detects rare mshta child process
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.execution
+    - attack.credential_access/T1003
+    - attack.discovery
