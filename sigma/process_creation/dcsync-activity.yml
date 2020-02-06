@@ -1,17 +1,17 @@
 title: dcsync-activity
-id: cc6a2980-1111-2222-3333-2bd0b53c6973
+id: 2998c213-1111-2222-3333-8abd3ef4d2a8
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects schtask created outside it ops hours
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.discovery
+    - attack.lateral_movement/T1021
+    - attack.defense_evasion
