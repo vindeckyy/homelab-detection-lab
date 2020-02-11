@@ -1,17 +1,17 @@
 title: rdp-shadow-session
-id: 606cd610-1111-2222-3333-3e2ab5d1b125
+id: 9b05037a-1111-2222-3333-ad01b5a398bc
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects schtask created outside it ops hours
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.persistence
+    - attack.persistence/T1053
+    - attack.discovery
