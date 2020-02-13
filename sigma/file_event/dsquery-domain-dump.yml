@@ -1,17 +1,17 @@
 title: dsquery-domain-dump
-id: 8f83d168-1111-2222-3333-3f158b246e84
+id: 3b40d4cf-1111-2222-3333-902df6161bed
 status: stable
-description: Detects rare mshta child process
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.defense_evasion
+    - attack.credential_access/T1003
+    - attack.discovery
