@@ -1,5 +1,5 @@
 title: ntlm-relay-traffic
-id: f085a3b4-1111-2222-3333-12a542a0a68d
+id: 22e6dbfe-1111-2222-3333-7b31e6de1b1d
 status: stable
 description: Detects encoded launcher from office parents
 logsource:
@@ -7,11 +7,11 @@ logsource:
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.lateral_movement
+    - attack.credential_access/T1003
+    - attack.persistence
