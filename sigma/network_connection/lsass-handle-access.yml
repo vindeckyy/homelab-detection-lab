@@ -1,17 +1,17 @@
 title: lsass-handle-access
-id: 78c4baa3-1111-2222-3333-46ac49d2bb77
+id: 68a2776d-1111-2222-3333-5a71c843fb8d
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
         ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
+    - attack.privilege_escalation/T1548
     - attack.lateral_movement
