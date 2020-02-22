@@ -1,17 +1,17 @@
 title: certutil-download
-id: e9f46155-1111-2222-3333-4875cd8ededc
+id: ef9d8b5e-1111-2222-3333-cd01fcf7795e
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects encoded launcher from office parents
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.discovery
+    - attack.lateral_movement/T1021
+    - attack.lateral_movement
