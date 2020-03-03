@@ -1,17 +1,17 @@
 title: samr-enumeration
-id: 8b12f969-1111-2222-3333-da7de9b1b742
+id: 6f186479-1111-2222-3333-8f205cce0b22
 status: stable
-description: Detects rare mshta child process
+description: Detects schtask created outside it ops hours
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.discovery
+    - attack.discovery/T1046
+    - attack.persistence
