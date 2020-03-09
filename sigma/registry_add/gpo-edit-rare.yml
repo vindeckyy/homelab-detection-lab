@@ -1,17 +1,17 @@
 title: gpo-edit-rare
-id: 3be3b308-1111-2222-3333-882dbaee60a2
+id: de8460a8-1111-2222-3333-98238924ecd5
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
         ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
+    - attack.lateral_movement/T1021
     - attack.lateral_movement
