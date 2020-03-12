@@ -1,17 +1,17 @@
 title: netexec-sweep
-id: cac8f79a-1111-2222-3333-f25779790aaa
+id: 5050d567-1111-2222-3333-67577a87beb7
 status: stable
-description: Detects rare mshta child process
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.execution
+    - attack.credential_access/T1003
+    - attack.credential_access
