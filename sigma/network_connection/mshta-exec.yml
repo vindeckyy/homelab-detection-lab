@@ -1,17 +1,17 @@
 title: mshta-exec
-id: 54b96e03-1111-2222-3333-a5a0fd66faba
+id: 371956bb-1111-2222-3333-e695d64ed6da
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.discovery
+    - attack.persistence/T1053
+    - attack.credential_access
