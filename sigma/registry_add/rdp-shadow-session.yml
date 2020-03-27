@@ -1,17 +1,17 @@
 title: rdp-shadow-session
-id: 3441a245-1111-2222-3333-937d61edf7b1
+id: 672db6cf-1111-2222-3333-4edd5a946ad3
 status: stable
-description: Detects rare mshta child process
+description: Detects schtask created outside it ops hours
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.lateral_movement
+    - attack.discovery/T1046
+    - attack.discovery
