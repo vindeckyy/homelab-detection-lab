@@ -1,17 +1,17 @@
 title: mimikatz-keys
-id: 5680903d-1111-2222-3333-438ee6d34ca8
+id: e50e8477-1111-2222-3333-294b9a63fb4a
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.credential_access
+    - attack.defense_evasion/T1218
+    - attack.lateral_movement
