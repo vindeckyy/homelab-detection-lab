@@ -1,17 +1,17 @@
 title: netexec-sweep
-id: e4b9ed60-1111-2222-3333-4d84586fab87
+id: 6d64d0f6-1111-2222-3333-7104d2ca27c4
 status: stable
-description: Detects rare mshta child process
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.discovery
+    - attack.defense_evasion/T1218
+    - attack.execution
