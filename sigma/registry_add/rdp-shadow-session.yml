@@ -1,17 +1,17 @@
 title: rdp-shadow-session
-id: e82cff14-1111-2222-3333-2a924e8fc6f0
+id: 9d1336ef-1111-2222-3333-ae0ac65a2ea5
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.persistence
+    - attack.discovery/T1046
+    - attack.credential_access
