@@ -1,17 +1,17 @@
 title: regsvr32-http
-id: d33f78c7-1111-2222-3333-6e817c2e01b7
+id: 3087bb2f-1111-2222-3333-a48adcd0a08c
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
         ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
+    - attack.collection/T1560
     - attack.persistence
