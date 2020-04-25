@@ -1,17 +1,17 @@
 title: kerberoast-activity
-id: 1a26d2c2-1111-2222-3333-ea1ccb422b9c
+id: d7d2c6ec-1111-2222-3333-492486f1a3da
 status: stable
-description: Detects rare mshta child process
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
         ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
+    - attack.persistence/T1053
     - attack.credential_access
