@@ -1,17 +1,17 @@
 title: bitsadmin-transfer
-id: 2a60694c-1111-2222-3333-7ef35dee5f37
+id: d8f14fc5-1111-2222-3333-62a68f8412f8
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
         ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
+    - attack.lateral_movement/T1021
     - attack.defense_evasion
