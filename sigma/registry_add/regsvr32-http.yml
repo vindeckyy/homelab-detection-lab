@@ -1,17 +1,17 @@
 title: regsvr32-http
-id: 11f0454a-1111-2222-3333-65fce8934bc9
+id: 0b96f7a8-1111-2222-3333-20d712663b5a
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects schtask created outside it ops hours
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.credential_access
+    - attack.execution/T1059
+    - attack.defense_evasion
