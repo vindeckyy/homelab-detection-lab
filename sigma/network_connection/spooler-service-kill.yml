@@ -1,17 +1,17 @@
 title: spooler-service-kill
-id: 083bdee7-1111-2222-3333-6e48024f7ffb
+id: 0b3797ee-1111-2222-3333-e834236bf316
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.execution
+    - attack.execution/T1059
+    - attack.lateral_movement
