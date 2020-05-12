@@ -1,17 +1,17 @@
 title: spooler-service-kill
-id: 0a5f29de-1111-2222-3333-ed7fc0c0412e
+id: 669d1ad9-1111-2222-3333-9dff4b70f0ea
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.discovery
+    - attack.lateral_movement/T1021
+    - attack.lateral_movement
