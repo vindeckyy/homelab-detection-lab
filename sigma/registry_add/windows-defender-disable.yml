@@ -1,17 +1,17 @@
 title: windows-defender-disable
-id: 3b4e1a82-1111-2222-3333-d0c6bc6c2e66
+id: 23b6a3de-1111-2222-3333-2be37978a29f
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects encoded launcher from office parents
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.lateral_movement
+    - attack.privilege_escalation/T1548
+    - attack.execution
