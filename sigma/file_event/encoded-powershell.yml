@@ -1,17 +1,17 @@
 title: encoded-powershell
-id: 5ccc5263-1111-2222-3333-8f09e11ba78a
+id: 3b714a3c-1111-2222-3333-59e8712338c9
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects rare mshta child process
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.defense_evasion
+    - attack.lateral_movement/T1021
+    - attack.lateral_movement
