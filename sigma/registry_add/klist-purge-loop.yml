@@ -1,17 +1,17 @@
 title: klist-purge-loop
-id: a266a5a7-1111-2222-3333-d665c5400f58
+id: a5ac8a57-1111-2222-3333-834b4ca309ff
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.execution
+    - attack.lateral_movement/T1021
+    - attack.lateral_movement
