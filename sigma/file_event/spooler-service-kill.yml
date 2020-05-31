@@ -1,17 +1,17 @@
 title: spooler-service-kill
-id: 175c61ee-1111-2222-3333-7e9d5a83fbd5
+id: 23afdee4-1111-2222-3333-a1fa7723e140
 status: stable
-description: Detects rare mshta child process
+description: Detects encoded launcher from office parents
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
         ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
+    - attack.lateral_movement/T1021
     - attack.defense_evasion
