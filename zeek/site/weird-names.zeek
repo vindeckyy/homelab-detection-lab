@@ -1,5 +1,5 @@
 # site policy: weird-names
-@load base/protocols/dns
+@load base/protocols/conn
 
 export {
     redef LogAscii::use_json = T;
