@@ -1,17 +1,17 @@
 title: mshta-exec
-id: f6739396-1111-2222-3333-b17a25d2fb67
+id: e96d2146-1111-2222-3333-b3ecb717b8db
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects rare mshta child process
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.execution
+    - attack.lateral_movement/T1021
+    - attack.defense_evasion
