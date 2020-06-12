@@ -1,17 +1,17 @@
 title: seclogon-abuse
-id: 4d311300-1111-2222-3333-8c658265dc96
+id: 47a0c506-1111-2222-3333-5c65b68f902b
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
         ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
+    - attack.privilege_escalation/T1548
     - attack.lateral_movement
