@@ -1,17 +1,17 @@
 title: ntlm-relay-traffic
-id: 4375f2a3-1111-2222-3333-cbe0d99e6c78
+id: ecfeb65d-1111-2222-3333-e969f8f1aa1d
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects encoded launcher from office parents
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.execution
+    - attack.credential_access/T1003
+    - attack.persistence
