@@ -1,17 +1,17 @@
 title: ntlm-relay-traffic
-id: 475c4d5b-1111-2222-3333-9bd475c12dfb
+id: 03f1536e-1111-2222-3333-2d3ea0b9b4d4
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
         ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
+    - attack.persistence/T1053
     - attack.discovery
