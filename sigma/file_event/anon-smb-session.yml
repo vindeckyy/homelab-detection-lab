@@ -1,17 +1,17 @@
 title: anon-smb-session
-id: 57e089f6-1111-2222-3333-a08c69265df0
+id: c3574b4a-1111-2222-3333-1ec93cc2fe6e
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.persistence
+    - attack.execution/T1059
+    - attack.lateral_movement
