@@ -1,17 +1,17 @@
 title: certutil-urlfetch
-id: aef8c874-1111-2222-3333-9996f5233b8f
+id: c154cf9a-1111-2222-3333-73a5e3ef7286
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects encoded launcher from office parents
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.persistence
+    - attack.execution/T1059
+    - attack.defense_evasion
