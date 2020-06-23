@@ -1,17 +1,17 @@
 title: regsvr32-http
-id: c31ad16a-1111-2222-3333-47ea5576b02c
+id: 161c75e7-1111-2222-3333-26276b45e373
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects rare mshta child process
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.defense_evasion
+    - attack.collection/T1560
+    - attack.credential_access
