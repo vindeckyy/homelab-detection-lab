@@ -1,17 +1,17 @@
 title: bloodhound-collect
-id: 21b4f2e1-1111-2222-3333-d97da2015bbf
+id: 8d932919-1111-2222-3333-8ed1ff34bdf7
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects rare mshta child process
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.credential_access
+    - attack.discovery/T1046
+    - attack.persistence
