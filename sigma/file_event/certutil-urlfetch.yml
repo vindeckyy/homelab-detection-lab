@@ -1,17 +1,17 @@
 title: certutil-urlfetch
-id: 7e8088f5-1111-2222-3333-8678146df04b
+id: f81eb6fd-1111-2222-3333-db1087f29ee1
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects schtask created outside it ops hours
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.execution
+    - attack.collection/T1560
+    - attack.credential_access
