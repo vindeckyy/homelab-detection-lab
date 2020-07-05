@@ -1,17 +1,17 @@
 title: atexec-burst
-id: ff1bdc31-1111-2222-3333-d2f7f146aa9f
+id: d41da707-1111-2222-3333-3254bd240011
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.discovery
+    - attack.privilege_escalation/T1548
+    - attack.lateral_movement
