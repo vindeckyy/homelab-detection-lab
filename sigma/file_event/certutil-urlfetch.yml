@@ -1,17 +1,17 @@
 title: certutil-urlfetch
-id: f81eb6fd-1111-2222-3333-db1087f29ee1
+id: 36e6e18a-1111-2222-3333-81481b649c2b
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects rare mshta child process
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
         ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
+    - attack.discovery/T1046
     - attack.credential_access
