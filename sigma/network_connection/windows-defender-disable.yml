@@ -1,17 +1,17 @@
 title: windows-defender-disable
-id: fb86c43f-1111-2222-3333-5d5cc59a87a6
+id: 4a43dd0d-1111-2222-3333-d9af3a875f93
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects rare mshta child process
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.persistence
+    - attack.execution/T1059
+    - attack.lateral_movement
