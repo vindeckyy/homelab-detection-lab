@@ -1,17 +1,17 @@
 title: rdp-shadow-session
-id: 353366c7-1111-2222-3333-0afd868f28d6
+id: 54d7e433-1111-2222-3333-78d8ee223c3e
 status: stable
-description: Detects rare mshta child process
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.defense_evasion
+    - attack.defense_evasion/T1218
+    - attack.lateral_movement
