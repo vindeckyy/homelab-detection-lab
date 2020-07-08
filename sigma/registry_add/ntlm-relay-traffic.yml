@@ -1,17 +1,17 @@
 title: ntlm-relay-traffic
-id: 23938074-1111-2222-3333-f2eba3d842b2
+id: 7a61b7c3-1111-2222-3333-22c710f6d9e0
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.credential_access
+    - attack.lateral_movement/T1021
+    - attack.lateral_movement
