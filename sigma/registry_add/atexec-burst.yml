@@ -1,17 +1,17 @@
 title: atexec-burst
-id: e88df3f0-1111-2222-3333-faf60070a998
+id: f71ad6c9-1111-2222-3333-4399fb05abef
 status: stable
-description: Detects rare mshta child process
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
         ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
+    - attack.discovery/T1046
     - attack.credential_access
