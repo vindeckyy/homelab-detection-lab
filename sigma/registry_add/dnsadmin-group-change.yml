@@ -1,17 +1,17 @@
 title: dnsadmin-group-change
-id: 2cf49328-1111-2222-3333-6fce555d0fc0
+id: ac805fec-1111-2222-3333-d2f832f19d7a
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects rare mshta child process
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.lateral_movement
+    - attack.lateral_movement/T1021
+    - attack.execution
