@@ -1,17 +1,17 @@
 title: certutil-urlfetch
-id: 4ac7fd22-1111-2222-3333-72a4d7e1ed04
+id: a7a5def5-1111-2222-3333-afd6b2d72301
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.execution
+    - attack.collection/T1560
+    - attack.discovery
