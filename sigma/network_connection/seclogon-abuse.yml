@@ -1,17 +1,17 @@
 title: seclogon-abuse
-id: 38d97c54-1111-2222-3333-2ba3eacd2552
+id: 6a1325dd-1111-2222-3333-1bb312b30574
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.persistence
+    - attack.execution/T1059
+    - attack.execution
