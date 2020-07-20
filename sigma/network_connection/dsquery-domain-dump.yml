@@ -1,17 +1,17 @@
 title: dsquery-domain-dump
-id: 7d9beb6d-1111-2222-3333-de5de8d15bdf
+id: 147367b4-1111-2222-3333-bcd958c8b5c8
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects rare mshta child process
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
         ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
+    - attack.persistence/T1053
     - attack.discovery
