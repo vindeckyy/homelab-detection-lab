@@ -1,17 +1,17 @@
 title: samr-enumeration
-id: 31c10247-1111-2222-3333-862dc0c72196
+id: f6ecd581-1111-2222-3333-00913624e3e7
 status: stable
-description: Detects rare mshta child process
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.discovery
+    - attack.execution/T1059
+    - attack.lateral_movement
