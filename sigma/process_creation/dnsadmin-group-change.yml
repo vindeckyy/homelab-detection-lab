@@ -1,17 +1,17 @@
 title: dnsadmin-group-change
-id: cd0b6284-1111-2222-3333-8a22671bcaef
+id: 14245ce9-1111-2222-3333-6e6c65386c3a
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects encoded launcher from office parents
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.credential_access
+    - attack.defense_evasion/T1218
+    - attack.execution
