@@ -1,5 +1,5 @@
 title: encoded-powershell
-id: 206b6fec-1111-2222-3333-a1510ec65e31
+id: f4127299-1111-2222-3333-9e3eb9a199b3
 status: stable
 description: Detects certutil fetch to a non-corp host
 logsource:
@@ -7,11 +7,11 @@ logsource:
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.discovery
+    - attack.discovery/T1046
+    - attack.credential_access
