@@ -1,17 +1,17 @@
 title: dnsadmin-group-change
-id: 1a9e34ea-1111-2222-3333-e8d4bb9a1dd5
+id: 80caafd1-1111-2222-3333-2325d60ea40f
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects schtask created outside it ops hours
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.lateral_movement
+    - attack.credential_access/T1003
+    - attack.persistence
