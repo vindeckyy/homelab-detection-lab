@@ -1,17 +1,17 @@
 title: wmi-subscription
-id: 32852191-1111-2222-3333-8f526b9d19ac
+id: 914748f4-1111-2222-3333-da3da217ecec
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.discovery
+    - attack.credential_access/T1003
+    - attack.credential_access
