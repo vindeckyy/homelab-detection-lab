@@ -1,17 +1,17 @@
 title: spooler-service-kill
-id: f988c8b4-1111-2222-3333-64154264c212
+id: 738681d7-1111-2222-3333-3a37eda235b9
 status: stable
-description: Detects rare mshta child process
+description: Detects encoded launcher from office parents
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.persistence
+    - attack.discovery/T1046
+    - attack.credential_access
