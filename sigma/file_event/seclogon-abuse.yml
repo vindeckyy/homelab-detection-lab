@@ -1,17 +1,17 @@
 title: seclogon-abuse
-id: f87ceabd-1111-2222-3333-7a3511f517b5
+id: fa9308fc-1111-2222-3333-d9630ab2025f
 status: stable
-description: Detects rare mshta child process
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.persistence
+    - attack.discovery/T1046
+    - attack.credential_access
