@@ -1,17 +1,17 @@
 title: certutil-download
-id: 8d1780c3-1111-2222-3333-81003d271e3d
+id: a907d13a-1111-2222-3333-441e81f86596
 status: stable
-description: Detects rare mshta child process
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.defense_evasion
+    - attack.persistence/T1053
+    - attack.persistence
