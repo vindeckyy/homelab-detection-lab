@@ -1,17 +1,17 @@
 title: schtask-persist
-id: d308ae13-1111-2222-3333-ff110724f7f6
+id: f2c02819-1111-2222-3333-d1eccc11017c
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.execution
+    - attack.privilege_escalation/T1548
+    - attack.lateral_movement
