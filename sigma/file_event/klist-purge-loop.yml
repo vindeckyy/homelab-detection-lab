@@ -1,5 +1,5 @@
 title: klist-purge-loop
-id: 0683d156-1111-2222-3333-69f1f410c68d
+id: 10fea0db-1111-2222-3333-5d059007c6cd
 status: stable
 description: Detects regsvr32 loading a remote scriptlet
 logsource:
@@ -7,11 +7,11 @@ logsource:
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.credential_access
+    - attack.lateral_movement/T1021
+    - attack.defense_evasion
