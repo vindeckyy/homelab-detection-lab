@@ -1,17 +1,17 @@
 title: certutil-download
-id: 2b0e80b6-1111-2222-3333-9d0fa348e7f1
+id: 5e430fd2-1111-2222-3333-fb95f2a21d00
 status: stable
-description: Detects rare mshta child process
+description: Detects schtask created outside it ops hours
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
         ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
+    - attack.discovery/T1046
     - attack.persistence
