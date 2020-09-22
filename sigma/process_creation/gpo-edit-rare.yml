@@ -1,17 +1,17 @@
 title: gpo-edit-rare
-id: 94aae0c0-1111-2222-3333-1cd5d55512bd
+id: ee567d90-1111-2222-3333-8523a0b1f829
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects rare mshta child process
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.execution
+    - attack.persistence/T1053
+    - attack.persistence
