@@ -1,5 +1,5 @@
 title: rdp-shadow-session
-id: ff256c7e-1111-2222-3333-324072062e17
+id: 29b88d8d-1111-2222-3333-9fd884a24540
 status: stable
 description: Detects schtask created outside it ops hours
 logsource:
@@ -7,11 +7,11 @@ logsource:
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.credential_access
+    - attack.privilege_escalation/T1548
+    - attack.execution
