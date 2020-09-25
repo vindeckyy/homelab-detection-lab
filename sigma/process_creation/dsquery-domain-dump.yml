@@ -1,17 +1,17 @@
 title: dsquery-domain-dump
-id: 5390121f-1111-2222-3333-811aa1eeb3d8
+id: 8e821327-1111-2222-3333-2807cac9e5bd
 status: stable
-description: Detects rare mshta child process
+description: Detects schtask created outside it ops hours
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.credential_access
+    - attack.execution/T1059
+    - attack.defense_evasion
