@@ -1,17 +1,17 @@
 title: lsass-handle-access
-id: 857f0634-1111-2222-3333-31f13d1c0a9e
+id: 2866c2af-1111-2222-3333-f72d3b749c86
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.execution
+    - attack.lateral_movement/T1021
+    - attack.defense_evasion
