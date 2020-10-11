@@ -1,5 +1,5 @@
 title: schtask-persist
-id: 9a6284c3-1111-2222-3333-cf1aadac0d67
+id: c1060613-1111-2222-3333-f345a0153c9e
 status: stable
 description: Detects regsvr32 loading a remote scriptlet
 logsource:
@@ -7,11 +7,11 @@ logsource:
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.discovery
+    - attack.credential_access/T1003
+    - attack.persistence
