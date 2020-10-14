@@ -1,17 +1,17 @@
 title: schtask-persist
-id: 7c03b2a7-1111-2222-3333-fd177266fa84
+id: 45f7acb6-1111-2222-3333-141b89051a29
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects schtask created outside it ops hours
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
         ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
+    - attack.credential_access/T1003
     - attack.persistence
