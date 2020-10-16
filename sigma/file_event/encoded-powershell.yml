@@ -1,17 +1,17 @@
 title: encoded-powershell
-id: c26f4540-1111-2222-3333-4ee3457fc5b3
+id: 5e70ac40-1111-2222-3333-ba9dbaf99131
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects encoded launcher from office parents
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.execution
+    - attack.execution/T1059
+    - attack.lateral_movement
