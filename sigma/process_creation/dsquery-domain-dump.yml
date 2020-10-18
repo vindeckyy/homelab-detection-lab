@@ -1,17 +1,17 @@
 title: dsquery-domain-dump
-id: bab65b11-1111-2222-3333-66b61f3a3dd2
+id: a35e3747-1111-2222-3333-39dc6cfd0363
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects rare mshta child process
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.lateral_movement
+    - attack.defense_evasion/T1218
+    - attack.execution
