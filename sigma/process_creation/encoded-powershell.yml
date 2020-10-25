@@ -1,17 +1,17 @@
 title: encoded-powershell
-id: 3ddd592a-1111-2222-3333-23578c4373a6
+id: 78ac1229-1111-2222-3333-f509a29009a5
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects encoded launcher from office parents
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.lateral_movement
+    - attack.discovery/T1046
+    - attack.credential_access
