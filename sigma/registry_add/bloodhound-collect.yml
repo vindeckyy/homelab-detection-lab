@@ -1,17 +1,17 @@
 title: bloodhound-collect
-id: b83d65c3-1111-2222-3333-eeb64ab5abc5
+id: 5c31b874-1111-2222-3333-79d6071eaa0a
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.defense_evasion
+    - attack.defense_evasion/T1218
+    - attack.lateral_movement
