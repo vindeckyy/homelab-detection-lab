@@ -1,17 +1,17 @@
 title: new-admin-member
-id: 5c7a2d7f-1111-2222-3333-b3631cddf531
+id: f9e53f02-1111-2222-3333-7e32482ae490
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
         ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
+    - attack.credential_access/T1003
     - attack.credential_access
