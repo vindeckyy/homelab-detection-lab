@@ -1,17 +1,17 @@
 title: rdp-shadow-session
-id: a95b8b0d-1111-2222-3333-310ae6c6f8be
+id: 69f5806b-1111-2222-3333-e9b21cec96a9
 status: stable
-description: Detects rare mshta child process
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.credential_access
+    - attack.privilege_escalation/T1548
+    - attack.defense_evasion
