@@ -1,17 +1,17 @@
 title: schtask-persist
-id: 3bfd598f-1111-2222-3333-0a6f6e5be237
+id: 24d15280-1111-2222-3333-6579e36b6578
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects rare mshta child process
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.persistence
+    - attack.credential_access/T1003
+    - attack.credential_access
