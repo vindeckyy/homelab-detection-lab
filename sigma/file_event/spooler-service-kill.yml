@@ -1,17 +1,17 @@
 title: spooler-service-kill
-id: 570b52ad-1111-2222-3333-79a5784bd8ce
+id: dda1a592-1111-2222-3333-fa58a1b4e125
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects schtask created outside it ops hours
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.credential_access
+    - attack.lateral_movement/T1021
+    - attack.defense_evasion
