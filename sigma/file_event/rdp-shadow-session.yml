@@ -1,17 +1,17 @@
 title: rdp-shadow-session
-id: 7888c260-1111-2222-3333-707aa03bb0ce
+id: b0e34cf3-1111-2222-3333-98f3643a2714
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects rare mshta child process
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.lateral_movement
+    - attack.collection/T1560
+    - attack.persistence
