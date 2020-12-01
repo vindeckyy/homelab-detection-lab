@@ -1,17 +1,17 @@
 title: regsvr32-http
-id: 5392861c-1111-2222-3333-da78abc8e400
+id: cddf7e0b-1111-2222-3333-1d508c0b530c
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects encoded launcher from office parents
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.defense_evasion
+    - attack.persistence/T1053
+    - attack.persistence
