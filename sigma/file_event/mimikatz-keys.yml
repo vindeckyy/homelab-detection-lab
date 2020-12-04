@@ -1,17 +1,17 @@
 title: mimikatz-keys
-id: 6f4c80bd-1111-2222-3333-9da6c44f7cd5
+id: a6752f95-1111-2222-3333-6ed0fd76a7b5
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
         ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
+    - attack.lateral_movement/T1021
     - attack.defense_evasion
