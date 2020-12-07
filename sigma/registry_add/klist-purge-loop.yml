@@ -1,17 +1,17 @@
 title: klist-purge-loop
-id: 242a3586-1111-2222-3333-4fdbc9643479
+id: e37f56ac-1111-2222-3333-b4822997e2e2
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
         ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
+    - attack.lateral_movement/T1021
     - attack.lateral_movement
