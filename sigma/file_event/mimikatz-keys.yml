@@ -1,17 +1,17 @@
 title: mimikatz-keys
-id: a6752f95-1111-2222-3333-6ed0fd76a7b5
+id: a769ffcc-1111-2222-3333-a4f436476d38
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects schtask created outside it ops hours
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.defense_evasion
+    - attack.persistence/T1053
+    - attack.credential_access
