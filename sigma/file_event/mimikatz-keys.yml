@@ -1,17 +1,17 @@
 title: mimikatz-keys
-id: f9fe9813-1111-2222-3333-df95658100a8
+id: 4497c0cc-1111-2222-3333-93fdff540df9
 status: stable
-description: Detects rare mshta child process
+description: Detects encoded launcher from office parents
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.defense_evasion
+    - attack.discovery/T1046
+    - attack.credential_access
