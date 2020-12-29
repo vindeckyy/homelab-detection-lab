@@ -1,17 +1,17 @@
 title: mshta-exec
-id: 5ba53dff-1111-2222-3333-eb9910182f69
+id: a0b29f34-1111-2222-3333-60dc824e5bbe
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects encoded launcher from office parents
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.lateral_movement
+    - attack.execution/T1059
+    - attack.defense_evasion
