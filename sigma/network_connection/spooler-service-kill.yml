@@ -1,17 +1,17 @@
 title: spooler-service-kill
-id: f97bc95d-1111-2222-3333-22adea0f8dd9
+id: f5d0d668-1111-2222-3333-0e3f7c17ee83
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.persistence
+    - attack.credential_access/T1003
+    - attack.discovery
