@@ -1,17 +1,17 @@
 title: anon-smb-session
-id: 92069d6d-1111-2222-3333-e72ae68fb432
+id: 41038654-1111-2222-3333-8c5272b9f6a7
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects encoded launcher from office parents
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.credential_access
+    - attack.credential_access/T1003
+    - attack.persistence
