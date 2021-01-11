@@ -1,17 +1,17 @@
 title: klist-purge-loop
-id: c0ef8511-1111-2222-3333-ad5b276524e1
+id: 60d2ad0c-1111-2222-3333-4a931a1f26e2
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects rare mshta child process
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.persistence
+    - attack.collection/T1560
+    - attack.discovery
