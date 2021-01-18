@@ -1,17 +1,17 @@
 title: windows-defender-disable
-id: bfaa2da3-1111-2222-3333-9927dc71df67
+id: 8e73ec1a-1111-2222-3333-8d75fec525cb
 status: stable
-description: Detects rare mshta child process
+description: Detects schtask created outside it ops hours
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.execution
+    - attack.discovery/T1046
+    - attack.credential_access
