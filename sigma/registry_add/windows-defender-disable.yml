@@ -1,17 +1,17 @@
 title: windows-defender-disable
-id: 1ff8e843-1111-2222-3333-e2d2e8309b74
+id: d9838cb9-1111-2222-3333-8937b5de1f3a
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.credential_access
+    - attack.collection/T1560
+    - attack.persistence
