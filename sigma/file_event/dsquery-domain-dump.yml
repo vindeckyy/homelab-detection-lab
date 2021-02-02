@@ -1,17 +1,17 @@
 title: dsquery-domain-dump
-id: e4ffa7e7-1111-2222-3333-1204c7679330
+id: 499b4b09-1111-2222-3333-5e59eec52c05
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.persistence
+    - attack.credential_access/T1003
+    - attack.discovery
