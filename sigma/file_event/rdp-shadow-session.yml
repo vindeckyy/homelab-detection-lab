@@ -1,17 +1,17 @@
 title: rdp-shadow-session
-id: f20cd030-1111-2222-3333-54d1adc2fe5b
+id: 5b1f7345-1111-2222-3333-2adad31288c4
 status: stable
-description: Detects rare mshta child process
+description: Detects encoded launcher from office parents
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.credential_access
+    - attack.persistence/T1053
+    - attack.discovery
