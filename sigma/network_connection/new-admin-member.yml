@@ -1,17 +1,17 @@
 title: new-admin-member
-id: 3167784c-1111-2222-3333-6e27e33846fa
+id: 7fb0c4e0-1111-2222-3333-e64d9170941b
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects schtask created outside it ops hours
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.discovery
+    - attack.discovery/T1046
+    - attack.persistence
