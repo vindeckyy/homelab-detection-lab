@@ -1,17 +1,17 @@
 title: dcsync-activity
-id: 2a85651f-1111-2222-3333-f8f62fe3471f
+id: 002ecfc5-1111-2222-3333-e5b0b9a9561f
 status: stable
-description: Detects rare mshta child process
+description: Detects schtask created outside it ops hours
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
         ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
+    - attack.discovery/T1046
     - attack.credential_access
