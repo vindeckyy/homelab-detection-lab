@@ -1,17 +1,17 @@
 title: rundll32-inproc
-id: 3a202444-1111-2222-3333-3ba30e36de25
+id: e01814bd-1111-2222-3333-a3043249cd03
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects schtask created outside it ops hours
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
         ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
+    - attack.lateral_movement/T1021
     - attack.defense_evasion
