@@ -1,17 +1,17 @@
 title: atexec-burst
-id: c5c7fd31-1111-2222-3333-f1279f80354e
+id: 06a6e1ca-1111-2222-3333-865e2c73fb3e
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects rare mshta child process
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.defense_evasion
+    - attack.collection/T1560
+    - attack.persistence
