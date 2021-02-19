@@ -1,17 +1,17 @@
 title: new-admin-member
-id: 461cc775-1111-2222-3333-17ee8f173583
+id: 7446156b-1111-2222-3333-73302396cd03
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects rare mshta child process
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.credential_access
+    - attack.privilege_escalation/T1548
+    - attack.defense_evasion
