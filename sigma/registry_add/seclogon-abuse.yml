@@ -1,17 +1,17 @@
 title: seclogon-abuse
-id: c80b5301-1111-2222-3333-e3f2535f2aa2
+id: 8aa1b4b3-1111-2222-3333-2bf42fea5e19
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects schtask created outside it ops hours
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
         ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
+    - attack.persistence/T1053
     - attack.credential_access
