@@ -1,17 +1,17 @@
 title: encoded-powershell
-id: 8828eb21-1111-2222-3333-b4dfbbad07ad
+id: aeeb07d4-1111-2222-3333-1eb8fc42e7a2
 status: stable
-description: Detects rare mshta child process
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
         ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
+    - attack.persistence/T1053
     - attack.persistence
