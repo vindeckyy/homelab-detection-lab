@@ -1,17 +1,17 @@
 title: rdp-shadow-session
-id: e6b8a781-1111-2222-3333-c8eb000aa356
+id: 0cf2c4ed-1111-2222-3333-9b9a856b0b1b
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects schtask created outside it ops hours
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
         ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
+    - attack.lateral_movement/T1021
     - attack.defense_evasion
