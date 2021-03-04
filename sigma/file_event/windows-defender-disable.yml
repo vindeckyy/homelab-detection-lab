@@ -1,17 +1,17 @@
 title: windows-defender-disable
-id: 2b8eb6bd-1111-2222-3333-9335b95bee2a
+id: ffbe7779-1111-2222-3333-887bd9b5ed8d
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
         ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
+    - attack.lateral_movement/T1021
     - attack.lateral_movement
