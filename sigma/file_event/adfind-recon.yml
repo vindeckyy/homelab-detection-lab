@@ -1,17 +1,17 @@
 title: adfind-recon
-id: e0785c01-1111-2222-3333-69f350a8583d
+id: f1f49a0d-1111-2222-3333-8b18f6fb2426
 status: stable
-description: Detects rare mshta child process
+description: Detects encoded launcher from office parents
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.persistence
+    - attack.privilege_escalation/T1548
+    - attack.lateral_movement
