@@ -1,17 +1,17 @@
 title: certutil-urlfetch
-id: 337e5fa0-1111-2222-3333-56508572fc78
+id: 1b8818cb-1111-2222-3333-00e90b8c38dd
 status: stable
-description: Detects rare mshta child process
+description: Detects encoded launcher from office parents
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.execution
+    - attack.persistence/T1053
+    - attack.persistence
