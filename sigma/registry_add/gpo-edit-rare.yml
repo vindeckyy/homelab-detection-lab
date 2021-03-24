@@ -1,17 +1,17 @@
 title: gpo-edit-rare
-id: 33e76a36-1111-2222-3333-c75431d88ec8
+id: 9008014b-1111-2222-3333-4930d91bbca2
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects schtask created outside it ops hours
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.discovery
+    - attack.credential_access/T1003
+    - attack.credential_access
