@@ -1,17 +1,17 @@
 title: kerberoast-activity
-id: 396c7b96-1111-2222-3333-29538bfbed94
+id: 95ee69b6-1111-2222-3333-586fc2af512c
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects rare mshta child process
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.defense_evasion
+    - attack.collection/T1560
+    - attack.credential_access
