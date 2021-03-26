@@ -1,17 +1,17 @@
 title: wmi-subscription
-id: 2d52083c-1111-2222-3333-4ce268b55c05
+id: 929a5de2-1111-2222-3333-9d7c9d35d71c
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.defense_evasion
+    - attack.persistence/T1053
+    - attack.persistence
