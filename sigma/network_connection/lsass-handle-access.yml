@@ -1,17 +1,17 @@
 title: lsass-handle-access
-id: 8cc7ce2b-1111-2222-3333-7cd348fda04e
+id: 3fe93d4b-1111-2222-3333-6d38bbe21851
 status: stable
-description: Detects rare mshta child process
+description: Detects schtask created outside it ops hours
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.discovery
+    - attack.defense_evasion/T1218
+    - attack.defense_evasion
