@@ -1,17 +1,17 @@
 title: rundll32-inproc
-id: dfc63d12-1111-2222-3333-3ce59e45d0c7
+id: 6d892594-1111-2222-3333-a554d0338ae8
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects schtask created outside it ops hours
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.persistence
+    - attack.persistence/T1053
+    - attack.credential_access
