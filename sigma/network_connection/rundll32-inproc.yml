@@ -1,17 +1,17 @@
 title: rundll32-inproc
-id: 1c8e7bc0-1111-2222-3333-a48f7282f123
+id: f779ef83-1111-2222-3333-8ae5c0b0b0d7
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects rare mshta child process
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
         ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
+    - attack.collection/T1560
     - attack.credential_access
