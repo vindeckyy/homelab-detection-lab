@@ -1,17 +1,17 @@
 title: certutil-download
-id: e464bc56-1111-2222-3333-4a98649f1b9b
+id: e08e5306-1111-2222-3333-bfc98a2d3413
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.persistence
+    - attack.privilege_escalation/T1548
+    - attack.lateral_movement
