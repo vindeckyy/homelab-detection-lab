@@ -1,17 +1,17 @@
 title: new-admin-member
-id: 6044db36-1111-2222-3333-eb2a998a4258
+id: ae89ac12-1111-2222-3333-80fa8ba185bb
 status: stable
-description: Detects rare mshta child process
+description: Detects schtask created outside it ops hours
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.credential_access
+    - attack.execution/T1059
+    - attack.lateral_movement
