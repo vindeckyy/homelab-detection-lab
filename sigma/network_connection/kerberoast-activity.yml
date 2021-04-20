@@ -1,17 +1,17 @@
 title: kerberoast-activity
-id: 3faa59c5-1111-2222-3333-4e4690bb134b
+id: e05dfd43-1111-2222-3333-76330e042b54
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects encoded launcher from office parents
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.lateral_movement
+    - attack.defense_evasion/T1218
+    - attack.defense_evasion
