@@ -1,17 +1,17 @@
 title: new-admin-member
-id: 2d6e50ff-1111-2222-3333-c71a08566eff
+id: b3d031b8-1111-2222-3333-c0aa52fc2489
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
         ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
+    - attack.lateral_movement/T1021
     - attack.execution
