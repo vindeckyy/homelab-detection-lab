@@ -1,17 +1,17 @@
 title: seclogon-abuse
-id: 9c563c5b-1111-2222-3333-2d2e9ea15475
+id: 4623639d-1111-2222-3333-d9c6a0404e0c
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects schtask created outside it ops hours
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.persistence
+    - attack.defense_evasion/T1218
+    - attack.execution
