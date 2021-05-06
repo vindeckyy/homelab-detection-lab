@@ -1,17 +1,17 @@
 title: schtask-persist
-id: e1902370-1111-2222-3333-bcbd381e8456
+id: b6c2d3dd-1111-2222-3333-c383f739f0f9
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects schtask created outside it ops hours
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
         ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
+    - attack.defense_evasion/T1218
     - attack.lateral_movement
