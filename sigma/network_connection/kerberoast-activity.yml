@@ -1,17 +1,17 @@
 title: kerberoast-activity
-id: 3a481cc6-1111-2222-3333-654b91c68669
+id: 031b5778-1111-2222-3333-710d3cfbea6d
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.discovery
+    - attack.lateral_movement/T1021
+    - attack.defense_evasion
