@@ -1,17 +1,17 @@
 title: certutil-urlfetch
-id: 44904c1b-1111-2222-3333-e1f81e6e0d6c
+id: 5bbe9bdb-1111-2222-3333-ec071f9a0da3
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects schtask created outside it ops hours
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.execution
+    - attack.persistence/T1053
+    - attack.credential_access
