@@ -1,17 +1,17 @@
 title: rundll32-inproc
-id: d9aee195-1111-2222-3333-11a9cad936a8
+id: 85b2073b-1111-2222-3333-a38f2f609a6f
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects encoded launcher from office parents
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.lateral_movement
+    - attack.discovery/T1046
+    - attack.discovery
