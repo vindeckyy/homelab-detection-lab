@@ -1,17 +1,17 @@
 title: regsvr32-http
-id: 5a9d6942-1111-2222-3333-40c428c43072
+id: 48186e0f-1111-2222-3333-b23d915ef348
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.discovery
+    - attack.defense_evasion/T1218
+    - attack.lateral_movement
