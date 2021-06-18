@@ -1,17 +1,17 @@
 title: rundll32-inproc
-id: 4b793ed6-1111-2222-3333-3d0cdfce6bf0
+id: 49d87e3d-1111-2222-3333-24828f446245
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
         ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
+    - attack.defense_evasion/T1218
     - attack.lateral_movement
