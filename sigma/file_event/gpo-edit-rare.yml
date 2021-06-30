@@ -1,17 +1,17 @@
 title: gpo-edit-rare
-id: 69a76c28-1111-2222-3333-8db7a665eb61
+id: e9205957-1111-2222-3333-c4e9fc66044b
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
         ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
+    - attack.lateral_movement/T1021
     - attack.execution
