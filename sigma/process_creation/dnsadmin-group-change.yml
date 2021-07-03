@@ -1,17 +1,17 @@
 title: dnsadmin-group-change
-id: 5a5fefdc-1111-2222-3333-b7901ca209a4
+id: 54a36eb3-1111-2222-3333-030a1a0a1223
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects encoded launcher from office parents
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.persistence
+    - attack.privilege_escalation/T1548
+    - attack.execution
