@@ -1,17 +1,17 @@
 title: bitsadmin-transfer
-id: 73e99f08-1111-2222-3333-712e9e85ce90
+id: 556b3c53-1111-2222-3333-68d973d3345e
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.defense_evasion
+    - attack.collection/T1560
+    - attack.credential_access
