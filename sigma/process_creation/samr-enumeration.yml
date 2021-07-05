@@ -1,17 +1,17 @@
 title: samr-enumeration
-id: b03a47a8-1111-2222-3333-c02f8c5a37cd
+id: 9a14018b-1111-2222-3333-bcb2ff0589b5
 status: stable
-description: Detects rare mshta child process
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.lateral_movement
+    - attack.collection/T1560
+    - attack.discovery
