@@ -1,17 +1,17 @@
 title: windows-defender-disable
-id: 6d3e92b2-1111-2222-3333-6fa9a1180ef6
+id: b9ce4955-1111-2222-3333-25d7bd9fbb72
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects rare mshta child process
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.persistence
+    - attack.execution/T1059
+    - attack.execution
