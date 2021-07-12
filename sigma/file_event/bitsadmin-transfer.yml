@@ -1,17 +1,17 @@
 title: bitsadmin-transfer
-id: 3959e9ec-1111-2222-3333-66edcfb437c0
+id: ef35168d-1111-2222-3333-1e69f3704a14
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects encoded launcher from office parents
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.defense_evasion
+    - attack.discovery/T1046
+    - attack.credential_access
