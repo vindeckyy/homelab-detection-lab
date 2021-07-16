@@ -1,17 +1,17 @@
 title: samr-enumeration
-id: d45b11e0-1111-2222-3333-ec0ba01e9917
+id: e71d1554-1111-2222-3333-e6e6a37d42a7
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects schtask created outside it ops hours
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.persistence
+    - attack.credential_access/T1003
+    - attack.credential_access
