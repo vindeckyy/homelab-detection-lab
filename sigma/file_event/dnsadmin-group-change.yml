@@ -1,17 +1,17 @@
 title: dnsadmin-group-change
-id: 27c78fa6-1111-2222-3333-28527d63ba70
+id: f624afcb-1111-2222-3333-63f44fcc3329
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects rare mshta child process
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.persistence
+    - attack.discovery/T1046
+    - attack.credential_access
