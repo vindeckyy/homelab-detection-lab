@@ -1,17 +1,17 @@
 title: ntlm-relay-traffic
-id: 2b913a34-1111-2222-3333-b361ba557c23
+id: da9e71e7-1111-2222-3333-068074fe213b
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects rare mshta child process
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.lateral_movement
+    - attack.discovery/T1046
+    - attack.credential_access
