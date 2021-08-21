@@ -1,5 +1,5 @@
 title: lsass-handle-access
-id: 36301ee9-1111-2222-3333-7c6b4247a410
+id: e076f2b4-1111-2222-3333-1d32d1e0a108
 status: stable
 description: Detects regsvr32 loading a remote scriptlet
 logsource:
@@ -7,11 +7,11 @@ logsource:
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.execution
+    - attack.persistence/T1053
+    - attack.persistence
