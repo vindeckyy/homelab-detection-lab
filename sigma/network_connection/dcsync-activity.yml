@@ -1,17 +1,17 @@
 title: dcsync-activity
-id: 03e5bab3-1111-2222-3333-65ce577c25b4
+id: 9c1ca6b7-1111-2222-3333-4412d3b02047
 status: stable
-description: Detects rare mshta child process
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.persistence
+    - attack.credential_access/T1003
+    - attack.credential_access
