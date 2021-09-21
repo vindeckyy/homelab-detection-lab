@@ -1,17 +1,17 @@
 title: certutil-urlfetch
-id: 4c1dbe78-1111-2222-3333-0621a8a1a1b4
+id: d83e495c-1111-2222-3333-c64f68e425d6
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects encoded launcher from office parents
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.lateral_movement
+    - attack.persistence/T1053
+    - attack.discovery
