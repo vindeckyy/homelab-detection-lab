@@ -1,17 +1,17 @@
 title: seclogon-abuse
-id: 6231ea7d-1111-2222-3333-f8e1daafcd01
+id: 9a8313eb-1111-2222-3333-630ccea13f2f
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects schtask created outside it ops hours
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.lateral_movement
+    - attack.execution/T1059
+    - attack.defense_evasion
