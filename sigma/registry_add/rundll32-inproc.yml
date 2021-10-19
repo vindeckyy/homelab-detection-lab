@@ -1,17 +1,17 @@
 title: rundll32-inproc
-id: 3492328e-1111-2222-3333-20a9a57d841c
+id: 5e2ffa05-1111-2222-3333-25d5c385f8e9
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.defense_evasion
+    - attack.collection/T1560
+    - attack.discovery
