@@ -1,5 +1,5 @@
 # site policy: ssl-extract
-@load base/protocols/ssl
+@load base/protocols/kerberos
 
 export {
     redef LogAscii::use_json = T;
