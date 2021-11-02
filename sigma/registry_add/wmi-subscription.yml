@@ -1,17 +1,17 @@
 title: wmi-subscription
-id: 7d0a26ee-1111-2222-3333-a39da6ba0c0d
+id: 353b0c63-1111-2222-3333-f5edffbdd09c
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects schtask created outside it ops hours
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.defense_evasion
+    - attack.collection/T1560
+    - attack.credential_access
