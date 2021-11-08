@@ -1,17 +1,17 @@
 title: rundll32-inproc
-id: de97c764-1111-2222-3333-fb6e1126624d
+id: 37c1eda8-1111-2222-3333-3b14a9c05d5f
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects encoded launcher from office parents
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.persistence
+    - attack.discovery/T1046
+    - attack.credential_access
