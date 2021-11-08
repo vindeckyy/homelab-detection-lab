@@ -1,17 +1,17 @@
 title: anon-smb-session
-id: 0d78ad99-1111-2222-3333-aa1a08a8349f
+id: f46f81c9-1111-2222-3333-7dc7ae03a732
 status: stable
-description: Detects rare mshta child process
+description: Detects schtask created outside it ops hours
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.lateral_movement
+    - attack.execution/T1059
+    - attack.defense_evasion
