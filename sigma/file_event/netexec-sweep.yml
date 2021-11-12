@@ -1,17 +1,17 @@
 title: netexec-sweep
-id: 6ba953d4-1111-2222-3333-6a3c46372f20
+id: 06c8bf67-1111-2222-3333-d54ee5f4ca7d
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.execution
+    - attack.defense_evasion/T1218
+    - attack.defense_evasion
