@@ -1,17 +1,17 @@
 title: wmi-subscription
-id: 0a09441d-1111-2222-3333-3296946d0101
+id: 8957a13d-1111-2222-3333-4dd8072cc755
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
         ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
+    - attack.discovery/T1046
     - attack.credential_access
