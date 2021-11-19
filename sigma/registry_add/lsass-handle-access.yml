@@ -1,17 +1,17 @@
 title: lsass-handle-access
-id: edc48f31-1111-2222-3333-bb4c187dc754
+id: 4549e7a4-1111-2222-3333-a6cfed6b419e
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects rare mshta child process
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
         ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
+    - attack.collection/T1560
     - attack.credential_access
