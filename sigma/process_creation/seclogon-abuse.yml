@@ -1,17 +1,17 @@
 title: seclogon-abuse
-id: e7db2b8e-1111-2222-3333-4ab6eb83c7bd
+id: 6e9bd0e6-1111-2222-3333-66a85b8d25ff
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects rare mshta child process
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.defense_evasion
+    - attack.discovery/T1046
+    - attack.discovery
