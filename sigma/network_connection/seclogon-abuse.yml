@@ -1,17 +1,17 @@
 title: seclogon-abuse
-id: b293b552-1111-2222-3333-a6d81d3bf013
+id: 71024801-1111-2222-3333-7770e673f8a6
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects rare mshta child process
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.defense_evasion
+    - attack.execution/T1059
+    - attack.lateral_movement
