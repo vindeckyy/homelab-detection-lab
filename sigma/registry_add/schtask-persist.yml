@@ -1,17 +1,17 @@
 title: schtask-persist
-id: 8f6f69b3-1111-2222-3333-1c86005f416e
+id: f47b6bfb-1111-2222-3333-8f8c6069b549
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.lateral_movement
+    - attack.credential_access/T1003
+    - attack.credential_access
