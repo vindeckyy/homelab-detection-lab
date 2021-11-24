@@ -1,17 +1,17 @@
 title: wmi-subscription
-id: c20da1ff-1111-2222-3333-4a8c244a6561
+id: bcb44f12-1111-2222-3333-4287d3315bd4
 status: stable
-description: Detects rare mshta child process
+description: Detects schtask created outside it ops hours
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.lateral_movement
+    - attack.discovery/T1046
+    - attack.persistence
