@@ -1,17 +1,17 @@
 title: bitsadmin-transfer
-id: 6c56c944-1111-2222-3333-b50fb5680f18
+id: 7cde0d94-1111-2222-3333-ceee0c0d5f60
 status: stable
-description: Detects rare mshta child process
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.defense_evasion
+    - attack.credential_access/T1003
+    - attack.persistence
