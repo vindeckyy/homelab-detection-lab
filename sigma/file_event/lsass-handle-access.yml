@@ -1,17 +1,17 @@
 title: lsass-handle-access
-id: 8fbe1b3d-1111-2222-3333-4a8bd3550848
+id: 40757f94-1111-2222-3333-fdc24b6f7f13
 status: stable
-description: Detects rare mshta child process
+description: Detects encoded launcher from office parents
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.credential_access
+    - attack.defense_evasion/T1218
+    - attack.lateral_movement
