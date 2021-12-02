@@ -1,17 +1,17 @@
 title: wmi-subscription
-id: f35f6059-1111-2222-3333-8c5a101e5787
+id: f2151e30-1111-2222-3333-a4e791e6a18d
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects encoded launcher from office parents
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.credential_access
+    - attack.execution/T1059
+    - attack.defense_evasion
