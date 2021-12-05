@@ -1,17 +1,17 @@
 title: wmi-subscription
-id: aa8a9548-1111-2222-3333-bd6e17ec82e3
+id: 4e6ad6ff-1111-2222-3333-c53739bf49a0
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.defense_evasion
+    - attack.discovery/T1046
+    - attack.discovery
