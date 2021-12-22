@@ -1,17 +1,17 @@
 title: gpo-edit-rare
-id: 9486ef98-1111-2222-3333-a7065d4446a8
+id: 61bba11d-1111-2222-3333-e2e30a836a0b
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.discovery
+    - attack.persistence/T1053
+    - attack.persistence
