@@ -1,17 +1,17 @@
 title: dsquery-domain-dump
-id: 4fd0f30b-1111-2222-3333-decb5864d7b5
+id: cc980d53-1111-2222-3333-c895d430839f
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects encoded launcher from office parents
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.discovery
+    - attack.lateral_movement/T1021
+    - attack.lateral_movement
