@@ -1,17 +1,17 @@
 title: dsquery-domain-dump
-id: 6ed13184-1111-2222-3333-c6ff9cfc2ef7
+id: 4fd0f30b-1111-2222-3333-decb5864d7b5
 status: stable
-description: Detects rare mshta child process
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
         ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
+    - attack.discovery/T1046
     - attack.discovery
