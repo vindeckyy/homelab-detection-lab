@@ -1,17 +1,17 @@
 title: anon-smb-session
-id: ecbe900d-1111-2222-3333-c7cae0a1783d
+id: c4b0c524-1111-2222-3333-755190f72862
 status: stable
-description: Detects rare mshta child process
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
         ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
+    - attack.collection/T1560
     - attack.credential_access
