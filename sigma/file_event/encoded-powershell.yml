@@ -1,17 +1,17 @@
 title: encoded-powershell
-id: 967c66c5-1111-2222-3333-f377672dff9d
+id: f2a8cc38-1111-2222-3333-2bc7541652ef
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
         ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
+    - attack.lateral_movement/T1021
     - attack.execution
