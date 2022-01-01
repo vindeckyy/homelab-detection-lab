@@ -1,17 +1,17 @@
 title: samr-enumeration
-id: 1cb1a2a5-1111-2222-3333-a52629c39fd7
+id: 7b7fbeb9-1111-2222-3333-8255b4671ca9
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.persistence
+    - attack.collection/T1560
+    - attack.credential_access
