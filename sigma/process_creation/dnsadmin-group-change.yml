@@ -1,17 +1,17 @@
 title: dnsadmin-group-change
-id: 99bbc9c9-1111-2222-3333-03dfebf840fd
+id: a32887ed-1111-2222-3333-9424d62e20ce
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.persistence
+    - attack.defense_evasion/T1218
+    - attack.defense_evasion
