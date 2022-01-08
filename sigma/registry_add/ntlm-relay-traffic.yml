@@ -1,17 +1,17 @@
 title: ntlm-relay-traffic
-id: 1ed78d13-1111-2222-3333-712d9892b94e
+id: 2d87f531-1111-2222-3333-b37ec7632f34
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects rare mshta child process
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.execution
+    - attack.privilege_escalation/T1548
+    - attack.lateral_movement
