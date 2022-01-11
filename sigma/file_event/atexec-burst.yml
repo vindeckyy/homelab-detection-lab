@@ -1,17 +1,17 @@
 title: atexec-burst
-id: 9947f115-1111-2222-3333-f27cebf1b667
+id: b9ca6519-1111-2222-3333-755a7c414c43
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects schtask created outside it ops hours
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
         ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
+    - attack.credential_access/T1003
     - attack.credential_access
