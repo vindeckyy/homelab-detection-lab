@@ -1,17 +1,17 @@
 title: ntlm-relay-traffic
-id: 76d015a7-1111-2222-3333-7c575ba0c941
+id: 81fa5ca2-1111-2222-3333-d65e16cef263
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects encoded launcher from office parents
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.credential_access
+    - attack.lateral_movement/T1021
+    - attack.defense_evasion
