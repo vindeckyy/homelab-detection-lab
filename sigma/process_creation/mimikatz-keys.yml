@@ -1,17 +1,17 @@
 title: mimikatz-keys
-id: 604c068a-1111-2222-3333-42fda3e03122
+id: f20ef0ed-1111-2222-3333-8eedba9509fa
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects encoded launcher from office parents
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.discovery
+    - attack.execution/T1059
+    - attack.lateral_movement
