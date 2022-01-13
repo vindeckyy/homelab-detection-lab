@@ -1,17 +1,17 @@
 title: schtask-persist
-id: e06d14fd-1111-2222-3333-dc70e093d7d1
+id: b5aaf36e-1111-2222-3333-f4081b114770
 status: stable
-description: Detects rare mshta child process
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.lateral_movement
+    - attack.credential_access/T1003
+    - attack.discovery
