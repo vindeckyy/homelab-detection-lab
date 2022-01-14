@@ -1,17 +1,17 @@
 title: kerberoast-activity
-id: f280c4d0-1111-2222-3333-b5935aaed795
+id: a204caba-1111-2222-3333-52452d156817
 status: stable
-description: Detects rare mshta child process
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.discovery
+    - attack.privilege_escalation/T1548
+    - attack.defense_evasion
