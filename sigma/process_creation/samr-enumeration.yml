@@ -1,17 +1,17 @@
 title: samr-enumeration
-id: ecc63935-1111-2222-3333-9dc0a4a21923
+id: 1080d3c4-1111-2222-3333-819b0f31ea29
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.discovery
+    - attack.defense_evasion/T1218
+    - attack.lateral_movement
