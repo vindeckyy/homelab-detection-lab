@@ -1,17 +1,17 @@
 title: encoded-powershell
-id: b8f61c7e-1111-2222-3333-ecb5730737fa
+id: 455e7a4f-1111-2222-3333-b51b532d7d97
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects rare mshta child process
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.persistence
+    - attack.lateral_movement/T1021
+    - attack.lateral_movement
