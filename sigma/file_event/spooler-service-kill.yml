@@ -1,17 +1,17 @@
 title: spooler-service-kill
-id: 4e2e3c76-1111-2222-3333-239e5c812f7c
+id: 74dda4a5-1111-2222-3333-aacd51f5cdc4
 status: stable
-description: Detects rare mshta child process
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
         ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
+    - attack.credential_access/T1003
     - attack.persistence
