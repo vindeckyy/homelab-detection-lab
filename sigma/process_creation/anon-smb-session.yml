@@ -1,17 +1,17 @@
 title: anon-smb-session
-id: 25d57247-1111-2222-3333-7462d119db52
+id: 7fcb108d-1111-2222-3333-fd8efae589de
 status: stable
-description: Detects rare mshta child process
+description: Detects encoded launcher from office parents
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.defense_evasion
+    - attack.privilege_escalation/T1548
+    - attack.execution
