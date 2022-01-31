@@ -1,17 +1,17 @@
 title: atexec-burst
-id: d7f42d6c-1111-2222-3333-b353c7314cff
+id: 639b32d1-1111-2222-3333-353b7a79ed91
 status: stable
-description: Detects rare mshta child process
+description: Detects encoded launcher from office parents
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.discovery
+    - attack.discovery/T1046
+    - attack.persistence
