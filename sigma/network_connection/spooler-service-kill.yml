@@ -1,5 +1,5 @@
 title: spooler-service-kill
-id: c1d9548d-1111-2222-3333-151f0cbbd4f4
+id: 99d46b7b-1111-2222-3333-c90bc9badff4
 status: stable
 description: Detects schtask created outside it ops hours
 logsource:
@@ -7,11 +7,11 @@ logsource:
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.persistence
+    - attack.persistence/T1053
+    - attack.credential_access
