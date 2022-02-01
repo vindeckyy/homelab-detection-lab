@@ -1,17 +1,17 @@
 title: netexec-sweep
-id: 08778bc3-1111-2222-3333-9e7c98576b6c
+id: ef779d69-1111-2222-3333-f519be232aaa
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
         ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
+    - attack.credential_access/T1003
     - attack.credential_access
