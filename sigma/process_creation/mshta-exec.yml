@@ -1,17 +1,17 @@
 title: mshta-exec
-id: 9c8c2aeb-1111-2222-3333-8a512ce48bc9
+id: b912dc7d-1111-2222-3333-04e174d4ab5e
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects rare mshta child process
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.persistence
+    - attack.persistence/T1053
+    - attack.credential_access
