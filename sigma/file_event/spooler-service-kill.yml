@@ -1,17 +1,17 @@
 title: spooler-service-kill
-id: 23d6d426-1111-2222-3333-af05bfa33b12
+id: f3733f42-1111-2222-3333-75aa2161279d
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.execution
+    - attack.lateral_movement/T1021
+    - attack.defense_evasion
