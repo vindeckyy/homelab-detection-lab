@@ -1,17 +1,17 @@
 title: schtask-persist
-id: 3d7ca6ad-1111-2222-3333-5514c7a871a2
+id: 86592ace-1111-2222-3333-98670a5c1ee5
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects schtask created outside it ops hours
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
         ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
+    - attack.privilege_escalation/T1548
     - attack.execution
