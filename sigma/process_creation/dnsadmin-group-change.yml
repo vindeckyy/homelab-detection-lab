@@ -1,17 +1,17 @@
 title: dnsadmin-group-change
-id: af0c5a40-1111-2222-3333-5bb7fa14c8ed
+id: 16d85a9b-1111-2222-3333-40065a67a762
 status: stable
-description: Detects rare mshta child process
+description: Detects encoded launcher from office parents
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.credential_access
+    - attack.privilege_escalation/T1548
+    - attack.lateral_movement
