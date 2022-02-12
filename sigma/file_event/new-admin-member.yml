@@ -1,17 +1,17 @@
 title: new-admin-member
-id: db03b471-1111-2222-3333-c5b22eeeadad
+id: 9f95f2d5-1111-2222-3333-e5846b18ed32
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.defense_evasion
+    - attack.privilege_escalation/T1548
+    - attack.execution
