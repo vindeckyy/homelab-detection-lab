@@ -1,17 +1,17 @@
 title: anon-smb-session
-id: 291c55e1-1111-2222-3333-6258a20707cf
+id: 06723383-1111-2222-3333-3fc899f900cf
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.discovery
+    - attack.lateral_movement/T1021
+    - attack.lateral_movement
