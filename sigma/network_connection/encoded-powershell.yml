@@ -1,17 +1,17 @@
 title: encoded-powershell
-id: 13dca4b4-1111-2222-3333-e170c56e537d
+id: 78cd7b97-1111-2222-3333-9967c74a8a20
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects rare mshta child process
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.lateral_movement
+    - attack.lateral_movement/T1021
+    - attack.defense_evasion
