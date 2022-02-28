@@ -1,17 +1,17 @@
 title: bitsadmin-transfer
-id: 676a078f-1111-2222-3333-de93c9beb03d
+id: 311b67ae-1111-2222-3333-d42f0226c543
 status: stable
-description: Detects rare mshta child process
+description: Detects encoded launcher from office parents
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.execution
+    - attack.lateral_movement/T1021
+    - attack.lateral_movement
