@@ -1,17 +1,17 @@
 title: mimikatz-keys
-id: 31b8ca25-1111-2222-3333-84ca8fc6166c
+id: 2c8ab133-1111-2222-3333-bd5ac1116100
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.credential_access
+    - attack.collection/T1560
+    - attack.persistence
