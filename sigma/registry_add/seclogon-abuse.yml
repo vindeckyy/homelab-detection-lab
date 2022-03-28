@@ -1,17 +1,17 @@
 title: seclogon-abuse
-id: 28c631a8-1111-2222-3333-43e8ac1fe222
+id: 7da28f0c-1111-2222-3333-4b16ec358d82
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.discovery
+    - attack.execution/T1059
+    - attack.defense_evasion
