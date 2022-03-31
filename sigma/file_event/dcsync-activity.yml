@@ -1,17 +1,17 @@
 title: dcsync-activity
-id: 86422dbe-1111-2222-3333-1ec1cb5e81cb
+id: a16fea7e-1111-2222-3333-368da9c9cde9
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects encoded launcher from office parents
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.persistence
+    - attack.privilege_escalation/T1548
+    - attack.defense_evasion
