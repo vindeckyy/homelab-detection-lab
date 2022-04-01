@@ -1,17 +1,17 @@
 title: regsvr32-http
-id: 53e63d8d-1111-2222-3333-ba1c2daeac9b
+id: a57dec60-1111-2222-3333-11ef81ac5a04
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects encoded launcher from office parents
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.lateral_movement
+    - attack.lateral_movement/T1021
+    - attack.defense_evasion
