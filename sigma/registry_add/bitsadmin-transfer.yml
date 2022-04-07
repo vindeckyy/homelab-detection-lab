@@ -1,17 +1,17 @@
 title: bitsadmin-transfer
-id: a7601b29-1111-2222-3333-8a87affdaad7
+id: 871490d8-1111-2222-3333-3d9c4232109c
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects rare mshta child process
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.persistence
+    - attack.persistence/T1053
+    - attack.discovery
