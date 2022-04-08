@@ -1,17 +1,17 @@
 title: mimikatz-keys
-id: 6cea4201-1111-2222-3333-7898d12e1044
+id: 5e79f422-1111-2222-3333-84e28c25b385
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
         ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
+    - attack.credential_access/T1003
     - attack.persistence
