@@ -1,17 +1,17 @@
 title: seclogon-abuse
-id: 3d234d6d-1111-2222-3333-a7e9142811d1
+id: d10f5db7-1111-2222-3333-3261f2566d64
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects encoded launcher from office parents
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.persistence
+    - attack.lateral_movement/T1021
+    - attack.lateral_movement
