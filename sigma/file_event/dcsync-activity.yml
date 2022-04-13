@@ -1,17 +1,17 @@
 title: dcsync-activity
-id: ee47010f-1111-2222-3333-2e2414020297
+id: e3dc1419-1111-2222-3333-9e1ebba7e799
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects rare mshta child process
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.defense_evasion
+    - attack.credential_access/T1003
+    - attack.persistence
