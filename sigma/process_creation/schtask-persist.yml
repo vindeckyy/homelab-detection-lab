@@ -1,17 +1,17 @@
 title: schtask-persist
-id: f6f81018-1111-2222-3333-3723907615d0
+id: b1ca1f43-1111-2222-3333-1def94a11456
 status: stable
-description: Detects rare mshta child process
+description: Detects schtask created outside it ops hours
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
         ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
+    - attack.persistence/T1053
     - attack.persistence
