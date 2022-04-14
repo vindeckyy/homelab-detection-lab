@@ -1,17 +1,17 @@
 title: new-admin-member
-id: 3e42b54d-1111-2222-3333-01d2d0f008b5
+id: 39e415c5-1111-2222-3333-06c05080e623
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects schtask created outside it ops hours
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.defense_evasion
+    - attack.defense_evasion/T1218
+    - attack.lateral_movement
