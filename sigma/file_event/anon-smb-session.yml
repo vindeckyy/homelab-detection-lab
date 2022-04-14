@@ -1,17 +1,17 @@
 title: anon-smb-session
-id: 3a4b701d-1111-2222-3333-09d0a728ebbc
+id: b4cc5e24-1111-2222-3333-6912851d2a89
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects schtask created outside it ops hours
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
         ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
+    - attack.persistence/T1053
     - attack.persistence
