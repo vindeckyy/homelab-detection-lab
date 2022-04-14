@@ -1,17 +1,17 @@
 title: regsvr32-http
-id: 0cbed040-1111-2222-3333-1ed2b6abfa3b
+id: 118bd883-1111-2222-3333-ab3680725430
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.execution
+    - attack.credential_access/T1003
+    - attack.persistence
