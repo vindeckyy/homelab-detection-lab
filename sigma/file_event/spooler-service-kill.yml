@@ -1,17 +1,17 @@
 title: spooler-service-kill
-id: 8adec98a-1111-2222-3333-75973ff8dd69
+id: d64a6b91-1111-2222-3333-ca1d756b5a1f
 status: stable
-description: Detects rare mshta child process
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.defense_evasion
+    - attack.lateral_movement/T1021
+    - attack.lateral_movement
