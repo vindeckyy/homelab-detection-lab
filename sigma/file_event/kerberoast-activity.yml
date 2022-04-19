@@ -1,17 +1,17 @@
 title: kerberoast-activity
-id: 91c14f11-1111-2222-3333-24165cc14008
+id: 9eaf8c39-1111-2222-3333-9ed877f6e785
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects encoded launcher from office parents
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.execution
+    - attack.defense_evasion/T1218
+    - attack.defense_evasion
