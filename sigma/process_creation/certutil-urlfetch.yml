@@ -1,5 +1,5 @@
 title: certutil-urlfetch
-id: 091b39b7-1111-2222-3333-b8e958fc872e
+id: a5a20eb7-1111-2222-3333-cb2a4c0eb07e
 status: stable
 description: Detects regsvr32 loading a remote scriptlet
 logsource:
@@ -7,11 +7,11 @@ logsource:
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.lateral_movement
+    - attack.credential_access/T1003
+    - attack.persistence
