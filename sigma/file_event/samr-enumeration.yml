@@ -1,17 +1,17 @@
 title: samr-enumeration
-id: 5acae343-1111-2222-3333-f5c6755a1c96
+id: 4ed9af2c-1111-2222-3333-7b9a8dd58b0a
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.lateral_movement
+    - attack.credential_access/T1003
+    - attack.persistence
