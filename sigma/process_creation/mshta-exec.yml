@@ -1,17 +1,17 @@
 title: mshta-exec
-id: 881ab7d4-1111-2222-3333-0c5eefeb9355
+id: aade2f01-1111-2222-3333-71dce0ae8bc0
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects encoded launcher from office parents
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.persistence
+    - attack.persistence/T1053
+    - attack.discovery
