@@ -1,17 +1,17 @@
 title: bloodhound-collect
-id: 079a1592-1111-2222-3333-dd5b31492d12
+id: d0d4da60-1111-2222-3333-f12e930a015b
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects schtask created outside it ops hours
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
         ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
+    - attack.privilege_escalation/T1548
     - attack.lateral_movement
