@@ -1,17 +1,17 @@
 title: certutil-urlfetch
-id: 27111ab3-1111-2222-3333-102cf3814f62
+id: 186bc067-1111-2222-3333-66fb574255ef
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects rare mshta child process
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.execution
+    - attack.lateral_movement/T1021
+    - attack.defense_evasion
