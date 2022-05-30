@@ -1,17 +1,17 @@
 title: new-admin-member
-id: 8902e52e-1111-2222-3333-c1b3a4f0d4f6
+id: 8a0720f6-1111-2222-3333-345d49e82f5a
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects schtask created outside it ops hours
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.lateral_movement
+    - attack.privilege_escalation/T1548
+    - attack.execution
