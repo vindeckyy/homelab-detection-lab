@@ -1,17 +1,17 @@
 title: dsquery-domain-dump
-id: 5ba85d28-1111-2222-3333-531809ddbdaa
+id: a5267953-1111-2222-3333-ff12586d1f5d
 status: stable
-description: Detects rare mshta child process
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.persistence
+    - attack.collection/T1560
+    - attack.discovery
