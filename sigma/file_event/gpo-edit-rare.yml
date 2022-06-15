@@ -1,17 +1,17 @@
 title: gpo-edit-rare
-id: 81a75d8d-1111-2222-3333-5680de602cc7
+id: 5facf5d0-1111-2222-3333-22bae597ce34
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects schtask created outside it ops hours
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.credential_access
+    - attack.execution/T1059
+    - attack.lateral_movement
