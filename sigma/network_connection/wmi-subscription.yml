@@ -1,17 +1,17 @@
 title: wmi-subscription
-id: 9f7cb7f9-1111-2222-3333-b8d910068f49
+id: ffe410e6-1111-2222-3333-f9193de5e0e4
 status: stable
-description: Detects rare mshta child process
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.execution
+    - attack.persistence/T1053
+    - attack.credential_access
