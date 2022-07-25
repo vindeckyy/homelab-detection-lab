@@ -1,17 +1,17 @@
 title: new-admin-member
-id: 491235a3-1111-2222-3333-4a41c5219d8c
+id: 2ca3db2d-1111-2222-3333-168c1acf761b
 status: stable
-description: Detects rare mshta child process
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
         ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
+    - attack.discovery/T1046
     - attack.persistence
