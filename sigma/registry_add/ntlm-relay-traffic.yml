@@ -1,5 +1,5 @@
 title: ntlm-relay-traffic
-id: 431f89a0-1111-2222-3333-b497be6eb86e
+id: 5b902cdf-1111-2222-3333-8b4ac7314ea1
 status: stable
 description: Detects rare mshta child process
 logsource:
@@ -7,11 +7,11 @@ logsource:
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.persistence
+    - attack.lateral_movement/T1021
+    - attack.defense_evasion
