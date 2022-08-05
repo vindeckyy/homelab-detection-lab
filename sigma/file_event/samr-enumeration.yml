@@ -1,17 +1,17 @@
 title: samr-enumeration
-id: cc0f7b8d-1111-2222-3333-b00fa1aa7fd6
+id: b0cf5d2b-1111-2222-3333-34e6b4675d2f
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects rare mshta child process
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.execution
+    - attack.privilege_escalation/T1548
+    - attack.defense_evasion
