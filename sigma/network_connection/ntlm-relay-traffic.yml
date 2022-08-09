@@ -1,17 +1,17 @@
 title: ntlm-relay-traffic
-id: 30d47db2-1111-2222-3333-5c4ab932af0c
+id: 4d0d603e-1111-2222-3333-eff9405663bd
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
         ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
+    - attack.collection/T1560
     - attack.discovery
