@@ -1,17 +1,17 @@
 title: bloodhound-collect
-id: b4439525-1111-2222-3333-c93369f2cdcb
+id: 9db23bcd-1111-2222-3333-811df611c0b4
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects encoded launcher from office parents
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.credential_access
+    - attack.persistence/T1053
+    - attack.persistence
