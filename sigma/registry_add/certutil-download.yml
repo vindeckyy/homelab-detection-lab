@@ -1,17 +1,17 @@
 title: certutil-download
-id: 38b1a78b-1111-2222-3333-4c96bebfa35f
+id: eb2bca95-1111-2222-3333-1c1a2d9afdda
 status: stable
-description: Detects rare mshta child process
+description: Detects encoded launcher from office parents
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.lateral_movement
+    - attack.persistence/T1053
+    - attack.persistence
