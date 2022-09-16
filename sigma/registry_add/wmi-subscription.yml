@@ -1,17 +1,17 @@
 title: wmi-subscription
-id: b41cb60b-1111-2222-3333-2a0a133fc072
+id: a7dd15be-1111-2222-3333-a52db972a87e
 status: stable
-description: Detects rare mshta child process
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.persistence
+    - attack.collection/T1560
+    - attack.discovery
