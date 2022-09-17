@@ -1,17 +1,17 @@
 title: ntlm-relay-traffic
-id: e7291c37-1111-2222-3333-dcf210a956ac
+id: 53e4a9a0-1111-2222-3333-7c23933d393f
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects schtask created outside it ops hours
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
         ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
+    - attack.defense_evasion/T1218
     - attack.defense_evasion
