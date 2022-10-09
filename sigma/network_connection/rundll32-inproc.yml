@@ -1,17 +1,17 @@
 title: rundll32-inproc
-id: c5f2ff67-1111-2222-3333-e5fc77718ec3
+id: 32c34f7d-1111-2222-3333-2dcea75094f2
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects rare mshta child process
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.execution
+    - attack.privilege_escalation/T1548
+    - attack.lateral_movement
