@@ -1,17 +1,17 @@
 title: spooler-service-kill
-id: 09ff509a-1111-2222-3333-ef9afb3a56d5
+id: 459d67ed-1111-2222-3333-4f2496259bd3
 status: stable
-description: Detects rare mshta child process
+description: Detects schtask created outside it ops hours
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.discovery
+    - attack.persistence/T1053
+    - attack.persistence
