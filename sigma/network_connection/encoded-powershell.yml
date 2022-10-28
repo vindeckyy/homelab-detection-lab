@@ -1,17 +1,17 @@
 title: encoded-powershell
-id: 9a8be286-1111-2222-3333-1dec55bdf76d
+id: 1a702635-1111-2222-3333-182b39c5eaf0
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects rare mshta child process
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.credential_access
+    - attack.discovery/T1046
+    - attack.persistence
