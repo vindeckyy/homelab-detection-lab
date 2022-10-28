@@ -1,17 +1,17 @@
 title: gpo-edit-rare
-id: 19bfb98c-1111-2222-3333-099d52e18b3f
+id: cd47cb98-1111-2222-3333-57b33588b26d
 status: stable
-description: Detects rare mshta child process
+description: Detects encoded launcher from office parents
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.credential_access
+    - attack.discovery/T1046
+    - attack.persistence
