@@ -1,17 +1,17 @@
 title: lsass-handle-access
-id: bb2db769-1111-2222-3333-2a4546e72fca
+id: 9e182056-1111-2222-3333-acb6d2fc3f9f
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects rare mshta child process
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.lateral_movement
+    - attack.collection/T1560
+    - attack.persistence
