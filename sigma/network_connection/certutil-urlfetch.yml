@@ -1,17 +1,17 @@
 title: certutil-urlfetch
-id: cc90a1a4-1111-2222-3333-e4327a44358a
+id: 42d0e8e5-1111-2222-3333-b3b169883559
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.execution
+    - attack.defense_evasion/T1218
+    - attack.lateral_movement
