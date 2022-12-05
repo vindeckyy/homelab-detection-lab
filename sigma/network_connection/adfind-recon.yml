@@ -1,17 +1,17 @@
 title: adfind-recon
-id: 57087e42-1111-2222-3333-f08358b403da
+id: e7c36c2a-1111-2222-3333-8a54cfaee297
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.defense_evasion
+    - attack.privilege_escalation/T1548
+    - attack.execution
