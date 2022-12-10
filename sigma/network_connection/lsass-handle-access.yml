@@ -1,5 +1,5 @@
 title: lsass-handle-access
-id: dee66d7c-1111-2222-3333-ae1d221e51c7
+id: e4e83f27-1111-2222-3333-76c4b2eea648
 status: stable
 description: Detects rare mshta child process
 logsource:
@@ -7,11 +7,11 @@ logsource:
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.defense_evasion
+    - attack.credential_access/T1003
+    - attack.persistence
