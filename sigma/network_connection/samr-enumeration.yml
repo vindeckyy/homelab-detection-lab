@@ -1,17 +1,17 @@
 title: samr-enumeration
-id: 4d41f40c-1111-2222-3333-709e1077c202
+id: 648ae17f-1111-2222-3333-72c67081700f
 status: stable
-description: Detects rare mshta child process
+description: Detects schtask created outside it ops hours
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.execution
+    - attack.defense_evasion/T1218
+    - attack.lateral_movement
