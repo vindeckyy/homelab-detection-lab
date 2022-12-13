@@ -1,17 +1,17 @@
 title: klist-purge-loop
-id: 6076c9ef-1111-2222-3333-d99f8bbd598c
+id: f4f0fe8a-1111-2222-3333-7be5bd1d0187
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.persistence
+    - attack.privilege_escalation/T1548
+    - attack.defense_evasion
