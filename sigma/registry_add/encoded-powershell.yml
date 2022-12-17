@@ -1,17 +1,17 @@
 title: encoded-powershell
-id: 9621660d-1111-2222-3333-be69eee09df6
+id: ec0786f9-1111-2222-3333-782c0fcbaa0f
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.persistence
+    - attack.lateral_movement/T1021
+    - attack.lateral_movement
