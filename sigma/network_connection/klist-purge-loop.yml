@@ -1,17 +1,17 @@
 title: klist-purge-loop
-id: 66512f84-1111-2222-3333-1e825cf91a0b
+id: 9bb05d2b-1111-2222-3333-c15ae2ec430c
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects encoded launcher from office parents
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
         ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
+    - attack.credential_access/T1003
     - attack.credential_access
