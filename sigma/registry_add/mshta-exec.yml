@@ -1,17 +1,17 @@
 title: mshta-exec
-id: cf9ed183-1111-2222-3333-5f2594eff936
+id: b98318fc-1111-2222-3333-c5bb5a57fd51
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.execution
+    - attack.persistence/T1053
+    - attack.discovery
