@@ -1,17 +1,17 @@
 title: schtask-persist
-id: 6437df55-1111-2222-3333-254046c1982c
+id: 7eec406e-1111-2222-3333-28850f6fa5e6
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.discovery
+    - attack.lateral_movement/T1021
+    - attack.lateral_movement
