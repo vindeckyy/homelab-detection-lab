@@ -1,17 +1,17 @@
 title: wmi-subscription
-id: a96cb1ae-1111-2222-3333-08203165e687
+id: a4b370a0-1111-2222-3333-344796fa0820
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects rare mshta child process
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.lateral_movement
+    - attack.discovery/T1046
+    - attack.persistence
