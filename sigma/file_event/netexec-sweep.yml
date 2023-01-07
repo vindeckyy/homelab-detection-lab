@@ -1,17 +1,17 @@
 title: netexec-sweep
-id: 54952a2c-1111-2222-3333-39f0b42f2317
+id: 02a38efd-1111-2222-3333-f29ac94fce29
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects rare mshta child process
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.execution
+    - attack.lateral_movement/T1021
+    - attack.defense_evasion
