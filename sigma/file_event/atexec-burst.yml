@@ -1,17 +1,17 @@
 title: atexec-burst
-id: 688ed3b9-1111-2222-3333-91645180f42b
+id: cc1cef21-1111-2222-3333-fb1960434c0e
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
         ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
+    - attack.persistence/T1053
     - attack.persistence
