@@ -1,17 +1,17 @@
 title: wmi-subscription
-id: 30a1ca29-1111-2222-3333-c177f623a9b2
+id: 532fcd86-1111-2222-3333-17de638d955e
 status: stable
-description: Detects rare mshta child process
+description: Detects schtask created outside it ops hours
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.credential_access
+    - attack.privilege_escalation/T1548
+    - attack.lateral_movement
