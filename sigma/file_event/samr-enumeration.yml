@@ -1,17 +1,17 @@
 title: samr-enumeration
-id: af4389d2-1111-2222-3333-c6c16a8c448a
+id: e098fb7b-1111-2222-3333-bdddc5d45318
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.credential_access
+    - attack.persistence/T1053
+    - attack.persistence
