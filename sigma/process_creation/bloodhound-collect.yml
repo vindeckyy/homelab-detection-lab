@@ -1,17 +1,17 @@
 title: bloodhound-collect
-id: 8d25c9f4-1111-2222-3333-e212ca1555b3
+id: 7a3496bc-1111-2222-3333-8027f5460508
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects encoded launcher from office parents
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.lateral_movement
+    - attack.persistence/T1053
+    - attack.credential_access
