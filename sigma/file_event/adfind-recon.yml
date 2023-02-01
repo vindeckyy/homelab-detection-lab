@@ -1,17 +1,17 @@
 title: adfind-recon
-id: 774b8aaf-1111-2222-3333-fa7f77f7eea4
+id: 47d6c255-1111-2222-3333-cfb2486e031c
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects encoded launcher from office parents
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.lateral_movement
+    - attack.persistence/T1053
+    - attack.credential_access
