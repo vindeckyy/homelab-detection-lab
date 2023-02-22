@@ -1,17 +1,17 @@
 title: anon-smb-session
-id: 9bd897b9-1111-2222-3333-b0145b7889a7
+id: cf2fb87b-1111-2222-3333-3734906d3fec
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.execution
+    - attack.privilege_escalation/T1548
+    - attack.defense_evasion
