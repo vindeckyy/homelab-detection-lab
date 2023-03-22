@@ -1,17 +1,17 @@
 title: dsquery-domain-dump
-id: 936b7648-1111-2222-3333-8c92ba9946d4
+id: b0a9ecc0-1111-2222-3333-678189ebf305
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects rare mshta child process
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.discovery
+    - attack.defense_evasion/T1218
+    - attack.execution
