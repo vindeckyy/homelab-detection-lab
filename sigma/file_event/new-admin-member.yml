@@ -1,17 +1,17 @@
 title: new-admin-member
-id: 12d76c8b-1111-2222-3333-75c0043f71e4
+id: 4d2be48c-1111-2222-3333-29da32f6e66f
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects rare mshta child process
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
         ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
+    - attack.defense_evasion/T1218
     - attack.lateral_movement
