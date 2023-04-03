@@ -1,17 +1,17 @@
 title: netexec-sweep
-id: 4b167da8-1111-2222-3333-570d901d4409
+id: ac7f0c04-1111-2222-3333-4447767a7ac2
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects rare mshta child process
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.persistence
+    - attack.defense_evasion/T1218
+    - attack.execution
