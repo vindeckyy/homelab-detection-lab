@@ -1,17 +1,17 @@
 title: mimikatz-keys
-id: 1fcfc5d7-1111-2222-3333-76404f586509
+id: 7be9d41d-1111-2222-3333-b9645ace1da2
 status: stable
-description: Detects rare mshta child process
+description: Detects encoded launcher from office parents
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.credential_access
+    - attack.execution/T1059
+    - attack.lateral_movement
