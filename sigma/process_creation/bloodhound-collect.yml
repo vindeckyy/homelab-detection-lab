@@ -1,17 +1,17 @@
 title: bloodhound-collect
-id: 6b405143-1111-2222-3333-720719ef84ea
+id: 50fc94eb-1111-2222-3333-ead0a9f5d7fe
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects schtask created outside it ops hours
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.credential_access
+    - attack.collection/T1560
+    - attack.persistence
