@@ -1,17 +1,17 @@
 title: spooler-service-kill
-id: 7d0903b2-1111-2222-3333-d849aaa76f36
+id: 662e64f3-1111-2222-3333-b7e6b07944a1
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
         ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
+    - attack.collection/T1560
     - attack.persistence
