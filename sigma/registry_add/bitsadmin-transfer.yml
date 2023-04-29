@@ -1,17 +1,17 @@
 title: bitsadmin-transfer
-id: 624f05f6-1111-2222-3333-937a4ae35c22
+id: e45e4f70-1111-2222-3333-5b970fcec3cf
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects rare mshta child process
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
         ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
+    - attack.defense_evasion/T1218
     - attack.lateral_movement
