@@ -1,17 +1,17 @@
 title: kerberoast-activity
-id: 6f393a20-1111-2222-3333-57ec07c4d7ca
+id: ec0bb8b4-1111-2222-3333-c91c72366a3b
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.credential_access
+    - attack.execution/T1059
+    - attack.execution
