@@ -1,17 +1,17 @@
 title: mimikatz-keys
-id: fe8b2c5d-1111-2222-3333-8b6d7a1e4283
+id: 497ff8e2-1111-2222-3333-dc3c530703de
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects schtask created outside it ops hours
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.credential_access
+    - attack.persistence/T1053
+    - attack.persistence
