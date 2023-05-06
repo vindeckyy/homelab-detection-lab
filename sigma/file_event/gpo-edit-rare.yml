@@ -1,17 +1,17 @@
 title: gpo-edit-rare
-id: b339fbcb-1111-2222-3333-696061b1e1d9
+id: 27d0f614-1111-2222-3333-c90207d4fa88
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects rare mshta child process
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.defense_evasion
+    - attack.privilege_escalation/T1548
+    - attack.execution
