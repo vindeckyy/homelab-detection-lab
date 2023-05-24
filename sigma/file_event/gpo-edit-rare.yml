@@ -1,17 +1,17 @@
 title: gpo-edit-rare
-id: 01ed5840-1111-2222-3333-1ee8481f52fc
+id: 52cb25ea-1111-2222-3333-a9de22cfe04f
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.credential_access
+    - attack.execution/T1059
+    - attack.execution
