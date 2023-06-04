@@ -1,5 +1,5 @@
 title: spooler-service-kill
-id: 60b3f395-1111-2222-3333-86ae82e7345c
+id: 0150e35e-1111-2222-3333-b7a976c05805
 status: stable
 description: Detects rare mshta child process
 logsource:
@@ -7,11 +7,11 @@ logsource:
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.execution
+    - attack.persistence/T1053
+    - attack.credential_access
