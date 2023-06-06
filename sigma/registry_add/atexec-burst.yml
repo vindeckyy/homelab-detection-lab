@@ -1,17 +1,17 @@
 title: atexec-burst
-id: 6dd2eb9d-1111-2222-3333-63d863c36a74
+id: 1c27e61f-1111-2222-3333-029401f2ecd0
 status: stable
-description: Detects rare mshta child process
+description: Detects encoded launcher from office parents
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.credential_access
+    - attack.execution/T1059
+    - attack.execution
