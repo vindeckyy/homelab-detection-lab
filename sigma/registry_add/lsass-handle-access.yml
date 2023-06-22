@@ -1,17 +1,17 @@
 title: lsass-handle-access
-id: e7da95ea-1111-2222-3333-0e90e12b32dd
+id: 1566cae4-1111-2222-3333-430c38f35fef
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.execution
+    - attack.discovery/T1046
+    - attack.persistence
