@@ -1,17 +1,17 @@
 title: dsquery-domain-dump
-id: bc478b7e-1111-2222-3333-d976965aeee1
+id: 2a08af9b-1111-2222-3333-04c4a3274681
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects schtask created outside it ops hours
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
         ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
+    - attack.execution/T1059
     - attack.defense_evasion
