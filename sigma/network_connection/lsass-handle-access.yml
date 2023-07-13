@@ -1,5 +1,5 @@
 title: lsass-handle-access
-id: fb3dcb0f-1111-2222-3333-2577577f9d9e
+id: b160f6b5-1111-2222-3333-cf1699b33923
 status: stable
 description: Detects encoded launcher from office parents
 logsource:
@@ -7,11 +7,11 @@ logsource:
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.defense_evasion
+    - attack.persistence/T1053
+    - attack.credential_access
