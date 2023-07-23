@@ -1,5 +1,5 @@
 title: mshta-exec
-id: 07af486c-1111-2222-3333-9b19f86657da
+id: 0bb9358b-1111-2222-3333-9b2df05c69b1
 status: stable
 description: Detects rare mshta child process
 logsource:
@@ -7,11 +7,11 @@ logsource:
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.lateral_movement
+    - attack.persistence/T1053
+    - attack.credential_access
