@@ -1,17 +1,17 @@
 title: mimikatz-keys
-id: 65ae7a4c-1111-2222-3333-f198e06da856
+id: 6249c1f4-1111-2222-3333-8be7a410466a
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects rare mshta child process
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.execution
+    - attack.execution/T1059
+    - attack.defense_evasion
