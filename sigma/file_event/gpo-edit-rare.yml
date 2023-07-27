@@ -1,17 +1,17 @@
 title: gpo-edit-rare
-id: 11fa04cf-1111-2222-3333-c6fda3e7c4d9
+id: 9099a7fa-1111-2222-3333-35f190e5c3f1
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects encoded launcher from office parents
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.credential_access
+    - attack.execution/T1059
+    - attack.lateral_movement
