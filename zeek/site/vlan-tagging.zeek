@@ -1,5 +1,5 @@
 # site policy: vlan-tagging
-@load base/protocols/ssl
+@load base/protocols/conn
 
 export {
     redef LogAscii::use_json = T;
