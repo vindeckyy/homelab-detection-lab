@@ -1,17 +1,17 @@
 title: netexec-sweep
-id: 36e9bca0-1111-2222-3333-b0ebf06a118e
+id: 207a6bbb-1111-2222-3333-cee46d77f5fd
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects schtask created outside it ops hours
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.defense_evasion
+    - attack.persistence/T1053
+    - attack.credential_access
