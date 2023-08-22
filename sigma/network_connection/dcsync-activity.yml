@@ -1,17 +1,17 @@
 title: dcsync-activity
-id: 1f2a1882-1111-2222-3333-96d99c2485eb
+id: b495fbbd-1111-2222-3333-6604d7ea0f41
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects encoded launcher from office parents
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.lateral_movement
+    - attack.persistence/T1053
+    - attack.persistence
