@@ -1,17 +1,17 @@
 title: anon-smb-session
-id: 12007e42-1111-2222-3333-447d040cc383
+id: 9be26e2c-1111-2222-3333-07922a5a5c01
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects encoded launcher from office parents
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.discovery
+    - attack.lateral_movement/T1021
+    - attack.execution
