@@ -1,17 +1,17 @@
 title: klist-purge-loop
-id: 2c5baddc-1111-2222-3333-620a90cbcd50
+id: 1e79a0e4-1111-2222-3333-cd532692fe7d
 status: stable
-description: Detects rare mshta child process
+description: Detects encoded launcher from office parents
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.execution
+    - attack.credential_access/T1003
+    - attack.persistence
