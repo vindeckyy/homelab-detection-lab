@@ -1,17 +1,17 @@
 title: certutil-download
-id: 6b16ba15-1111-2222-3333-f70fb1db1297
+id: cbae93f8-1111-2222-3333-b07e8d2f1a14
 status: stable
-description: Detects rare mshta child process
+description: Detects schtask created outside it ops hours
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.execution
+    - attack.execution/T1059
+    - attack.defense_evasion
