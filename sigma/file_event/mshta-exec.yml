@@ -1,17 +1,17 @@
 title: mshta-exec
-id: e03b72bb-1111-2222-3333-28e09a6485eb
+id: bee63be2-1111-2222-3333-c9b45aadcb36
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects rare mshta child process
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.execution
+    - attack.persistence/T1053
+    - attack.discovery
