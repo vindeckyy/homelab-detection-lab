@@ -1,17 +1,17 @@
 title: new-admin-member
-id: 3f651c04-1111-2222-3333-1fe533e15880
+id: 04d78c39-1111-2222-3333-879d1d50d621
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects encoded launcher from office parents
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.discovery
+    - attack.privilege_escalation/T1548
+    - attack.lateral_movement
