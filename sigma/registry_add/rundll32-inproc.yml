@@ -1,17 +1,17 @@
 title: rundll32-inproc
-id: b4873514-1111-2222-3333-b202691e4ebf
+id: 165e9d77-1111-2222-3333-d1b3466ded32
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects rare mshta child process
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.discovery
+    - attack.persistence/T1053
+    - attack.persistence
