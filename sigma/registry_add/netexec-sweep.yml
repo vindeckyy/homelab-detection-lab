@@ -1,17 +1,17 @@
 title: netexec-sweep
-id: f2d89483-1111-2222-3333-2e49c4fc31d5
+id: cfd9dfe6-1111-2222-3333-b6ef5fb4dea6
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects rare mshta child process
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.discovery
+    - attack.collection/T1560
+    - attack.credential_access
