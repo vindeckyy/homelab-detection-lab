@@ -1,17 +1,17 @@
 title: mshta-exec
-id: a22b8f4a-1111-2222-3333-97fd63030aef
+id: 50ba656b-1111-2222-3333-e34423c46d5a
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects schtask created outside it ops hours
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.discovery
+    - attack.collection/T1560
+    - attack.credential_access
