@@ -1,17 +1,17 @@
 title: regsvr32-http
-id: e9e32ab9-1111-2222-3333-025121c43d1a
+id: ee7fe727-1111-2222-3333-cc9a95c64e5d
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.lateral_movement
+    - attack.persistence/T1053
+    - attack.credential_access
