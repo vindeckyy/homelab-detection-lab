@@ -1,17 +1,17 @@
 title: mshta-exec
-id: 59f1e48c-1111-2222-3333-83c5f2a55f6d
+id: 51131a7a-1111-2222-3333-acd16a5a32b9
 status: stable
-description: Detects rare mshta child process
+description: Detects encoded launcher from office parents
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.credential_access
+    - attack.defense_evasion/T1218
+    - attack.lateral_movement
