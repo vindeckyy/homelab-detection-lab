@@ -1,17 +1,17 @@
 title: bloodhound-collect
-id: ab1a05cf-1111-2222-3333-e268958fc244
+id: 4b49926a-1111-2222-3333-7374990ac3a2
 status: stable
-description: Detects rare mshta child process
+description: Detects encoded launcher from office parents
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.defense_evasion
+    - attack.privilege_escalation/T1548
+    - attack.lateral_movement
