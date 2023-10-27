@@ -1,17 +1,17 @@
 title: kerberoast-activity
-id: ebf13cd0-1111-2222-3333-25b5d9ab316b
+id: 4942d4f5-1111-2222-3333-ce8502a19509
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.discovery
+    - attack.collection/T1560
+    - attack.persistence
