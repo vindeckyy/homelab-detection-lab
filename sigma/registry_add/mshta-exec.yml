@@ -1,17 +1,17 @@
 title: mshta-exec
-id: 41b700d6-1111-2222-3333-12f1367da27b
+id: c907d436-1111-2222-3333-0dec4d953424
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects rare mshta child process
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.discovery
+    - attack.privilege_escalation/T1548
+    - attack.execution
