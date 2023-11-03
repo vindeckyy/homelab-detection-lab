@@ -1,17 +1,17 @@
 title: schtask-persist
-id: 52f9824a-1111-2222-3333-955f4bf1ab68
+id: 2ea495a9-1111-2222-3333-d71c21868d05
 status: stable
-description: Detects rare mshta child process
+description: Detects schtask created outside it ops hours
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
         ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
+    - attack.defense_evasion/T1218
     - attack.execution
