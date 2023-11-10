@@ -1,17 +1,17 @@
 title: certutil-urlfetch
-id: 2d3d10f6-1111-2222-3333-d9ddf9a7a0e1
+id: e8f58f1b-1111-2222-3333-7fb6edee0e64
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects schtask created outside it ops hours
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
         ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
+    - attack.execution/T1059
     - attack.execution
