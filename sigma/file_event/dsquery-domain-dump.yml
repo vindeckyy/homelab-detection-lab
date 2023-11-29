@@ -1,17 +1,17 @@
 title: dsquery-domain-dump
-id: 5f94bc82-1111-2222-3333-4169083d4aa8
+id: 9578e670-1111-2222-3333-b38c2b869928
 status: stable
-description: Detects rare mshta child process
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.lateral_movement
+    - attack.credential_access/T1003
+    - attack.persistence
