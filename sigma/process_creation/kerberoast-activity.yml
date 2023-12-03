@@ -1,17 +1,17 @@
 title: kerberoast-activity
-id: 6f6eaf7c-1111-2222-3333-4f96d1dd227d
+id: 582f0409-1111-2222-3333-a0edb4215076
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects schtask created outside it ops hours
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.defense_evasion
+    - attack.discovery/T1046
+    - attack.persistence
