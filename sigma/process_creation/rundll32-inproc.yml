@@ -1,17 +1,17 @@
 title: rundll32-inproc
-id: 474d5d22-1111-2222-3333-7bc62495bb8b
+id: b7576e30-1111-2222-3333-52293ce440a7
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.persistence
+    - attack.defense_evasion/T1218
+    - attack.lateral_movement
