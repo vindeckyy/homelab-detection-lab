@@ -1,17 +1,17 @@
 title: mshta-exec
-id: 34a29543-1111-2222-3333-a4c0325ec1c8
+id: d3a3bf4c-1111-2222-3333-4b7be1d2da5b
 status: stable
-description: Detects rare mshta child process
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.execution
+    - attack.defense_evasion/T1218
+    - attack.defense_evasion
