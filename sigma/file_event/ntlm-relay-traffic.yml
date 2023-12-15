@@ -1,5 +1,5 @@
 title: ntlm-relay-traffic
-id: 822b8b4d-1111-2222-3333-7b38b8b4cdfb
+id: 6a4fa8c8-1111-2222-3333-6ec77fcc6827
 status: stable
 description: Detects encoded launcher from office parents
 logsource:
@@ -7,11 +7,11 @@ logsource:
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.defense_evasion
+    - attack.discovery/T1046
+    - attack.persistence
