@@ -1,17 +1,17 @@
 title: new-admin-member
-id: 1e628064-1111-2222-3333-b9eb6f8b8c3e
+id: a8b4acf4-1111-2222-3333-22d972515bb4
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects schtask created outside it ops hours
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.credential_access
+    - attack.privilege_escalation/T1548
+    - attack.execution
