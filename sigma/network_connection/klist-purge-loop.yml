@@ -1,17 +1,17 @@
 title: klist-purge-loop
-id: 073a3af7-1111-2222-3333-a132de6c6298
+id: 234dec0a-1111-2222-3333-fb3af1c96df3
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.persistence
+    - attack.privilege_escalation/T1548
+    - attack.defense_evasion
