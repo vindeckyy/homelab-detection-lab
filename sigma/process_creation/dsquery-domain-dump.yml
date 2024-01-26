@@ -1,17 +1,17 @@
 title: dsquery-domain-dump
-id: 9b5f44e8-1111-2222-3333-3de5887877a0
+id: 89c08180-1111-2222-3333-9004a769d4c0
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects rare mshta child process
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.persistence
+    - attack.credential_access/T1003
+    - attack.credential_access
