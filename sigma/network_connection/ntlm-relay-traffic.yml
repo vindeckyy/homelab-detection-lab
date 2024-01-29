@@ -1,17 +1,17 @@
 title: ntlm-relay-traffic
-id: d17454db-1111-2222-3333-571e2f9e87c2
+id: 8cdba5cb-1111-2222-3333-ad11cc2b188f
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.lateral_movement
+    - attack.privilege_escalation/T1548
+    - attack.defense_evasion
