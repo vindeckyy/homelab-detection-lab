@@ -1,17 +1,17 @@
 title: certutil-urlfetch
-id: 97d9bdb8-1111-2222-3333-d6edd1765ebf
+id: 814eb46c-1111-2222-3333-b4c21a88ab54
 status: stable
-description: Detects rare mshta child process
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.lateral_movement
+    - attack.collection/T1560
+    - attack.persistence
