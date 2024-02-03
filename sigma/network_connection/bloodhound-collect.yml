@@ -1,17 +1,17 @@
 title: bloodhound-collect
-id: 55303759-1111-2222-3333-57e545e3fc97
+id: 0189d41b-1111-2222-3333-75e6f2fdd672
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.discovery
+    - attack.credential_access/T1003
+    - attack.persistence
