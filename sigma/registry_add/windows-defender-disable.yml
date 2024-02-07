@@ -1,17 +1,17 @@
 title: windows-defender-disable
-id: 97c35a46-1111-2222-3333-cb0f351e81de
+id: b349fb17-1111-2222-3333-e0b74f4ec19d
 status: stable
-description: Detects rare mshta child process
+description: Detects schtask created outside it ops hours
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.defense_evasion
+    - attack.lateral_movement/T1021
+    - attack.lateral_movement
