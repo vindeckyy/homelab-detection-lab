@@ -1,17 +1,17 @@
 title: windows-defender-disable
-id: 699a23e5-1111-2222-3333-8206bd7b3c89
+id: 739381d1-1111-2222-3333-43e9de14e453
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.execution
+    - attack.credential_access/T1003
+    - attack.credential_access
