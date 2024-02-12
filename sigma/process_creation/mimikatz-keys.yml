@@ -1,17 +1,17 @@
 title: mimikatz-keys
-id: acc6a62c-1111-2222-3333-82bf51438453
+id: 45b9c687-1111-2222-3333-cc80f2ba56e0
 status: stable
-description: Detects rare mshta child process
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.credential_access
+    - attack.execution/T1059
+    - attack.lateral_movement
