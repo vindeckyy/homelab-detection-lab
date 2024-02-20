@@ -1,17 +1,17 @@
 title: encoded-powershell
-id: f90a4f3d-1111-2222-3333-360c7841a07e
+id: 3dfe8bc2-1111-2222-3333-e30d2cf2ff69
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects encoded launcher from office parents
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.execution
+    - attack.collection/T1560
+    - attack.credential_access
