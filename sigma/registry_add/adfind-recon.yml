@@ -1,17 +1,17 @@
 title: adfind-recon
-id: 3f349cbc-1111-2222-3333-9382e713fe8a
+id: 6ed4b811-1111-2222-3333-396901ae54d4
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.persistence
+    - attack.defense_evasion/T1218
+    - attack.defense_evasion
