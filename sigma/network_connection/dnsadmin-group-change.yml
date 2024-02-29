@@ -1,17 +1,17 @@
 title: dnsadmin-group-change
-id: 0f4d6ecc-1111-2222-3333-bbd3a1ff5114
+id: d4d10993-1111-2222-3333-8b9850d04502
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.credential_access
+    - attack.privilege_escalation/T1548
+    - attack.lateral_movement
