@@ -1,17 +1,17 @@
 title: wmi-subscription
-id: 90a1f7ce-1111-2222-3333-6e7d23e4a07a
+id: 5f30a2b4-1111-2222-3333-6cf04f895338
 status: stable
-description: Detects rare mshta child process
+description: Detects encoded launcher from office parents
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.discovery
+    - attack.credential_access/T1003
+    - attack.persistence
