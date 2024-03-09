@@ -1,17 +1,17 @@
 title: windows-defender-disable
-id: b567f7d3-1111-2222-3333-2c8452343ae9
+id: 74fb661b-1111-2222-3333-c17facf9c6a5
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects rare mshta child process
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.discovery
+    - attack.defense_evasion/T1218
+    - attack.lateral_movement
