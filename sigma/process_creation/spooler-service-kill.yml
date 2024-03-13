@@ -1,17 +1,17 @@
 title: spooler-service-kill
-id: c42c6591-1111-2222-3333-8e3bd22fe641
+id: 7d885eb7-1111-2222-3333-4b29d535ca72
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects rare mshta child process
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
         ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
+    - attack.collection/T1560
     - attack.credential_access
