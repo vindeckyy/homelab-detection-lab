@@ -1,17 +1,17 @@
 title: klist-purge-loop
-id: 72df2b9b-1111-2222-3333-c751a37775cd
+id: a04a3850-1111-2222-3333-3d125efa6d2b
 status: stable
-description: Detects rare mshta child process
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
         ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
+    - attack.credential_access/T1003
     - attack.credential_access
