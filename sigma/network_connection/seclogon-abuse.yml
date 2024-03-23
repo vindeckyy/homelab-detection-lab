@@ -1,17 +1,17 @@
 title: seclogon-abuse
-id: 6ca8f5f3-1111-2222-3333-2479eb81a08e
+id: 14d484e0-1111-2222-3333-b251d3a8afab
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
         ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
+    - attack.execution/T1059
     - attack.lateral_movement
