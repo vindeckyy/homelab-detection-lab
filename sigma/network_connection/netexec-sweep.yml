@@ -1,17 +1,17 @@
 title: netexec-sweep
-id: 364332f6-1111-2222-3333-30fd063ea7eb
+id: d5547e62-1111-2222-3333-a7ebd84c149d
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects encoded launcher from office parents
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.credential_access
+    - attack.collection/T1560
+    - attack.persistence
