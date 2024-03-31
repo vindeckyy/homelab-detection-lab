@@ -1,17 +1,17 @@
 title: bloodhound-collect
-id: dec96eda-1111-2222-3333-c5a59d07a065
+id: d818f7fc-1111-2222-3333-faea3ce2288c
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects schtask created outside it ops hours
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.discovery
+    - attack.execution/T1059
+    - attack.lateral_movement
