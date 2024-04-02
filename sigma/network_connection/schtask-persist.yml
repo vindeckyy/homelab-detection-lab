@@ -1,17 +1,17 @@
 title: schtask-persist
-id: 70025309-1111-2222-3333-95bd67749699
+id: e9446ce0-1111-2222-3333-7b928b61fd00
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.lateral_movement
+    - attack.privilege_escalation/T1548
+    - attack.defense_evasion
