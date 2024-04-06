@@ -1,17 +1,17 @@
 title: seclogon-abuse
-id: 35c1f016-1111-2222-3333-c0682d22115b
+id: 14aedaad-1111-2222-3333-e9c2964b0a8b
 status: stable
-description: Detects rare mshta child process
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.lateral_movement
+    - attack.lateral_movement/T1021
+    - attack.defense_evasion
