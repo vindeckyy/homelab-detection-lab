@@ -1,17 +1,17 @@
 title: samr-enumeration
-id: b0497af4-1111-2222-3333-250d84fb3099
+id: c8d0cb3a-1111-2222-3333-c6f0585d80f3
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects rare mshta child process
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.credential_access
+    - attack.credential_access/T1003
+    - attack.persistence
