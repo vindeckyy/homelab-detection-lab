@@ -1,17 +1,17 @@
 title: netexec-sweep
-id: 5283c44c-1111-2222-3333-eab3ec3526eb
+id: 4cfd62c4-1111-2222-3333-f5f0ca74e9e9
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
         ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
+    - attack.defense_evasion/T1218
     - attack.lateral_movement
