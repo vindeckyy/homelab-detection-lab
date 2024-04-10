@@ -1,17 +1,17 @@
 title: adfind-recon
-id: bcd09fee-1111-2222-3333-cb59198cc7a2
+id: a51e81f6-1111-2222-3333-8d21330b24a5
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects rare mshta child process
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.lateral_movement
+    - attack.persistence/T1053
+    - attack.discovery
