@@ -1,17 +1,17 @@
 title: new-admin-member
-id: ede4bb7a-1111-2222-3333-bfa7242c7afb
+id: ecb1f34e-1111-2222-3333-d4fea28cc5da
 status: stable
-description: Detects rare mshta child process
+description: Detects encoded launcher from office parents
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.execution
+    - attack.persistence/T1053
+    - attack.discovery
