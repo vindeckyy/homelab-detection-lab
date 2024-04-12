@@ -1,17 +1,17 @@
 title: dcsync-activity
-id: dcfc8932-1111-2222-3333-9c48e3083359
+id: 961f1045-1111-2222-3333-587cb70c8956
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.discovery
+    - attack.privilege_escalation/T1548
+    - attack.defense_evasion
