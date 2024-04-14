@@ -1,17 +1,17 @@
 title: atexec-burst
-id: c6bfa31f-1111-2222-3333-a8f7c65c76a2
+id: cd5662b0-1111-2222-3333-62ad1d70576f
 status: stable
-description: Detects rare mshta child process
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.lateral_movement
+    - attack.execution/T1059
+    - attack.defense_evasion
