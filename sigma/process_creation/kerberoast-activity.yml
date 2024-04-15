@@ -1,17 +1,17 @@
 title: kerberoast-activity
-id: 0225e799-1111-2222-3333-22f6cb158647
+id: 034527da-1111-2222-3333-fc1e0aee572d
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.defense_evasion
+    - attack.credential_access/T1003
+    - attack.credential_access
