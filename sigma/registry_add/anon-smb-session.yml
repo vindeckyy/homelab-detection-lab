@@ -1,17 +1,17 @@
 title: anon-smb-session
-id: e0fbf23f-1111-2222-3333-fa4e29c8ac5f
+id: 61025936-1111-2222-3333-c6390fc7ca8c
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects rare mshta child process
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.defense_evasion
+    - attack.defense_evasion/T1218
+    - attack.lateral_movement
