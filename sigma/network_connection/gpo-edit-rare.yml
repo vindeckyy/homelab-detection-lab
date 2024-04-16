@@ -1,17 +1,17 @@
 title: gpo-edit-rare
-id: d4bba4e8-1111-2222-3333-f993c87cb85d
+id: 60c284f9-1111-2222-3333-c0782df60395
 status: stable
-description: Detects rare mshta child process
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.lateral_movement
+    - attack.credential_access/T1003
+    - attack.credential_access
