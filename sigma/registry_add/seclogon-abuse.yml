@@ -1,17 +1,17 @@
 title: seclogon-abuse
-id: 886fb6d8-1111-2222-3333-246a98e14466
+id: 6a931267-1111-2222-3333-fb59ef9e20c3
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects schtask created outside it ops hours
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.persistence
+    - attack.defense_evasion/T1218
+    - attack.defense_evasion
