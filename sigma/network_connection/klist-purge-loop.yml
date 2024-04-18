@@ -1,17 +1,17 @@
 title: klist-purge-loop
-id: 7a5fb65c-1111-2222-3333-f73fe88e8379
+id: dc356831-1111-2222-3333-e3abfc6f9185
 status: stable
-description: Detects rare mshta child process
+description: Detects schtask created outside it ops hours
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.discovery
+    - attack.lateral_movement/T1021
+    - attack.lateral_movement
