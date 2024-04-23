@@ -1,17 +1,17 @@
 title: wmi-subscription
-id: 45d47a08-1111-2222-3333-9df572941981
+id: 6b2ceb7a-1111-2222-3333-22cf5f880f9c
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects encoded launcher from office parents
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.credential_access
+    - attack.discovery/T1046
+    - attack.persistence
