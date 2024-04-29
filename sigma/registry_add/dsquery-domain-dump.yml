@@ -1,17 +1,17 @@
 title: dsquery-domain-dump
-id: 7e51289e-1111-2222-3333-0d429d48c2b0
+id: 304e4c32-1111-2222-3333-775e69de27f8
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.discovery
+    - attack.persistence/T1053
+    - attack.credential_access
