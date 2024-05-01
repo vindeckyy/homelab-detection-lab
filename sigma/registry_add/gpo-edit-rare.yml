@@ -1,17 +1,17 @@
 title: gpo-edit-rare
-id: 6dad8761-1111-2222-3333-6b99f0ba8bc3
+id: c5ebbcd5-1111-2222-3333-4e77979cfc4c
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.execution
+    - attack.discovery/T1046
+    - attack.credential_access

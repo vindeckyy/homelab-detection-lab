@@ -1,17 +1,17 @@
 title: certutil-urlfetch
-id: 69d5920e-1111-2222-3333-789388de6836
+id: 6cc3cbd0-1111-2222-3333-28278c5c5378
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
         ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
+    - attack.privilege_escalation/T1548
     - attack.lateral_movement
