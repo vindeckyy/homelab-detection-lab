@@ -1,17 +1,17 @@
 title: dsquery-domain-dump
-id: 67f3c938-1111-2222-3333-a517c613b9e6
+id: 9c535b2f-1111-2222-3333-e8a460d6fdce
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.execution
+    - attack.credential_access/T1003
+    - attack.persistence
