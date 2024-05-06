@@ -1,5 +1,5 @@
 # site policy: notice-policy
-@load base/protocols/kerberos
+@load base/protocols/ntlm
 
 export {
     redef LogAscii::use_json = T;
