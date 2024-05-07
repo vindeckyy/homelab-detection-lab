@@ -1,17 +1,17 @@
 title: certutil-download
-id: 4fb45aea-1111-2222-3333-09fb49ebf6c5
+id: 2f5d8b85-1111-2222-3333-c53c81665a16
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects rare mshta child process
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.lateral_movement
+    - attack.collection/T1560
+    - attack.persistence
