@@ -1,17 +1,17 @@
 title: gpo-edit-rare
-id: 1f9aaccf-1111-2222-3333-6dd7c92ac4b5
+id: b641e0f4-1111-2222-3333-27a4a7425643
 status: stable
-description: Detects rare mshta child process
+description: Detects schtask created outside it ops hours
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
         ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
+    - attack.defense_evasion/T1218
     - attack.lateral_movement
