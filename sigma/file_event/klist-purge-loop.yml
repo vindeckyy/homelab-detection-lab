@@ -1,17 +1,17 @@
 title: klist-purge-loop
-id: e7c0410c-1111-2222-3333-95bf968f10c2
+id: ebd069e3-1111-2222-3333-28c1c5e6c625
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects schtask created outside it ops hours
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.discovery
+    - attack.collection/T1560
+    - attack.credential_access
