@@ -1,17 +1,17 @@
 title: regsvr32-http
-id: 28ff6a07-1111-2222-3333-be845603a03d
+id: 3d323e69-1111-2222-3333-dfb34a71604d
 status: stable
-description: Detects rare mshta child process
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.execution
+    - attack.privilege_escalation/T1548
+    - attack.lateral_movement
