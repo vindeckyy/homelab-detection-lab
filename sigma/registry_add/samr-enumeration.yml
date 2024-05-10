@@ -1,17 +1,17 @@
 title: samr-enumeration
-id: 18f2da88-1111-2222-3333-afeed848a674
+id: c1d05b12-1111-2222-3333-d9c908c1b1a6
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects encoded launcher from office parents
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.discovery
+    - attack.lateral_movement/T1021
+    - attack.lateral_movement
