@@ -1,17 +1,17 @@
 title: certutil-urlfetch
-id: e3ae7b1b-1111-2222-3333-541f48b0abca
+id: e6ed0d5a-1111-2222-3333-1cee25c59528
 status: stable
-description: Detects rare mshta child process
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.lateral_movement
+    - attack.defense_evasion/T1218
+    - attack.defense_evasion
