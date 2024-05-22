@@ -1,17 +1,17 @@
 title: klist-purge-loop
-id: 65fa38a4-1111-2222-3333-c16f3befcd1c
+id: d5d8afec-1111-2222-3333-17d68ab1e3ed
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects rare mshta child process
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
         ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
+    - attack.lateral_movement/T1021
     - attack.lateral_movement
