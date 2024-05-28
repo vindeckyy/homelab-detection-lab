@@ -1,17 +1,17 @@
 title: certutil-download
-id: 335ce33b-1111-2222-3333-e0126075f0a4
+id: a6fdaed7-1111-2222-3333-da67cefe3b71
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects rare mshta child process
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.credential_access
+    - attack.persistence/T1053
+    - attack.discovery
