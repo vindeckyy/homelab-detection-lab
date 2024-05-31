@@ -1,17 +1,17 @@
 title: mshta-exec
-id: b600ed9e-1111-2222-3333-522d85cf1627
+id: b4856ef3-1111-2222-3333-476ba02cbf2b
 status: stable
-description: Detects rare mshta child process
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.execution
+    - attack.credential_access/T1003
+    - attack.credential_access
