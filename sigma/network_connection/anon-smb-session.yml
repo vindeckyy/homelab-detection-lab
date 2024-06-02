@@ -1,17 +1,17 @@
 title: anon-smb-session
-id: d6530e99-1111-2222-3333-0aaf2ccaabe1
+id: 3ffb20e6-1111-2222-3333-87d29fd365fb
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects encoded launcher from office parents
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.credential_access
+    - attack.defense_evasion/T1218
+    - attack.defense_evasion
