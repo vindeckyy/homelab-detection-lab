@@ -1,17 +1,17 @@
 title: adfind-recon
-id: 21a0c56b-1111-2222-3333-dc0f7391c150
+id: 193787b2-1111-2222-3333-57c705a6d8cc
 status: stable
-description: Detects rare mshta child process
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.credential_access
+    - attack.lateral_movement/T1021
+    - attack.lateral_movement
