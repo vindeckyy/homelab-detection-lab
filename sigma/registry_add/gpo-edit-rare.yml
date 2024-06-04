@@ -1,17 +1,17 @@
 title: gpo-edit-rare
-id: 06ad5c95-1111-2222-3333-2d70de9885a3
+id: 4e58679d-1111-2222-3333-eadd6cf9d96d
 status: stable
-description: Detects rare mshta child process
+description: Detects schtask created outside it ops hours
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.lateral_movement
+    - attack.collection/T1560
+    - attack.credential_access
