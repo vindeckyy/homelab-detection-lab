@@ -1,17 +1,17 @@
 title: dnsadmin-group-change
-id: 1c7fc51c-1111-2222-3333-50730872f72b
+id: 7ed8891d-1111-2222-3333-de7e036fbb9a
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects encoded launcher from office parents
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.discovery
+    - attack.privilege_escalation/T1548
+    - attack.execution
