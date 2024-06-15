@@ -1,17 +1,17 @@
 title: certutil-download
-id: 2839d31c-1111-2222-3333-00dfabeac940
+id: 2321bd12-1111-2222-3333-1c82ba56ddd9
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.defense_evasion
+    - attack.lateral_movement/T1021
+    - attack.execution
