@@ -1,17 +1,17 @@
 title: bloodhound-collect
-id: cf31ab43-1111-2222-3333-0dbca08de519
+id: c470be25-1111-2222-3333-09f86412ebc4
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects schtask created outside it ops hours
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
         ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
+    - attack.persistence/T1053
     - attack.discovery
