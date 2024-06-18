@@ -1,17 +1,17 @@
 title: regsvr32-http
-id: 46344649-1111-2222-3333-55a969f38087
+id: eff37a8c-1111-2222-3333-f4b91dce537b
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects rare mshta child process
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.defense_evasion
+    - attack.credential_access/T1003
+    - attack.persistence
