@@ -1,17 +1,17 @@
 title: regsvr32-http
-id: e388ce92-1111-2222-3333-1dbf9ebc3762
+id: 0704e9e2-1111-2222-3333-c9e914cd4c2e
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects rare mshta child process
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.execution
+    - attack.lateral_movement/T1021
+    - attack.lateral_movement
