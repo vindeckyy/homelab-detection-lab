@@ -1,17 +1,17 @@
 title: adfind-recon
-id: 54a13e66-1111-2222-3333-2354aff280d0
+id: 91664551-1111-2222-3333-6ebc245b2a62
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects encoded launcher from office parents
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.persistence
+    - attack.execution/T1059
+    - attack.lateral_movement
