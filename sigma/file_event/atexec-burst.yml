@@ -1,5 +1,5 @@
 title: atexec-burst
-id: 8b0c445f-1111-2222-3333-ba09b443e273
+id: f338107b-1111-2222-3333-7bfc762de581
 status: stable
 description: Detects regsvr32 loading a remote scriptlet
 logsource:
@@ -7,11 +7,11 @@ logsource:
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.defense_evasion
+    - attack.persistence/T1053
+    - attack.persistence
