@@ -1,17 +1,17 @@
 title: bloodhound-collect
-id: 003a0cf6-1111-2222-3333-c736105a75e5
+id: 0914e759-1111-2222-3333-c4009503d60a
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects rare mshta child process
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.credential_access
+    - attack.discovery/T1046
+    - attack.persistence
