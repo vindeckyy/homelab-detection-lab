@@ -1,5 +1,5 @@
 title: ntlm-relay-traffic
-id: ba858a78-1111-2222-3333-88ff9676be0f
+id: 3589e8d4-1111-2222-3333-43bc9dccc75c
 status: stable
 description: Detects schtask created outside it ops hours
 logsource:
@@ -7,11 +7,11 @@ logsource:
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.persistence
+    - attack.privilege_escalation/T1548
+    - attack.execution
