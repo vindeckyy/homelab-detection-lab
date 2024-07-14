@@ -1,17 +1,17 @@
 title: dcsync-activity
-id: 13d57794-1111-2222-3333-d6552e480ca7
+id: d2eb72fc-1111-2222-3333-2a62bfea3c36
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects schtask created outside it ops hours
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.defense_evasion
+    - attack.privilege_escalation/T1548
+    - attack.execution
