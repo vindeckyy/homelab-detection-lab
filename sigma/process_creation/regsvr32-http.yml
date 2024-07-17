@@ -1,5 +1,5 @@
 title: regsvr32-http
-id: d54afb8f-1111-2222-3333-fa2329abb9f0
+id: 3c97f004-1111-2222-3333-c7469a780c65
 status: stable
 description: Detects certutil fetch to a non-corp host
 logsource:
@@ -7,11 +7,11 @@ logsource:
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.execution
+    - attack.discovery/T1046
+    - attack.persistence
