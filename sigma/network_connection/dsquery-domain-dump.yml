@@ -1,17 +1,17 @@
 title: dsquery-domain-dump
-id: 73965e35-1111-2222-3333-f668d22176f0
+id: 77652909-1111-2222-3333-50e349748994
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects schtask created outside it ops hours
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.execution
+    - attack.collection/T1560
+    - attack.discovery
