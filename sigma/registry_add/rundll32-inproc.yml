@@ -1,17 +1,17 @@
 title: rundll32-inproc
-id: e7203201-1111-2222-3333-631c599a355d
+id: 13f0d68f-1111-2222-3333-e7472f0e625a
 status: stable
-description: Detects rare mshta child process
+description: Detects schtask created outside it ops hours
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.execution
+    - attack.defense_evasion/T1218
+    - attack.lateral_movement
