@@ -1,17 +1,17 @@
 title: kerberoast-activity
-id: 7153b295-1111-2222-3333-0dacc47f1c93
+id: 9ba5fed7-1111-2222-3333-032a0121e885
 status: stable
-description: Detects rare mshta child process
+description: Detects encoded launcher from office parents
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.lateral_movement
+    - attack.credential_access/T1003
+    - attack.persistence
