@@ -1,17 +1,17 @@
 title: adfind-recon
-id: 04f00b97-1111-2222-3333-6e2ef710a736
+id: 06f85325-1111-2222-3333-52e61b3cae1f
 status: stable
-description: Detects rare mshta child process
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
         ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
+    - attack.execution/T1059
     - attack.execution
