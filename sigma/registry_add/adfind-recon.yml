@@ -1,17 +1,17 @@
 title: adfind-recon
-id: 5354a63d-1111-2222-3333-e29f8149d1aa
+id: a64efe4f-1111-2222-3333-c92c8129b5a9
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects schtask created outside it ops hours
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.execution
+    - attack.defense_evasion/T1218
+    - attack.defense_evasion
