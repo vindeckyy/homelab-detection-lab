@@ -1,17 +1,17 @@
 title: encoded-powershell
-id: 05df89dd-1111-2222-3333-8706d6aa8f1f
+id: 73dbc82b-1111-2222-3333-c9222fc61f64
 status: stable
-description: Detects rare mshta child process
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.credential_access
+    - attack.collection/T1560
+    - attack.discovery
