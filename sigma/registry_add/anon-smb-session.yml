@@ -1,17 +1,17 @@
 title: anon-smb-session
-id: 170a2290-1111-2222-3333-54f3829434ba
+id: 67b16f42-1111-2222-3333-485fe867fd99
 status: stable
-description: Detects rare mshta child process
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
         ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
+    - attack.execution/T1059
     - attack.defense_evasion
