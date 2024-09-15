@@ -1,17 +1,17 @@
 title: wmi-subscription
-id: f6b53de2-1111-2222-3333-adcf3489242b
+id: 1215883a-1111-2222-3333-f0ec6ae3f1da
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.lateral_movement
+    - attack.collection/T1560
+    - attack.persistence
