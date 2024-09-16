@@ -1,17 +1,17 @@
 title: dsquery-domain-dump
-id: 60bd7dd5-1111-2222-3333-00e2e815e261
+id: 79a5dd2b-1111-2222-3333-98372fa4ad01
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects schtask created outside it ops hours
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
         ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
+    - attack.credential_access/T1003
     - attack.discovery
