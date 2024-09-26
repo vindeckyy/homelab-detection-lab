@@ -1,17 +1,17 @@
 title: dcsync-activity
-id: 6a1fdf84-1111-2222-3333-c766effb2047
+id: cce28942-1111-2222-3333-c9b64dd3ccbd
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects schtask created outside it ops hours
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.credential_access
+    - attack.credential_access/T1003
+    - attack.discovery
