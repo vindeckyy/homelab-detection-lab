@@ -1,17 +1,17 @@
 title: windows-defender-disable
-id: 41a1e934-1111-2222-3333-5c0f29a61046
+id: acc2124d-1111-2222-3333-f73a46795944
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.execution
+    - attack.defense_evasion/T1218
+    - attack.defense_evasion
