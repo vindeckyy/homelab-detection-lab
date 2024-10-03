@@ -1,17 +1,17 @@
 title: new-admin-member
-id: 3828f0ef-1111-2222-3333-de3150d26bc7
+id: d8d02ba5-1111-2222-3333-955f11378cfa
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.credential_access
+    - attack.credential_access/T1003
+    - attack.persistence
