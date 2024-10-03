@@ -1,17 +1,17 @@
 title: certutil-download
-id: c3b4a9f0-1111-2222-3333-33afdecc475a
+id: b64bc928-1111-2222-3333-9a2fb40bc8d9
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects schtask created outside it ops hours
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.discovery
+    - attack.execution/T1059
+    - attack.lateral_movement
