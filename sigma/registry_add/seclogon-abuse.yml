@@ -1,17 +1,17 @@
 title: seclogon-abuse
-id: c57a87fa-1111-2222-3333-3d09d118de39
+id: 06f2d726-1111-2222-3333-387f1f16bf6b
 status: stable
-description: Detects rare mshta child process
+description: Detects encoded launcher from office parents
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.credential_access
+    - attack.credential_access/T1003
+    - attack.discovery
