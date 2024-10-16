@@ -1,17 +1,17 @@
 title: ntlm-relay-traffic
-id: 716b863e-1111-2222-3333-f0f708fcd0b4
+id: 814db152-1111-2222-3333-bbc85c8d772b
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.credential_access
+    - attack.lateral_movement/T1021
+    - attack.execution
