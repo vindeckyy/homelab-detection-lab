@@ -1,17 +1,17 @@
 title: ntlm-relay-traffic
-id: 1435855f-1111-2222-3333-c99f4d2a6a3b
+id: f8a76635-1111-2222-3333-f255ccc3c6c0
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects rare mshta child process
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.execution
+    - attack.defense_evasion/T1218
+    - attack.lateral_movement
