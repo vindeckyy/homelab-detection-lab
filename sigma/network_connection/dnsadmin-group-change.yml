@@ -1,17 +1,17 @@
 title: dnsadmin-group-change
-id: 0ec37737-1111-2222-3333-ee0202f58980
+id: dafb8bc2-1111-2222-3333-c31c1ab15bf6
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.execution
+    - attack.persistence/T1053
+    - attack.persistence
