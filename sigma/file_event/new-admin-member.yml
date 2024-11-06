@@ -1,17 +1,17 @@
 title: new-admin-member
-id: 1a5e8f4e-1111-2222-3333-f9d8b9bd391f
+id: 4c4ced61-1111-2222-3333-918a8e6d1dc5
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects schtask created outside it ops hours
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.execution
+    - attack.credential_access/T1003
+    - attack.persistence
