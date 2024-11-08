@@ -1,17 +1,17 @@
 title: mshta-exec
-id: b29ded1b-1111-2222-3333-dc10b4e3fc2c
+id: 9f17e252-1111-2222-3333-4e2c46438cfc
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects encoded launcher from office parents
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.defense_evasion
+    - attack.privilege_escalation/T1548
+    - attack.lateral_movement
