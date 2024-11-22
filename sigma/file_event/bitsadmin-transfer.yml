@@ -1,17 +1,17 @@
 title: bitsadmin-transfer
-id: 9edc379b-1111-2222-3333-493e5f619e16
+id: 3f47b99e-1111-2222-3333-aa1916294091
 status: stable
-description: Detects rare mshta child process
+description: Detects encoded launcher from office parents
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.persistence
+    - attack.discovery/T1046
+    - attack.discovery
