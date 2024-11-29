@@ -1,17 +1,17 @@
 title: gpo-edit-rare
-id: 8cb89dc7-1111-2222-3333-fef6e97fc0f0
+id: 54d3846c-1111-2222-3333-689d57d9725e
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.defense_evasion
+    - attack.persistence/T1053
+    - attack.persistence
