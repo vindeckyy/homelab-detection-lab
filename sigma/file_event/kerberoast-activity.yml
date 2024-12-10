@@ -1,17 +1,17 @@
 title: kerberoast-activity
-id: 4bab427d-1111-2222-3333-5638eaccd41e
+id: 6b29f1c8-1111-2222-3333-386fc7fc0653
 status: stable
-description: Detects rare mshta child process
+description: Detects schtask created outside it ops hours
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.execution
+    - attack.collection/T1560
+    - attack.credential_access
