@@ -1,17 +1,17 @@
 title: regsvr32-http
-id: 3d3a0a6b-1111-2222-3333-75938e763de0
+id: a10afb68-1111-2222-3333-4c68d2904097
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects rare mshta child process
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.discovery
+    - attack.credential_access/T1003
+    - attack.credential_access
