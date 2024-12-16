@@ -1,17 +1,17 @@
 title: certutil-download
-id: 7654ed9c-1111-2222-3333-722f73c723b5
+id: b0fac317-1111-2222-3333-b1c27ba3795e
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects rare mshta child process
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.discovery
+    - attack.execution/T1059
+    - attack.lateral_movement
