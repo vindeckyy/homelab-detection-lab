@@ -1,17 +1,17 @@
 title: anon-smb-session
-id: 3d59dd55-1111-2222-3333-b71355082377
+id: 8880485d-1111-2222-3333-e6ad8c1281bc
 status: stable
-description: Detects rare mshta child process
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.credential_access
+    - attack.persistence/T1053
+    - attack.persistence
