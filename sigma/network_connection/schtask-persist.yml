@@ -1,17 +1,17 @@
 title: schtask-persist
-id: b9613b61-1111-2222-3333-17ae22a582fa
+id: c311078b-1111-2222-3333-b802c74107a1
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects encoded launcher from office parents
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.persistence
+    - attack.lateral_movement/T1021
+    - attack.execution
