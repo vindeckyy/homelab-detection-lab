@@ -1,17 +1,17 @@
 title: certutil-urlfetch
-id: 2f412e2f-1111-2222-3333-85c926bc642b
+id: ce3baa84-1111-2222-3333-2674b2800e14
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.credential_access
+    - attack.defense_evasion/T1218
+    - attack.lateral_movement
