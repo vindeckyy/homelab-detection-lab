@@ -1,17 +1,17 @@
 title: lsass-handle-access
-id: f7028227-1111-2222-3333-399f73f4cf63
+id: 39b23f45-1111-2222-3333-498d5fd4965f
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects schtask created outside it ops hours
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.persistence
+    - attack.privilege_escalation/T1548
+    - attack.lateral_movement
