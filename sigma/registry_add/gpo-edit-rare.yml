@@ -1,17 +1,17 @@
 title: gpo-edit-rare
-id: 980b36a5-1111-2222-3333-92c9af64c01b
+id: 449d7ca4-1111-2222-3333-75ec6f40ce8f
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects encoded launcher from office parents
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.persistence
+    - attack.collection/T1560
+    - attack.discovery
