@@ -1,17 +1,17 @@
 title: rdp-shadow-session
-id: 79f8e6b9-1111-2222-3333-a14811109bc4
+id: 249e6706-1111-2222-3333-5a48c3f0697c
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects encoded launcher from office parents
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.lateral_movement
+    - attack.collection/T1560
+    - attack.discovery
