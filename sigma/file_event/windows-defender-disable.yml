@@ -1,17 +1,17 @@
 title: windows-defender-disable
-id: 78f06929-1111-2222-3333-62de2fd39f5e
+id: 0835c26c-1111-2222-3333-5b977e78d2a5
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects schtask created outside it ops hours
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.defense_evasion
+    - attack.persistence/T1053
+    - attack.persistence
