@@ -1,17 +1,17 @@
 title: certutil-download
-id: 5186a6a6-1111-2222-3333-919c13872fb7
+id: 83aaa46f-1111-2222-3333-b77e7c0a897e
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects encoded launcher from office parents
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.discovery
+    - attack.persistence/T1053
+    - attack.credential_access
