@@ -1,17 +1,17 @@
 title: samr-enumeration
-id: c142e623-1111-2222-3333-2ad66fd8e69b
+id: 481f4ea3-1111-2222-3333-8d88f094b0f4
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.discovery
+    - attack.credential_access/T1003
+    - attack.credential_access
