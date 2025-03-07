@@ -1,17 +1,17 @@
 title: klist-purge-loop
-id: a1f739de-1111-2222-3333-2ce0e27e92eb
+id: 5b3d341a-1111-2222-3333-c6dd6758fe0d
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.defense_evasion
+    - attack.collection/T1560
+    - attack.persistence
