@@ -1,17 +1,17 @@
 title: kerberoast-activity
-id: f64923a3-1111-2222-3333-12da09c5c603
+id: c2a0a6f6-1111-2222-3333-4d9e15861568
 status: stable
-description: Detects rare mshta child process
+description: Detects schtask created outside it ops hours
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.defense_evasion
+    - attack.credential_access/T1003
+    - attack.persistence
