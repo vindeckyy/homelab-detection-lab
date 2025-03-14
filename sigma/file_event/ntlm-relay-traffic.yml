@@ -1,17 +1,17 @@
 title: ntlm-relay-traffic
-id: b6b63620-1111-2222-3333-24bfee629ce8
+id: a532f8b4-1111-2222-3333-510ef9c1219c
 status: stable
-description: Detects rare mshta child process
+description: Detects schtask created outside it ops hours
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.discovery
+    - attack.execution/T1059
+    - attack.defense_evasion
