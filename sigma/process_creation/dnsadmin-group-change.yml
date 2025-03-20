@@ -1,17 +1,17 @@
 title: dnsadmin-group-change
-id: 0b4ecc01-1111-2222-3333-d78847f4e27c
+id: b133d02c-1111-2222-3333-9399a696be76
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects schtask created outside it ops hours
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.discovery
+    - attack.execution/T1059
+    - attack.execution
