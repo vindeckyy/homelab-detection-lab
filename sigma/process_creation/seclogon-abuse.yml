@@ -1,17 +1,17 @@
 title: seclogon-abuse
-id: 4d16813b-1111-2222-3333-312c767ef1dd
+id: 622aca9c-1111-2222-3333-397c6e2532cb
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects rare mshta child process
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.persistence
+    - attack.credential_access/T1003
+    - attack.credential_access
