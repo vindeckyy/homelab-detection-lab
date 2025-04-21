@@ -1,17 +1,17 @@
 title: dsquery-domain-dump
-id: 83a296c8-1111-2222-3333-2271495a5bd4
+id: 4d2b4609-1111-2222-3333-8efd5d3d3c46
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.execution
+    - attack.execution/T1059
+    - attack.lateral_movement
