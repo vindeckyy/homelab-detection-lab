@@ -1,17 +1,17 @@
 title: rundll32-inproc
-id: 667fb69a-1111-2222-3333-8ba0f3d0a28d
+id: 30e81e20-1111-2222-3333-67174987141a
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects encoded launcher from office parents
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.discovery
+    - attack.privilege_escalation/T1548
+    - attack.execution
