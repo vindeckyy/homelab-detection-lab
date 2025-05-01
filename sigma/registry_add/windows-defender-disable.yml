@@ -1,17 +1,17 @@
 title: windows-defender-disable
-id: 0779c6e5-1111-2222-3333-cf0df79d42e0
+id: 042267ff-1111-2222-3333-5c2c3f1817d6
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
         ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
+    - attack.credential_access/T1003
     - attack.discovery
