@@ -1,17 +1,17 @@
 title: spooler-service-kill
-id: 9b219e26-1111-2222-3333-88fc0b111ab2
+id: 8194b722-1111-2222-3333-e3620e4d8dde
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.persistence
+    - attack.lateral_movement/T1021
+    - attack.execution
