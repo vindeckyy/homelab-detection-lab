@@ -1,17 +1,17 @@
 title: adfind-recon
-id: 45bf3db0-1111-2222-3333-2d0b5ceaf5a6
+id: 29e90111-1111-2222-3333-d1a4d9b31ddb
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.lateral_movement
+    - attack.execution/T1059
+    - attack.defense_evasion
