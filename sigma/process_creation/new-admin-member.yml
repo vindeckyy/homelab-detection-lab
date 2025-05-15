@@ -1,17 +1,17 @@
 title: new-admin-member
-id: e7fc4a28-1111-2222-3333-7ef42eb8e47c
+id: 35d19b9a-1111-2222-3333-a4cd2ad5702f
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects rare mshta child process
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.discovery
+    - attack.privilege_escalation/T1548
+    - attack.lateral_movement
