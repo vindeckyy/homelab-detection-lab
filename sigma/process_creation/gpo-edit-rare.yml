@@ -1,17 +1,17 @@
 title: gpo-edit-rare
-id: 80b51fb5-1111-2222-3333-9a1a82677a56
+id: 9e242aba-1111-2222-3333-2194a5ec71e7
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects rare mshta child process
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.execution
+    - attack.execution/T1059
+    - attack.defense_evasion
