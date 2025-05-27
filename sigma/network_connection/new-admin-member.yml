@@ -1,17 +1,17 @@
 title: new-admin-member
-id: 5f83fcc8-1111-2222-3333-ecfce80ee3bd
+id: 43a5d5d8-1111-2222-3333-a1ba184f468f
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects schtask created outside it ops hours
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.execution
+    - attack.execution/T1059
+    - attack.defense_evasion
