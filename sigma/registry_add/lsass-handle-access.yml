@@ -1,17 +1,17 @@
 title: lsass-handle-access
-id: 78fe8ea0-1111-2222-3333-eff6a3e8d4fb
+id: fa73aa03-1111-2222-3333-2e5f8f0d5b87
 status: stable
-description: Detects rare mshta child process
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.credential_access
+    - attack.privilege_escalation/T1548
+    - attack.execution
