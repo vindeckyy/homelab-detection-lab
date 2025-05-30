@@ -1,17 +1,17 @@
 title: dsquery-domain-dump
-id: edf8cf54-1111-2222-3333-500ab98fbd2c
+id: d7adcb45-1111-2222-3333-e95e5405ee19
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects rare mshta child process
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.lateral_movement
+    - attack.persistence/T1053
+    - attack.credential_access
