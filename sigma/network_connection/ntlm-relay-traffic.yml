@@ -1,17 +1,17 @@
 title: ntlm-relay-traffic
-id: 655ac642-1111-2222-3333-f78cdc9d69b2
+id: 91076d97-1111-2222-3333-1047572c101b
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects rare mshta child process
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.defense_evasion
+    - attack.credential_access/T1003
+    - attack.credential_access
