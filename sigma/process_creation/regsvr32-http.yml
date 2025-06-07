@@ -1,17 +1,17 @@
 title: regsvr32-http
-id: 30b97d1d-1111-2222-3333-8d0a9d7c3504
+id: b2b515b7-1111-2222-3333-b26beb43466a
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects encoded launcher from office parents
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.execution
+    - attack.collection/T1560
+    - attack.discovery
