@@ -1,5 +1,5 @@
 title: lsass-handle-access
-id: a7923d00-1111-2222-3333-77bff612c3cc
+id: 3d9c4626-1111-2222-3333-6d88a4d209cc
 status: stable
 description: Detects regsvr32 loading a remote scriptlet
 logsource:
@@ -7,11 +7,11 @@ logsource:
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.credential_access
+    - attack.privilege_escalation/T1548
+    - attack.lateral_movement
