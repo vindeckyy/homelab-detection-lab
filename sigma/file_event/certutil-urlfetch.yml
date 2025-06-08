@@ -1,17 +1,17 @@
 title: certutil-urlfetch
-id: 74e3f44e-1111-2222-3333-88452b1b07d8
+id: c074e2cb-1111-2222-3333-3f454307186e
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.lateral_movement
+    - attack.discovery/T1046
+    - attack.persistence
