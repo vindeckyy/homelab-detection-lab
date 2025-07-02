@@ -1,17 +1,17 @@
 title: netexec-sweep
-id: 06a6699a-1111-2222-3333-682ce1ff71be
+id: 52099c30-1111-2222-3333-080d1ff36d5e
 status: stable
-description: Detects rare mshta child process
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.execution
+    - attack.collection/T1560
+    - attack.credential_access
