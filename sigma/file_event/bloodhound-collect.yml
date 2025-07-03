@@ -1,17 +1,17 @@
 title: bloodhound-collect
-id: b784652e-1111-2222-3333-e475f9c255ec
+id: 19b53c7d-1111-2222-3333-d179673f7e99
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.persistence
+    - attack.execution/T1059
+    - attack.defense_evasion
