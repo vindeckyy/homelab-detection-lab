@@ -1,5 +1,5 @@
 title: spooler-service-kill
-id: b43e19ef-1111-2222-3333-b63ca67f6bd9
+id: dae6790e-1111-2222-3333-a41513d03ff5
 status: stable
 description: Detects certutil fetch to a non-corp host
 logsource:
@@ -7,11 +7,11 @@ logsource:
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.lateral_movement
+    - attack.discovery/T1046
+    - attack.credential_access
