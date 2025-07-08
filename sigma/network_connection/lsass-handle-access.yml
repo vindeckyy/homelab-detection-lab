@@ -1,17 +1,17 @@
 title: lsass-handle-access
-id: 579c7f4a-1111-2222-3333-dd6abe38a3b9
+id: 9dde6394-1111-2222-3333-45438664dc1c
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.persistence
+    - attack.privilege_escalation/T1548
+    - attack.lateral_movement
