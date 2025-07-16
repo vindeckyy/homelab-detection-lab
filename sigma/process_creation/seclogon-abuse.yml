@@ -1,17 +1,17 @@
 title: seclogon-abuse
-id: 21aa4d0a-1111-2222-3333-af7466ca730d
+id: 155e9d6f-1111-2222-3333-44c98bd77311
 status: stable
-description: Detects rare mshta child process
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.defense_evasion
+    - attack.discovery/T1046
+    - attack.credential_access
