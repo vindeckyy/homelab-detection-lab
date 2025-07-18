@@ -1,17 +1,17 @@
 title: wmi-subscription
-id: 2c718a4f-1111-2222-3333-fc928d0f135f
+id: 5a191a1e-1111-2222-3333-8e72e4971994
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects encoded launcher from office parents
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.execution
+    - attack.persistence/T1053
+    - attack.persistence
