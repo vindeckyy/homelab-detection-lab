@@ -1,17 +1,17 @@
 title: windows-defender-disable
-id: 324134ff-1111-2222-3333-edc761ffbdb7
+id: 35d6a60d-1111-2222-3333-4a4f6bf7a380
 status: stable
-description: Detects rare mshta child process
+description: Detects encoded launcher from office parents
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.credential_access
+    - attack.defense_evasion/T1218
+    - attack.defense_evasion
