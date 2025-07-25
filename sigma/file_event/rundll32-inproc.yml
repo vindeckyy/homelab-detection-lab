@@ -1,17 +1,17 @@
 title: rundll32-inproc
-id: e5f37a8b-1111-2222-3333-1fbd74d4ff45
+id: 5e6fca4c-1111-2222-3333-728bea0d6a0c
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.discovery
+    - attack.execution/T1059
+    - attack.execution
