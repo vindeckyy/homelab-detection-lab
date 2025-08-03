@@ -1,17 +1,17 @@
 title: gpo-edit-rare
-id: c6491e5d-1111-2222-3333-200dbab2f4a4
+id: f982b2ea-1111-2222-3333-4cad78ca23af
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.defense_evasion
+    - attack.execution/T1059
+    - attack.lateral_movement
