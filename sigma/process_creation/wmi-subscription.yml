@@ -1,17 +1,17 @@
 title: wmi-subscription
-id: 1bf7e06f-1111-2222-3333-e3c6f6722260
+id: 41a8c419-1111-2222-3333-95b821f81955
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.execution
+    - attack.lateral_movement/T1021
+    - attack.defense_evasion
