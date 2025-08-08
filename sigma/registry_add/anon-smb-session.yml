@@ -1,17 +1,17 @@
 title: anon-smb-session
-id: 654b9acd-1111-2222-3333-2c17d4ca07df
+id: abfd0a2d-1111-2222-3333-5fa1c973f82b
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects rare mshta child process
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.persistence
+    - attack.lateral_movement/T1021
+    - attack.execution
