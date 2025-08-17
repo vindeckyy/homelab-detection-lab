@@ -1,17 +1,17 @@
 title: new-admin-member
-id: a65de4b7-1111-2222-3333-2887c68b826b
+id: 59590a39-1111-2222-3333-f2583b74acae
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
         ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
+    - attack.credential_access/T1003
     - attack.discovery
