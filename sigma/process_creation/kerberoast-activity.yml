@@ -1,17 +1,17 @@
 title: kerberoast-activity
-id: ca873337-1111-2222-3333-a79d96af2435
+id: f8cae242-1111-2222-3333-49d9e2fdd7c2
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects encoded launcher from office parents
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.discovery
+    - attack.collection/T1560
+    - attack.credential_access
