@@ -1,17 +1,17 @@
 title: wmi-subscription
-id: 4101f605-1111-2222-3333-7ecbb6606db5
+id: 265343b0-1111-2222-3333-c4341b2dc403
 status: stable
-description: Detects rare mshta child process
+description: Detects encoded launcher from office parents
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.execution
+    - attack.defense_evasion/T1218
+    - attack.lateral_movement
