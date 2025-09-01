@@ -1,17 +1,17 @@
 title: netexec-sweep
-id: 9193f9e0-1111-2222-3333-704b03797a6d
+id: 2c411a45-1111-2222-3333-136b8df0fb9a
 status: stable
-description: Detects rare mshta child process
+description: Detects encoded launcher from office parents
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.discovery
+    - attack.credential_access/T1003
+    - attack.persistence
