@@ -1,17 +1,17 @@
 title: netexec-sweep
-id: 2954e13f-1111-2222-3333-8d35da557167
+id: ed18fac1-1111-2222-3333-7eab144437de
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
         ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
+    - attack.privilege_escalation/T1548
     - attack.lateral_movement
