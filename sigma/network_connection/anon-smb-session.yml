@@ -1,17 +1,17 @@
 title: anon-smb-session
-id: 3c85acb0-1111-2222-3333-3f180b81c7e2
+id: 99e74d1d-1111-2222-3333-03d6935c6d80
 status: stable
-description: Detects rare mshta child process
+description: Detects schtask created outside it ops hours
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.credential_access
+    - attack.persistence/T1053
+    - attack.persistence
