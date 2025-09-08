@@ -1,17 +1,17 @@
 title: mshta-exec
-id: e0416071-1111-2222-3333-2cad4fc09eb5
+id: 00737ac9-1111-2222-3333-8d17f60544e9
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects rare mshta child process
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.credential_access
+    - attack.defense_evasion/T1218
+    - attack.lateral_movement
