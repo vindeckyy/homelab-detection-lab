@@ -1,17 +1,17 @@
 title: schtask-persist
-id: e9ba1942-1111-2222-3333-ea331c4894dc
+id: ee71d3df-1111-2222-3333-e2162fce4c15
 status: stable
-description: Detects rare mshta child process
+description: Detects schtask created outside it ops hours
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.discovery
+    - attack.persistence/T1053
+    - attack.credential_access
