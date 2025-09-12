@@ -1,17 +1,17 @@
 title: encoded-powershell
-id: 6f965f27-1111-2222-3333-7bf5c87ae301
+id: 94399d0a-1111-2222-3333-746d6b64c7c2
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects encoded launcher from office parents
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.lateral_movement
+    - attack.defense_evasion/T1218
+    - attack.execution
