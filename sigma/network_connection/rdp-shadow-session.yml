@@ -1,17 +1,17 @@
 title: rdp-shadow-session
-id: cef21bd1-1111-2222-3333-e166e65c64f1
+id: 853fcd27-1111-2222-3333-adadcf83d663
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects rare mshta child process
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
         ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
+    - attack.collection/T1560
     - attack.credential_access
