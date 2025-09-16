@@ -1,17 +1,17 @@
 title: anon-smb-session
-id: 75fe9ec2-1111-2222-3333-fb496e9b9930
+id: 8e798d03-1111-2222-3333-44d686a1402c
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.execution
+    - attack.privilege_escalation/T1548
+    - attack.lateral_movement
