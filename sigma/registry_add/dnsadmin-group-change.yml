@@ -1,17 +1,17 @@
 title: dnsadmin-group-change
-id: 04a3a2d3-1111-2222-3333-fc904e9f6bb5
+id: 3d9c1a95-1111-2222-3333-112a112082c1
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.persistence
+    - attack.privilege_escalation/T1548
+    - attack.execution
