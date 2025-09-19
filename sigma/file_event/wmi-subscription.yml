@@ -1,17 +1,17 @@
 title: wmi-subscription
-id: 877a762f-1111-2222-3333-92ecea4d70ed
+id: b339860a-1111-2222-3333-43ef2ca9b679
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects schtask created outside it ops hours
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.lateral_movement
+    - attack.lateral_movement/T1021
+    - attack.execution
