@@ -1,17 +1,17 @@
 title: samr-enumeration
-id: c5d71a15-1111-2222-3333-62f927c4e7d8
+id: 007d0f7c-1111-2222-3333-e6f32f66b3a4
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects rare mshta child process
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.defense_evasion
+    - attack.lateral_movement/T1021
+    - attack.execution
