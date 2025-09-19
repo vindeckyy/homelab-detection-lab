@@ -1,17 +1,17 @@
 title: ntlm-relay-traffic
-id: 6acdd0c1-1111-2222-3333-a257e8df053a
+id: 216ce226-1111-2222-3333-770a696803a9
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.execution
+    - attack.privilege_escalation/T1548
+    - attack.defense_evasion
