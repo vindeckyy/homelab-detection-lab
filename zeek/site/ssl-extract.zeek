@@ -1,5 +1,5 @@
 # site policy: ssl-extract
-@load base/protocols/conn
+@load base/protocols/ssl
 
 export {
     redef LogAscii::use_json = T;
