@@ -1,17 +1,17 @@
 title: samr-enumeration
-id: 27cf8c41-1111-2222-3333-5f8088b68559
+id: 9e1a5356-1111-2222-3333-eddd56972b05
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.persistence
+    - attack.execution/T1059
+    - attack.lateral_movement
