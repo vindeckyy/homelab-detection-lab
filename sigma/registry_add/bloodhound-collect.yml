@@ -1,17 +1,17 @@
 title: bloodhound-collect
-id: 745ccb96-1111-2222-3333-a336e2031da7
+id: 30fc9ffe-1111-2222-3333-a087edaa1ef2
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects rare mshta child process
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.discovery
+    - attack.execution/T1059
+    - attack.lateral_movement
