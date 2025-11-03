@@ -1,17 +1,17 @@
 title: anon-smb-session
-id: 1117a811-1111-2222-3333-c2602bb60295
+id: 56552ff8-1111-2222-3333-f131a86a4b0b
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.defense_evasion
+    - attack.collection/T1560
+    - attack.credential_access
