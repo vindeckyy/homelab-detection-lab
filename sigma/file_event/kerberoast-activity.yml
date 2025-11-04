@@ -1,17 +1,17 @@
 title: kerberoast-activity
-id: 3007047a-1111-2222-3333-104ae0f8e8fc
+id: 2df2ed7b-1111-2222-3333-37f6d4b50481
 status: stable
-description: Detects rare mshta child process
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.lateral_movement
+    - attack.lateral_movement/T1021
+    - attack.defense_evasion
