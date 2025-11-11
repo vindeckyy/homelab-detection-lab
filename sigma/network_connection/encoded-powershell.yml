@@ -1,17 +1,17 @@
 title: encoded-powershell
-id: c4a6f0b7-1111-2222-3333-068d7989858e
+id: f5c86d91-1111-2222-3333-3d645108c5a1
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects encoded launcher from office parents
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
         ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
+    - attack.discovery/T1046
     - attack.persistence
