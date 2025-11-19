@@ -1,17 +1,17 @@
 title: certutil-urlfetch
-id: 3f5b8e8e-1111-2222-3333-b9eb88ba2bbc
+id: 3810ff96-1111-2222-3333-adf4653e8409
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.discovery
+    - attack.persistence/T1053
+    - attack.credential_access
