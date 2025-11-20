@@ -1,17 +1,17 @@
 title: bloodhound-collect
-id: 08175096-1111-2222-3333-d5b9f6f69c68
+id: e847db9a-1111-2222-3333-581045e8eaa2
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects encoded launcher from office parents
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.execution
+    - attack.execution/T1059
+    - attack.defense_evasion
