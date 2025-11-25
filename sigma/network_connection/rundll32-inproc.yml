@@ -1,17 +1,17 @@
 title: rundll32-inproc
-id: 0b5c83eb-1111-2222-3333-a56f0584a54e
+id: 5a577c90-1111-2222-3333-21f92fdef55d
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects rare mshta child process
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
         ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
+    - attack.collection/T1560
     - attack.persistence
