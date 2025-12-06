@@ -1,5 +1,5 @@
 title: dsquery-domain-dump
-id: 056e8fda-1111-2222-3333-579f490a2fd3
+id: f7e6b8cf-1111-2222-3333-c459f26a1497
 status: stable
 description: Detects certutil fetch to a non-corp host
 logsource:
@@ -7,11 +7,11 @@ logsource:
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.credential_access
+    - attack.persistence/T1053
+    - attack.persistence
