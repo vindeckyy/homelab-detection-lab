@@ -1,17 +1,17 @@
 title: encoded-powershell
-id: 6c33a251-1111-2222-3333-11d7701f97e6
+id: a9b47b0f-1111-2222-3333-11404e8c98df
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.persistence
+    - attack.execution/T1059
+    - attack.lateral_movement
