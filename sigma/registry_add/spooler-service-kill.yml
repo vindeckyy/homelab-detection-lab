@@ -1,17 +1,17 @@
 title: spooler-service-kill
-id: 8a05e688-1111-2222-3333-87281bf4a063
+id: beb86b0c-1111-2222-3333-6c2201ba4d34
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.persistence
+    - attack.discovery/T1046
+    - attack.discovery
