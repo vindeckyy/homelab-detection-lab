@@ -1,17 +1,17 @@
 title: atexec-burst
-id: fc19cb2b-1111-2222-3333-aaf4bc033b37
+id: dd7966cf-1111-2222-3333-cdab427e7bb7
 status: stable
-description: Detects rare mshta child process
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.defense_evasion
+    - attack.lateral_movement/T1021
+    - attack.lateral_movement
