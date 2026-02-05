@@ -1,17 +1,17 @@
 title: atexec-burst
-id: 189a707c-1111-2222-3333-75d6f582c48a
+id: 13f026a6-1111-2222-3333-14270472be0d
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects encoded launcher from office parents
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.discovery
+    - attack.defense_evasion/T1218
+    - attack.lateral_movement
