@@ -1,17 +1,17 @@
 title: bitsadmin-transfer
-id: 4a994028-1111-2222-3333-ac845f62a1c1
+id: 7e9fe77d-1111-2222-3333-c7219c9329bf
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
         ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
+    - attack.credential_access/T1003
     - attack.discovery
