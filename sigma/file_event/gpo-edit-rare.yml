@@ -1,17 +1,17 @@
 title: gpo-edit-rare
-id: 4d49db8b-1111-2222-3333-cc187b618efd
+id: b3d755ce-1111-2222-3333-acf693389115
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects schtask created outside it ops hours
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
         ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
+    - attack.privilege_escalation/T1548
     - attack.execution
