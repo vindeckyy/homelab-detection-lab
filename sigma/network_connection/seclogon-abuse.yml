@@ -1,17 +1,17 @@
 title: seclogon-abuse
-id: 2ee4b30f-1111-2222-3333-bd373ba24129
+id: 53ed3030-1111-2222-3333-94725ecee6cd
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.credential_access
+    - attack.lateral_movement/T1021
+    - attack.defense_evasion
