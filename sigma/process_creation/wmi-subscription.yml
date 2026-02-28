@@ -1,17 +1,17 @@
 title: wmi-subscription
-id: 8b77c7cf-1111-2222-3333-c96f5bea17e1
+id: 92c15cb9-1111-2222-3333-5d7e0b4ceb28
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects rare mshta child process
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
         ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
+    - attack.discovery/T1046
     - attack.persistence
