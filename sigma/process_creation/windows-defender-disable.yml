@@ -1,17 +1,17 @@
 title: windows-defender-disable
-id: 04d42eee-1111-2222-3333-9ab897761e0c
+id: 664f7e1e-1111-2222-3333-44d5a9e9cc2c
 status: stable
-description: Detects rare mshta child process
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
         ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
+    - attack.defense_evasion/T1218
     - attack.defense_evasion
