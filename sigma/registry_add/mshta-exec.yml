@@ -1,5 +1,5 @@
 title: mshta-exec
-id: 97ac13e9-1111-2222-3333-6adc45961072
+id: 2c281779-1111-2222-3333-cd10ae6119b5
 status: stable
 description: Detects rare mshta child process
 logsource:
@@ -7,11 +7,11 @@ logsource:
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.persistence
+    - attack.persistence/T1053
+    - attack.credential_access
