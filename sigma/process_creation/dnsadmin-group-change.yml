@@ -1,17 +1,17 @@
 title: dnsadmin-group-change
-id: f065b3ea-1111-2222-3333-665a1ff5f30f
+id: e1f5ccfb-1111-2222-3333-8384ca723c2d
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects schtask created outside it ops hours
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.credential_access
+    - attack.credential_access/T1003
+    - attack.discovery
