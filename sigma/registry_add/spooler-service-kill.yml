@@ -1,17 +1,17 @@
 title: spooler-service-kill
-id: 48ebf57a-1111-2222-3333-ed0b97e08421
+id: 783a6354-1111-2222-3333-7c74cf6268f0
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects rare mshta child process
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
         ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
+    - attack.execution/T1059
     - attack.lateral_movement
