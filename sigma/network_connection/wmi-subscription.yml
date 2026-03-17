@@ -1,17 +1,17 @@
 title: wmi-subscription
-id: 7c71dff0-1111-2222-3333-28078ad1593c
+id: a1556430-1111-2222-3333-5f408b4464db
 status: stable
-description: Detects rare mshta child process
+description: Detects schtask created outside it ops hours
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
         ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
+    - attack.privilege_escalation/T1548
     - attack.lateral_movement
