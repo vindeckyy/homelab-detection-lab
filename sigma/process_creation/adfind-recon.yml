@@ -1,17 +1,17 @@
 title: adfind-recon
-id: 40df5302-1111-2222-3333-326af1feb634
+id: 5f3b1b44-1111-2222-3333-e6cf11ba78e0
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects rare mshta child process
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
         ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
+    - attack.persistence/T1053
     - attack.credential_access
