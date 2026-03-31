@@ -1,5 +1,5 @@
 title: anon-smb-session
-id: 58adf389-1111-2222-3333-72af4bcbc5e8
+id: 4f512a34-1111-2222-3333-d0cb38840ae9
 status: stable
 description: Detects certutil fetch to a non-corp host
 logsource:
@@ -7,11 +7,11 @@ logsource:
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.lateral_movement
+    - attack.discovery/T1046
+    - attack.persistence
