@@ -1,17 +1,17 @@
 title: adfind-recon
-id: 65995b92-1111-2222-3333-3901519409d1
+id: d0c7d0f9-1111-2222-3333-c2bef0ce026c
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects rare mshta child process
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.discovery
+    - attack.lateral_movement/T1021
+    - attack.lateral_movement
