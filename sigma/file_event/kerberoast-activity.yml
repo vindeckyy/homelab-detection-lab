@@ -1,17 +1,17 @@
 title: kerberoast-activity
-id: b27840c3-1111-2222-3333-35fb00bd8690
+id: 85d99b61-1111-2222-3333-4d5bc81aeda3
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.lateral_movement
+    - attack.privilege_escalation/T1548
+    - attack.defense_evasion
