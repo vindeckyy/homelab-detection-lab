@@ -1,17 +1,17 @@
 title: certutil-urlfetch
-id: e87f1801-1111-2222-3333-a9a937d32c7b
+id: 4245d22d-1111-2222-3333-f34dd53848f8
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects rare mshta child process
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.execution
+    - attack.discovery/T1046
+    - attack.persistence
