@@ -1,17 +1,17 @@
 title: windows-defender-disable
-id: d96aa4c1-1111-2222-3333-4b0e1278fd7c
+id: 7794d6f5-1111-2222-3333-46678579b3f3
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects schtask created outside it ops hours
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.persistence
+    - attack.defense_evasion/T1218
+    - attack.execution
