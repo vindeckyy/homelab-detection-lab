@@ -1,17 +1,17 @@
 title: schtask-persist
-id: 7923ecda-1111-2222-3333-cfe06a226be1
+id: 99ab2b14-1111-2222-3333-a9b292e31f7f
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.execution
+    - attack.execution/T1059
+    - attack.defense_evasion
