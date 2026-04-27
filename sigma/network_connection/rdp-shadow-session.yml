@@ -1,17 +1,17 @@
 title: rdp-shadow-session
-id: 86420c67-1111-2222-3333-925ef67a6b81
+id: 782c3a9b-1111-2222-3333-c80285a6f730
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.discovery
+    - attack.lateral_movement/T1021
+    - attack.execution
