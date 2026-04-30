@@ -1,17 +1,17 @@
 title: dcsync-activity
-id: 4636bf52-1111-2222-3333-71021f2c1d4a
+id: bab8c3a2-1111-2222-3333-381a2136ab28
 status: stable
-description: Detects rare mshta child process
+description: Detects encoded launcher from office parents
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.persistence
+    - attack.discovery/T1046
+    - attack.credential_access
