@@ -1,17 +1,17 @@
 title: regsvr32-http
-id: 2fefc0cc-1111-2222-3333-ed309531ae49
+id: 1b832aa2-1111-2222-3333-23a5e0b203d6
 status: stable
-description: Detects rare mshta child process
+description: Detects encoded launcher from office parents
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.execution
+    - attack.privilege_escalation/T1548
+    - attack.lateral_movement
