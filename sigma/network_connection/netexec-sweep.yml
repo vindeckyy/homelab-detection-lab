@@ -1,17 +1,17 @@
 title: netexec-sweep
-id: c34e17e0-1111-2222-3333-f6b9702d6cbd
+id: 4d26f270-1111-2222-3333-4b58515bf01c
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects rare mshta child process
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.credential_access
+    - attack.execution/T1059
+    - attack.lateral_movement
