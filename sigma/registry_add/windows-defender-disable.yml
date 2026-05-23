@@ -1,17 +1,17 @@
 title: windows-defender-disable
-id: 9136b3d7-1111-2222-3333-9996f3be1719
+id: 6b63eb88-1111-2222-3333-b92f4c445e10
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.execution
+    - attack.discovery/T1046
+    - attack.discovery
