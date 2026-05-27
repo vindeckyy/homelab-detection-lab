@@ -1,17 +1,17 @@
 title: dnsadmin-group-change
-id: 403c5f00-1111-2222-3333-33e91b1ab3b9
+id: 868ee921-1111-2222-3333-4785a17f9f63
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects rare mshta child process
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.discovery
+    - attack.execution/T1059
+    - attack.lateral_movement
