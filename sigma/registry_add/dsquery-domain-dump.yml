@@ -1,17 +1,17 @@
 title: dsquery-domain-dump
-id: 2712cc52-1111-2222-3333-4fe4e385ebe7
+id: fd67de70-1111-2222-3333-b4b42fd6d07b
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects encoded launcher from office parents
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
         ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
+    - attack.privilege_escalation/T1548
     - attack.lateral_movement
