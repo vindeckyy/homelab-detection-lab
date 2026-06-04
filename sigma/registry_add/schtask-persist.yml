@@ -1,17 +1,17 @@
 title: schtask-persist
-id: 21ec5631-1111-2222-3333-e0be01a18539
+id: 7129ded5-1111-2222-3333-70dfa56f7949
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects encoded launcher from office parents
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.defense_evasion
+    - attack.credential_access/T1003
+    - attack.credential_access
