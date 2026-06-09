@@ -1,17 +1,17 @@
 title: gpo-edit-rare
-id: 87c0d5f4-1111-2222-3333-2b8310e97ceb
+id: f11a765e-1111-2222-3333-304a52d78121
 status: stable
-description: Detects rare mshta child process
+description: Detects encoded launcher from office parents
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.lateral_movement
+    - attack.execution/T1059
+    - attack.execution
