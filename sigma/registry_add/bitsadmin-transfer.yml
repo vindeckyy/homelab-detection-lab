@@ -1,17 +1,17 @@
 title: bitsadmin-transfer
-id: 77c99259-1111-2222-3333-56378aecdbea
+id: b49f0a14-1111-2222-3333-c34f900bae24
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects encoded launcher from office parents
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.discovery
+    - attack.defense_evasion/T1218
+    - attack.defense_evasion
