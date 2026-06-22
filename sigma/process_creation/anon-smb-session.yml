@@ -1,17 +1,17 @@
 title: anon-smb-session
-id: 7825d4a5-1111-2222-3333-f7a4bed53e26
+id: 82d63b14-1111-2222-3333-57b2c4eb6c63
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.discovery
+    - attack.privilege_escalation/T1548
+    - attack.execution
