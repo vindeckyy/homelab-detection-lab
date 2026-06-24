@@ -1,17 +1,17 @@
 title: klist-purge-loop
-id: c2941fe1-1111-2222-3333-dd23aed540c1
+id: e7b362e1-1111-2222-3333-15d9370b37f3
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects schtask created outside it ops hours
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.discovery
+    - attack.defense_evasion/T1218
+    - attack.defense_evasion
