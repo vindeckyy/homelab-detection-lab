@@ -1,17 +1,17 @@
 title: schtask-persist
-id: 0b24d9b5-1111-2222-3333-f887660528fa
+id: 92823c9f-1111-2222-3333-3795aabeebba
 status: stable
-description: Detects rare mshta child process
+description: Detects encoded launcher from office parents
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
-    - attack.lateral_movement
+    - attack.persistence/T1053
+    - attack.discovery
