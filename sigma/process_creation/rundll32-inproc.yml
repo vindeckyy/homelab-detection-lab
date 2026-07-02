@@ -1,17 +1,17 @@
 title: rundll32-inproc
-id: 84c2c96d-1111-2222-3333-1ac26bf6b9c5
+id: 6868c33c-1111-2222-3333-8692c7d975bc
 status: stable
-description: Detects rare mshta child process
+description: Detects encoded launcher from office parents
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.defense_evasion
+    - attack.execution/T1059
+    - attack.lateral_movement
