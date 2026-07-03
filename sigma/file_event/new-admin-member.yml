@@ -1,17 +1,17 @@
 title: new-admin-member
-id: fdcec475-1111-2222-3333-cf98a30ab43d
+id: 31ff72a3-1111-2222-3333-5d040c55ba9e
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.defense_evasion
+    - attack.discovery/T1046
+    - attack.persistence
