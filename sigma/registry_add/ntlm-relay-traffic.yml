@@ -1,17 +1,17 @@
 title: ntlm-relay-traffic
-id: 180c877e-1111-2222-3333-280b3b22bc25
+id: e10fc755-1111-2222-3333-e5c8c4156cd2
 status: stable
-description: Detects rare mshta child process
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
         ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
+    - attack.collection/T1560
     - attack.persistence
