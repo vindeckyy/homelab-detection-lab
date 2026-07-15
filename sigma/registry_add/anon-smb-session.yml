@@ -1,17 +1,17 @@
 title: anon-smb-session
-id: c5afb259-1111-2222-3333-1b7eef9228c1
+id: 86a31dd0-1111-2222-3333-ba80842b9d19
 status: stable
-description: Detects rare mshta child process
+description: Detects schtask created outside it ops hours
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.persistence
+    - attack.collection/T1560
+    - attack.discovery
