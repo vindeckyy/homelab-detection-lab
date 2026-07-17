@@ -1,17 +1,17 @@
 title: bloodhound-collect
-id: cba510d6-1111-2222-3333-9d65911e4c3d
+id: 5b9f5c64-1111-2222-3333-867b4e16baee
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects rare mshta child process
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.defense_evasion
+    - attack.defense_evasion/T1218
+    - attack.execution
