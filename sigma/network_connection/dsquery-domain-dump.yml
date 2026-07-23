@@ -1,17 +1,17 @@
 title: dsquery-domain-dump
-id: b9af0dee-1111-2222-3333-803f2a46fd7a
+id: f44f2d85-1111-2222-3333-d5545abcfd37
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\svchost'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.execution
+    - attack.persistence/T1053
+    - attack.credential_access
