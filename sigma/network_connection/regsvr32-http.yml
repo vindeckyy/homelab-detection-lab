@@ -1,17 +1,17 @@
 title: regsvr32-http
-id: d6da6693-1111-2222-3333-98258b4a5c88
+id: b85d38f3-1111-2222-3333-55e674eb5343
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects schtask created outside it ops hours
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
         ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
+    - attack.execution/T1059
     - attack.lateral_movement
