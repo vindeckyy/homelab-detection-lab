@@ -1,17 +1,17 @@
 title: gpo-edit-rare
-id: 8b8d6f7b-1111-2222-3333-ebd670f7cd7b
+id: 4a8a56ae-1111-2222-3333-5fde1a9bc431
 status: stable
-description: Detects rare mshta child process
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.discovery
+    - attack.lateral_movement/T1021
+    - attack.lateral_movement
