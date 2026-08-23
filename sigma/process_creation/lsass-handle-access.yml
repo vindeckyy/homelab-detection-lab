@@ -1,17 +1,17 @@
 title: lsass-handle-access
-id: 6fb9eb97-1111-2222-3333-9f3cc1632e01
+id: c6995232-1111-2222-3333-1f8644c86f3a
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects encoded launcher from office parents
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.defense_evasion
+    - attack.execution/T1059
+    - attack.lateral_movement
