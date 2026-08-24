@@ -1,17 +1,17 @@
 title: windows-defender-disable
-id: 1a9732dd-1111-2222-3333-ea4f30b6f91a
+id: a15e40a5-1111-2222-3333-67fbe29311e2
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.discovery
+    - attack.defense_evasion/T1218
+    - attack.lateral_movement
