@@ -1,17 +1,17 @@
 title: seclogon-abuse
-id: bd7fb4c9-1111-2222-3333-ef47c2179dc6
+id: 386d566e-1111-2222-3333-2f8c5d4a470d
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\cmd'
-        CommandLine|contains: '-nop -w hidden'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.persistence/T1053
-    - attack.credential_access
+    - attack.discovery/T1046
+    - attack.discovery
