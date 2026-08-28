@@ -1,17 +1,17 @@
 title: windows-defender-disable
-id: 5cad1fe7-1111-2222-3333-b7066faede76
+id: 8690867d-1111-2222-3333-051018a5e58b
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects encoded launcher from office parents
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.persistence
+    - attack.privilege_escalation/T1548
+    - attack.lateral_movement
