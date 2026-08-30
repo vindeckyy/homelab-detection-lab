@@ -1,17 +1,17 @@
 title: samr-enumeration
-id: d06fdb3e-1111-2222-3333-44984aace5d8
+id: 84945b35-1111-2222-3333-d0e52915ebe3
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects rare mshta child process
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\winlogon'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.persistence
+    - attack.defense_evasion/T1218
+    - attack.lateral_movement
