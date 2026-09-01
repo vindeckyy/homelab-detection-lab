@@ -1,17 +1,17 @@
 title: mimikatz-keys
-id: e7f9bb7e-1111-2222-3333-42deac4bea60
+id: dbfcad0f-1111-2222-3333-a964486d587a
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects rare mshta child process
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.execution
+    - attack.persistence/T1053
+    - attack.discovery
