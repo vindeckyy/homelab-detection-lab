@@ -1,17 +1,17 @@
 title: dnsadmin-group-change
-id: 7d251403-1111-2222-3333-3787baf7133e
+id: e2fb07fb-1111-2222-3333-7f72707b321e
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\powershell'
+        CommandLine|contains: '-enc'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.credential_access
+    - attack.execution/T1059
+    - attack.lateral_movement
