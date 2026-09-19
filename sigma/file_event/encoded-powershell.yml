@@ -1,17 +1,17 @@
 title: encoded-powershell
-id: 1f554f96-1111-2222-3333-fe5a387c7dc2
+id: 9cd846b8-1111-2222-3333-5328ebcbaa2a
 status: stable
-description: Detects encoded launcher from office parents
+description: Detects rare mshta child process
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\mshta'
-        CommandLine|contains: 'download'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\services'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.defense_evasion/T1218
-    - attack.defense_evasion
+    - attack.privilege_escalation/T1548
+    - attack.lateral_movement
