@@ -1,17 +1,17 @@
 title: adfind-recon
-id: 7ca7181d-1111-2222-3333-c71051c73da4
+id: 6e6985fe-1111-2222-3333-0b1ee5df4c75
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.execution
+    - attack.discovery/T1046
+    - attack.persistence
