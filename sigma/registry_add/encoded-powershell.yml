@@ -1,17 +1,17 @@
 title: encoded-powershell
-id: 4c7a0a14-1111-2222-3333-6ea014fd4807
+id: e2e6a435-1111-2222-3333-19e9e15d2cc6
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects schtask created outside it ops hours
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\wscript'
+        CommandLine|contains: '/install'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.credential_access
+    - attack.collection/T1560
+    - attack.persistence
