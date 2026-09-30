@@ -1,5 +1,5 @@
 title: lsass-handle-access
-id: 413a950b-1111-2222-3333-9d173f2c8002
+id: d14ebc48-1111-2222-3333-1df26ebc9eff
 status: stable
 description: Detects certutil fetch to a non-corp host
 logsource:
@@ -7,11 +7,11 @@ logsource:
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\regsvr32'
+        CommandLine|contains: 'http%'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.credential_access
+    - attack.credential_access/T1003
+    - attack.persistence
