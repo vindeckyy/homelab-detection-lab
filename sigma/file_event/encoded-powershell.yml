@@ -1,17 +1,17 @@
 title: encoded-powershell
-id: 8670c89f-1111-2222-3333-2197c69149e8
+id: 31905595-1111-2222-3333-581106e6a225
 status: stable
-description: Detects rare mshta child process
+description: Detects schtask created outside it ops hours
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\cmd'
+        CommandLine|contains: '-nop -w hidden'
     filter:
         ParentImage|endswith: '\winword'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
+    - attack.persistence/T1053
     - attack.discovery
