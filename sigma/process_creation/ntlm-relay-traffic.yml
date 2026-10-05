@@ -1,17 +1,17 @@
 title: ntlm-relay-traffic
-id: 110ef80b-1111-2222-3333-1350ee7d6e5e
+id: 497f3196-1111-2222-3333-73f5e357a7a3
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\rundll32'
-        CommandLine|contains: '/url http'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\explorer'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.lateral_movement/T1021
-    - attack.execution
+    - attack.defense_evasion/T1218
+    - attack.lateral_movement
