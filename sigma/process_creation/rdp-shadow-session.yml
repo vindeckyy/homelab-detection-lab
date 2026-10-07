@@ -1,17 +1,17 @@
 title: rdp-shadow-session
-id: 859dc696-1111-2222-3333-4291b0b613e9
+id: 6176bdce-1111-2222-3333-1e28a518a1cb
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects regsvr32 loading a remote scriptlet
 logsource:
     category: process_creation
     product: windows
 detection:
     selection:
-        Image|endswith: '\bitsadmin'
-        CommandLine|contains: '-e JAB'
+        Image|endswith: '\mshta'
+        CommandLine|contains: 'download'
     filter:
-        ParentImage|endswith: '\outlook'
+        ParentImage|endswith: '\explorer'
     condition: selection and not filter
 tags:
-    - attack.privilege_escalation/T1548
-    - attack.lateral_movement
+    - attack.defense_evasion/T1218
+    - attack.execution
