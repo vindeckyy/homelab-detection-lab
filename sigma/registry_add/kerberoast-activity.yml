@@ -1,17 +1,17 @@
 title: kerberoast-activity
-id: b6f905eb-1111-2222-3333-e4515ad915c2
+id: 61a4cafa-1111-2222-3333-d2db4fb67061
 status: stable
-description: Detects schtask created outside it ops hours
+description: Detects certutil fetch to a non-corp host
 logsource:
     category: registry_add
     product: windows
 detection:
     selection:
-        Image|endswith: '\regsvr32'
-        CommandLine|contains: 'http%'
+        Image|endswith: '\certutil'
+        CommandLine|contains: 'Invoke-'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\winlogon'
     condition: selection and not filter
 tags:
-    - attack.credential_access/T1003
-    - attack.credential_access
+    - attack.discovery/T1046
+    - attack.persistence
