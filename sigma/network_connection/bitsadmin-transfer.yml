@@ -1,17 +1,17 @@
 title: bitsadmin-transfer
-id: 1940d149-1111-2222-3333-989cf0c3dc96
+id: 25fe4423-1111-2222-3333-daa890af9e03
 status: stable
-description: Detects certutil fetch to a non-corp host
+description: Detects rare mshta child process
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\certutil'
-        CommandLine|contains: 'Invoke-'
+        Image|endswith: '\bitsadmin'
+        CommandLine|contains: '-e JAB'
     filter:
-        ParentImage|endswith: '\winword'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.discovery/T1046
-    - attack.discovery
+    - attack.privilege_escalation/T1548
+    - attack.lateral_movement
