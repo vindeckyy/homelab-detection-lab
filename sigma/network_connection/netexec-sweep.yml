@@ -1,17 +1,17 @@
 title: netexec-sweep
-id: ddb81228-1111-2222-3333-89d2e47a39e7
+id: 3713e68d-1111-2222-3333-af0767a6b4f9
 status: stable
-description: Detects rare mshta child process
+description: Detects encoded launcher from office parents
 logsource:
     category: network_connection
     product: windows
 detection:
     selection:
-        Image|endswith: '\powershell'
-        CommandLine|contains: '-enc'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
         ParentImage|endswith: '\services'
     condition: selection and not filter
 tags:
-    - attack.execution/T1059
+    - attack.lateral_movement/T1021
     - attack.defense_evasion
