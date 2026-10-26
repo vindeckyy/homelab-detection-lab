@@ -1,17 +1,17 @@
 title: atexec-burst
-id: 5d4016fa-1111-2222-3333-e8a052973f4b
+id: 96f89a7c-1111-2222-3333-54d187ce6767
 status: stable
-description: Detects regsvr32 loading a remote scriptlet
+description: Detects schtask created outside it ops hours
 logsource:
     category: file_event
     product: windows
 detection:
     selection:
-        Image|endswith: '\wscript'
-        CommandLine|contains: '/install'
+        Image|endswith: '\rundll32'
+        CommandLine|contains: '/url http'
     filter:
-        ParentImage|endswith: '\svchost'
+        ParentImage|endswith: '\outlook'
     condition: selection and not filter
 tags:
-    - attack.collection/T1560
-    - attack.credential_access
+    - attack.lateral_movement/T1021
+    - attack.lateral_movement
